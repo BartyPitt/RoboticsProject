@@ -24,7 +24,8 @@ import matplotlib.pyplot as plt
 
 
 def ImageInlineShow(Image):
-    '''A function to show the images in line instead of as sperate images designed for Jupyter Notepad.
+    '''
+    A function to show the images in line instead of as sperate images designed for Jupyter Notepad.
     Sabotage me if you dont want anything being printed out.
     '''
     plt.imshow(cv2.cvtColor(Image, cv2.COLOR_BGR2RGB))
@@ -59,7 +60,7 @@ def ConvectionFunction(Image ,LowerBound , UpperBound):
 def ContourInfo(contours ,minArea):
     '''
     Takes in a set of contours returns the cordinate for the centre of the the ones above a certain size
-    TODO ADD TEST FOR IF IT IS A CIRCLE RATHER THAN JUST AREA
+    TODO ADD TEST FOR IF IT IS A CIRCLE RATHER THAN JUST doing it by overal area
      '''
     output = []
     for c in contours:
@@ -81,6 +82,7 @@ def GetPossitions(ImageLocation):
     '''Takes In an Image Location and returns what the current layout of the parts is'''
     img = cv2.imread(ImageLocation)
     
+    #Red Contours
     lower_red = np.array([0,110,139])
     upper_red = np.array([10,255,255])
     
@@ -107,6 +109,8 @@ def GetPossitions(ImageLocation):
     
     blueContours = ConvectionFunction(SquareImage,lower_blue , upper_blue)
     blue_cordinates = ContourInfo(blueContours , 500)
+    print("Blue Cordinates")
+    print(blue_cordinates)
 
     #The Yellow Mask
     lower_yellow = np.array([20,204,150])
@@ -116,6 +120,7 @@ def GetPossitions(ImageLocation):
     yellow_cordinates = ContourInfo(yellowContours , 500)
     
     #End of barty Code I am unsure what you want me to return aida.
+
 
 
 GetPossitions('Refference Images/WithRedDot/Grid1.jpg')
