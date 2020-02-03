@@ -78,10 +78,8 @@ def ContourInfo(contours ,minArea):
     return output
 
 
-def GetPossitions(ImageLocation):
-    '''Takes In an Image Location and returns what the current layout of the parts is'''
-    img = cv2.imread(ImageLocation)
-    
+def TransformTheImage(img,Extension):  
+    '''Takes the image and transforms it , extension if you want to see above the grid.  ''' 
     #Red Contours
     lower_red = np.array([0,110,139])
     upper_red = np.array([10,255,255])
@@ -94,23 +92,34 @@ def GetPossitions(ImageLocation):
     Red_cordinates = [x[0] for _, x in sorted(zip(Squared,Red_cordinates), key=lambda pair: pair[0])] # like a cheaky zip for when the going gets rough.
     print(Red_cordinates)
     
-    pts_dst = np.array([[0,0] , [0,600] , [700,0] ,[700 , 600]],np.float32)
+    pts_dst = np.array([[0,Extension] , [0,600 + Extension] , [700,Extension] ,[700 , 600 + Extension]],np.float32)
     Red_cordinates = np.array(Red_cordinates,np.float32)
 
     #h, status = cv2.findHomography(pts_src, Red_cordinates)
-    h = cv2.getPerspectiveTransform(Red_cordinates,pts_dst)
-    SquareImage = cv2.warpPerspective(img, h,(700,600))
-
+    #h = cv2.getPerspectiveTransform(Red_cordinates,pts_dst)
+    h, _ = cv2.findHomography(Red_cordinates,pts_dst)
+    SquareImage = cv2.warpPerspective(img, h,(700,600 + Extension))
     ImageInlineShow(SquareImage)
-    
-    #The Blue mask
+
+    return SquareImage
+
+
+
+def GetPossitions(ImageLocation):
+    '''Takes In an Image Location and returns what the current layout of the parts is'''
+   
+
+    img = cv2.imread(ImageLocation)
+    SquareImage = TransformTheImage(img,0)
+    #If the Extra space at the top starts causing problems. 
+
+    #The Blue ask
     lower_blue = np.array([90,130,80])
     upper_blue = np.array([115,255,255])
     
     blueContours = ConvectionFunction(SquareImage,lower_blue , upper_blue)
     blue_cordinates = ContourInfo(blueContours , 500)
-    print("Blue Cordinates")
-    print(blue_cordinates)
+
 
     #The Yellow Mask
     lower_yellow = np.array([20,204,150])
