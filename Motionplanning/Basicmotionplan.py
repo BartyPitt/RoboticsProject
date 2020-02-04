@@ -53,12 +53,16 @@ class Connect4Robot():
 		# It is always good to clear your targets after planning with poses.
 		group.clear_pose_targets()
 
-	def closegrip(self , GripOveride = self.GripperSizeRetracted):
+	def closegrip(self , GripOveride = None):
+		if GripOveride == None:
+			GripOveride = self.GripperSizeRetracted
 		gripper_msg.data = [GripOveride, GripOveride]
 		gripper_publisher.publish(gripper_msg)
 		rospy.sleep(2)
 
-	def opengrip(self, GripOveride = self.GripperSizeExtended):
+	def opengrip(self, GripOveride = None):
+		if GripOveride == None:
+			GripOveride = self.GripperSizeExtended
 		gripper_msg.data = [GripOveride, GripOveride]
 		gripper_publisher.publish(gripper_msg)
 		rospy.sleep(2)
@@ -79,19 +83,19 @@ if __name__=="__main__":
 	gripper_msg = Float64MultiArray()
 	gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
 
-	PandaRobot = Connect4Robot():
-	PandaRobot.AddPosition("Neutral" , 0.3,0.4,0.7,pi,0,pi/4)
-	PandaRobot.AddPosition("DiskCollection" ,0.3,0.4,0.15,pi,0,pi/4)
-	PandaRobot.AddPosition("AboveBoard" , 0.6,0,0.7,pi,0,pi/4 )
-	PandaRobot.AddPosition("Colunm1" ,0.6,0,0.64,pi,0,pi/4 )
-
-	PandaRobot.MoveToPosition("Neutral")
-	PandaRobot.opengrip()
-	PandaRobot.MoveToPosition("DiskCollection")
-	PandaRobot.closegrip()
-	PandaRobot.MoveToPosition("Neutral")
-	PandaRobot.MoveToPosition("Aboveboard")
-	PandaRobot.MoveToPosition("Column1")
-	PandaRobot.opengrip()
-	PandaRobot.MoveToPosition("Neutral")
+	PandaRobot = Connect4Robot()
+	PandaRobot.AddPosition("Neutral" ,[ 0.3,0.4,0.7,pi,0,pi/4])
+	PandaRobot.AddPosition("DiskCollection" ,[0.3,0.4,0.15,pi,0,pi/4])
+	PandaRobot.AddPosition("AboveBoard" , [0.6,0,0.7,pi,0,pi/4])
+	PandaRobot.AddPosition("Colunm1" ,[0.6,0,0.64,pi,0,pi/4] )
+	for i in range(10):
+		PandaRobot.MoveToPosition("Neutral")
+		PandaRobot.opengrip()
+		PandaRobot.MoveToPosition("DiskCollection")
+		PandaRobot.closegrip()
+		PandaRobot.MoveToPosition("Neutral")
+		PandaRobot.MoveToPosition("AboveBoard")
+		PandaRobot.MoveToPosition("Colunm1")
+		PandaRobot.opengrip()
+		PandaRobot.MoveToPosition("Neutral")
 	
