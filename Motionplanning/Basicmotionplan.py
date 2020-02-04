@@ -10,39 +10,58 @@ from math import pi
 from std_msgs.msg import String, Float64MultiArray, MultiArrayDimension, Float64
 from moveit_commander.conversions import pose_to_list
 
+class Connect4Robot():
 
-def moveto(x,y,z,roll,pitch,yaw):
-	print("Moving to: ({},{},{}) with angle ({:.2f},{:.2f},{:.2f})".format(x,y,z,roll,pitch,yaw))
-	#Converting the roll, pitch, yaw values to values which "moveit" understands
-	quaternion = tf.transformations.quaternion_from_euler(roll, pitch, yaw)
+	def __init__(self,GripperSizeExtended = 0.05 , GripperSizeRetracted = 0): #defult positions added to maintain compability with legacy code
+		'''Sets up the Inital setup conditions for the robot.
+		TODO add in more setup conditions when more are needed.
+		'''
+		self.GripperSizeRetracted = GripperSizeRetracted
+		self.GripperSizeExtended = GripperSizeExtended
+		self.__positions__ = dict() #the __ does nothing , it just signifies that I dont want the user to be writting to the memory location directly.
+	
+	def AddPosition(self , PositionName , PositionCordinates):
+		'''A setter funciton that sets up the positions for the robot to travel to'''
+		self.__positions__[PositionName] = PositionCordinates
+	
+	def MoveToPosition(self ,Position):
+		'''Takes the name of the position and moves the robot to that position.'''
+		Cordinates = self.__positions__[Position]
+		self.moveto(*Cordinates)
 
-	pose_goal = geometry_msgs.msg.Pose() # Sets var to current pose, just to get the variable in the correct format
 
- 	# Defining target angle
-	pose_goal.orientation.x = quaternion[0]
-	pose_goal.orientation.y = quaternion[1]
-	pose_goal.orientation.z = quaternion[2]
-	pose_goal.orientation.w = quaternion[3]
-	# Defining target coordinates
-	pose_goal.position.x = x
-	pose_goal.position.y = y
-	pose_goal.position.z = z
+	def moveto(self,x,y,z,roll,pitch,yaw):
+		print("Moving to: ({},{},{}) with angle ({:.2f},{:.2f},{:.2f})".format(x,y,z,roll,pitch,yaw))
+		#Converting the roll, pitch, yaw values to values which "moveit" understands
+		quaternion = tf.transformations.quaternion_from_euler(roll, pitch, yaw)
 
-	group.set_pose_target(pose_goal) # Set new pose objective
-	plan = group.go(wait=True) # Move to new pose
-	rospy.sleep(2)
-	# It is always good to clear your targets after planning with poses.
-	group.clear_pose_targets()
+		pose_goal = geometry_msgs.msg.Pose() # Sets var to current pose, just to get the variable in the correct format
 
-def closegrip():
-	gripper_msg.data = [0, 0]
-	gripper_publisher.publish(gripper_msg)
-	rospy.sleep(2)
+		# Defining target angle
+		pose_goal.orientation.x = quaternion[0]
+		pose_goal.orientation.y = quaternion[1]
+		pose_goal.orientation.z = quaternion[2]
+		pose_goal.orientation.w = quaternion[3]
+		# Defining target coordinates
+		pose_goal.position.x = x
+		pose_goal.position.y = y
+		pose_goal.position.z = z
 
-def opengrip():
-	gripper_msg.data = [0.05, 0.05]
-	gripper_publisher.publish(gripper_msg)
-	rospy.sleep(2)
+		group.set_pose_target(pose_goal) # Set new pose objective
+		plan = group.go(wait=True) # Move to new pose
+		rospy.sleep(2)
+		# It is always good to clear your targets after planning with poses.
+		group.clear_pose_targets()
+
+	def closegrip(self , GripOveride = self.GripperSizeRetracted):
+		gripper_msg.data = [GripOveride, GripOveride]
+		gripper_publisher.publish(gripper_msg)
+		rospy.sleep(2)
+
+	def opengrip(self, GripOveride = self.GripperSizeExtended):
+		gripper_msg.data = [GripOveride, GripOveride]
+		gripper_publisher.publish(gripper_msg)
+		rospy.sleep(2)
 
 
 
@@ -60,13 +79,19 @@ if __name__=="__main__":
 	gripper_msg = Float64MultiArray()
 	gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
 
-	moveto(0.3,0.4,0.7,pi,0,pi/4) # Neutral position
-	opengrip()
-	moveto(0.3,0.4,0.15,pi,0,pi/4) # Move to disk
-	closegrip()
-	moveto(0.3,0.4,0.7,pi,0,pi/4) # Neutral position
-	moveto(0.6,0,0.7,pi,0,pi/4) # Above board
-	moveto(0.6,0,0.64,pi,0,pi/4) # Column
-	opengrip()
-	moveto(0.3,0.4,0.7,pi,0,pi/4) # Neutral position
+	PandaRobot = Connect4Robot():
+	PandaRobot.AddPosition("Neutral" , 0.3,0.4,0.7,pi,0,pi/4)
+	PandaRobot.AddPosition("DiskCollection" ,0.3,0.4,0.15,pi,0,pi/4)
+	PandaRobot.AddPosition("AboveBoard" , 0.6,0,0.7,pi,0,pi/4 )
+	PandaRobot.AddPosition("Colunm1" ,0.6,0,0.64,pi,0,pi/4 )
 
+	PandaRobot.MoveToPosition("Neutral")
+	PandaRobot.opengrip()
+	PandaRobot.MoveToPosition("DiskCollection")
+	PandaRobot.closegrip()
+	PandaRobot.MoveToPosition("Neutral")
+	PandaRobot.MoveToPosition("Aboveboard")
+	PandaRobot.MoveToPosition("Column1")
+	PandaRobot.opengrip()
+	PandaRobot.MoveToPosition("Neutral")
+	
