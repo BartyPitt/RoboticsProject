@@ -48,7 +48,15 @@ class Connect4Robot():
 		pose_goal.position.z = z
 
 		group.set_pose_target(pose_goal) # Set new pose objective
-		plan = group.go(wait=True) # Move to new pose
+		pose_goal.orientation.x = quaternion[0]
+		pose_goal.orientation.y = quaternion[1]
+		pose_goal.orientation.z = quaternion[2]
+		pose_goal.orientation.w = quaternion[3]
+		# Defining target coordinates
+		pose_goal.position.x = x
+		pose_goal.position.y = y
+		pose_goal.position.z = z
+n = group.go(wait=True) # Move to new pose
 		rospy.sleep(2)
 		# It is always good to clear your targets after planning with poses.
 		group.clear_pose_targets()
@@ -79,6 +87,8 @@ if __name__=="__main__":
 	robot = moveit_commander.RobotCommander()
 	scene = moveit_commander.PlanningSceneInterface()
 	group = moveit_commander.MoveGroupCommander("panda_arm")
+
+	
 	gripper_publisher = rospy.Publisher('/franka/gripper_position_controller/command', Float64MultiArray, queue_size=1)
 	gripper_msg = Float64MultiArray()
 	gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
@@ -90,12 +100,12 @@ if __name__=="__main__":
 	PandaRobot.AddPosition("Colunm1" ,[0.6,0,0.64,pi,0,pi/4] )
 	for i in range(10):
 		PandaRobot.MoveToPosition("Neutral")
-		PandaRobot.opengrip()
+		#PandaRobot.opengrip()
 		PandaRobot.MoveToPosition("DiskCollection")
-		PandaRobot.closegrip()
+		#PandaRobot.closegrip()
 		PandaRobot.MoveToPosition("Neutral")
 		PandaRobot.MoveToPosition("AboveBoard")
 		PandaRobot.MoveToPosition("Colunm1")
-		PandaRobot.opengrip()
+		#PandaRobot.opengrip()
 		PandaRobot.MoveToPosition("Neutral")
 	
