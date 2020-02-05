@@ -59,14 +59,15 @@ if __name__=="__main__":
 	gripper_publisher = rospy.Publisher('/franka/gripper_position_controller/command', Float64MultiArray, queue_size=1)
 	gripper_msg = Float64MultiArray()
 	gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
-
-	moveto(0.3,0.4,0.7,pi,0,pi/4) # Neutral position
-	opengrip()
-	moveto(0.3,0.4,0.15,pi,0,pi/4) # Move to disk
-	closegrip()
-	moveto(0.3,0.4,0.7,pi,0,pi/4) # Neutral position
-	moveto(0.6,0,0.7,pi,0,pi/4) # Above board
-	moveto(0.6,0,0.64,pi,0,pi/4) # Column
-	opengrip()
-	moveto(0.3,0.4,0.7,pi,0,pi/4) # Neutral position
+	
+	while True:
+		moveto(0.3,0.4,0.7,pi,0,pi/4) # Neutral position
+		opengrip()
+		moveto(0.3,0.4,0.15,pi,0,pi/4) # Move to disk
+		closegrip()
+		moveto(0.3,0.4,0.7,pi,0,pi/4) # Neutral position
+		moveto(0.6,0,0.7,pi,0,pi/4) # Above board
+		moveto(0.6,0,0.64,pi,0,pi/4) # Column
+		opengrip()
+		moveto(0.3,0.4,0.7,pi,0,pi/4) # Neutral position
 
