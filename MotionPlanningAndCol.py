@@ -87,6 +87,7 @@ if __name__=="__main__":
 
 	rospy.sleep(2)
 
+	
 	p = geometry_msgs.msg.PoseStamped()
 	p.header.frame_id = robot.get_planning_frame()
 	p.pose.position.x = 0.153745
@@ -97,8 +98,8 @@ if __name__=="__main__":
 	p.pose.orientation.z = 0.6335811
 	p.pose.orientation.w = 0.4440158
 	scene.add_mesh("Connect4", p,"Connect 4 Simple Assembly.STL")
+	"""
 	
-
 	p = geometry_msgs.msg.PoseStamped()
 	p.header.frame_id = robot.get_planning_frame()
 	p.pose.position.x = 0.
@@ -106,7 +107,9 @@ if __name__=="__main__":
 	p.pose.position.z = 0.
 	scene.add_box("table", p, (0.5, 1.5, 0.6))
 	print(scene.get_known_object_names())
+	"""
 
+	rospy.sleep(3)
 
 	PandaRobot = Connect4Robot()
 	PandaRobot.AddPosition("Neutral" ,[ 0.3,0.4,0.7,pi,0,pi/4])
