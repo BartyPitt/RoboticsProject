@@ -54,3 +54,5 @@ html_static_path = ['_static']
 
 
 extensions = ['recommonmark']
+
+master_doc = 'index'
