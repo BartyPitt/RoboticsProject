@@ -22,17 +22,17 @@ if __name__=="__main__":
 
 	# We can also print the name of the end-effector link for this group:
 	eef_link = group.get_end_effector_link()
-	print "============ End effector: %s" % eef_link
+	print ("============ End effector: %s" % eef_link)
 
 	# We can get a list of all the groups in the robot:
 	group_names = robot.get_group_names()
-	print "============ Robot Groups:", robot.get_group_names()
+	print ("============ Robot Groups:", robot.get_group_names())
 
 	# Sometimes for debugging it is useful to print the entire state of the
 	# robot:
-	print "============ Printing robot state"
-	print robot.get_current_state()
-	print ""
+	print ("============ Printing robot state")
+	print (robot.get_current_state())
+	print ("")
 
 	# We can get the joint values from the group and adjust some of the values:
 	joint_goal = group.get_current_joint_values()

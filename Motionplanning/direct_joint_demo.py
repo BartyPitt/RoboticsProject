@@ -25,9 +25,8 @@ if __name__ == '__main__':
     while not rospy.is_shutdown():
         elapsed = rospy.Time.now() - start
         delta_angle = math.pi / 16 * (math.cos(math.pi / 5 * elapsed.to_sec()))
-	gripper_msg.data = [0.05 * (1 + math.cos(math.pi / 5 * elapsed.to_sec()))/ 2,		# left gripper position (m)
-			    0.05 * (1 + math.cos(math.pi / 5 * elapsed.to_sec()))/ 2]		# right gripper position (m)
+        gripper_msg.data = [0.05 * (1 + math.cos(math.pi / 5 * elapsed.to_sec()))/ 2,0.05 * (1 + math.cos(math.pi / 5 * elapsed.to_sec()))/ 2]	# right gripper position (m)
         for i in range(7):
             publishers[i].publish(initial[i] + delta_angle)					# joint angle (radians)
-	gripper_publisher.publish(gripper_msg)
+        gripper_publisher.publish(gripper_msg)
     rate.sleep()
