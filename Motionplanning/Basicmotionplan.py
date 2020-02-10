@@ -53,6 +53,12 @@ class Connect4Robot():
 		# It is always good to clear your targets after planning with poses.
 		group.clear_pose_targets()
 
+	def movejoints(self, joint1, joint2, joint3, joint4, joint5, joint6, joint7, finger_joint1, finger_joint2):
+		'''Takes in joint angles and moves to that pose'''
+		joint_goal = [joint1, joint2, joint3, joint4, joint5, joint6, joint7, finger_joint1, finger_joint2]
+		group.go(joint_goal, wait=True)
+		group.stop()
+
 	def closegrip(self , GripOveride = None):
 		if GripOveride == None:
 			GripOveride = self.GripperSizeRetracted
@@ -87,8 +93,19 @@ if __name__=="__main__":
 	PandaRobot.AddPosition("Neutral" ,[ 0.3,0.4,0.7,pi,0,pi/4])
 	PandaRobot.AddPosition("DiskCollection" ,[0.3,0.4,0.15,pi,0,pi/4])
 	PandaRobot.AddPosition("AboveBoard" , [0.6,0,0.7,pi,0,pi/4])
-	PandaRobot.AddPosition("Colunm1" ,[0.6,0,0.64,pi,0,pi/4] )
-	for i in range(10):
+	PandaRobot.AddPosition("Column1" ,[0.6,0,0.64,pi,0,pi/4])
+
+
+	# Calibration positions
+
+	movejoints(0.5945, 0.4944, -0.09639, -1.2919, 0.0286, 1.8412, -0.2622, 3.2505e-05, 3.2505e-05)
+	sleep(5)
+	movejoints(-0.0336, 0.2612, -0.1809, -1.6607, 0.01549, 1.9535, -0.9906, 3.2505e-05, 3.2505e-05)
+	sleep(5)
+
+	# Main code
+
+	for i in range(1):
 		PandaRobot.MoveToPosition("Neutral")
 		PandaRobot.opengrip()
 		PandaRobot.MoveToPosition("DiskCollection")
