@@ -1,0 +1,3 @@
+[submodule "catkin_ws/src/arm_master"]
+	path = catkin_ws/src/arm_master
+	url = https://github.com/de3-robo/arm_master.git

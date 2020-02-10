@@ -1,0 +1,400 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Getting Started &mdash; Connect-four played by Panda Robot  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Running on Gazebo" href="gazebo_problems.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Connect-four played by Panda Robot
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gazebo_problems.html">Running on Gazebo</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#set-up">Set Up</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-project-packages">Installing Project Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-3rd-party-packages">Installing 3rd Party Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-additional-files">Installing Additional Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-code-in-gazebo-simulation">Running the Code in Gazebo simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#additional-resources">Additional Resources</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Connect-four played by Panda Robot</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Getting Started</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/getting_start.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>At a high level, to install and run this projects code on your computer or VM involves:</p>
+<ol class="arabic simple">
+<li><p>Pulling the 3 main packages (<em>arm_master</em>, <em>brick_manager</em>, <em>spawn_manager</em>) from github and building them</p></li>
+<li><p>Pulling relevant packages for interfacing with Panda robot (<em>franka_ros</em>, <em>franka_gazebo</em>)</p></li>
+<li><p>Downloading relevant support files (<em>brick.stl</em>)</p></li>
+</ol>
+<p>We will now walk step by step to go from an empty workspace to a robot that can build a wall in Gazebo</p>
+<div class="section" id="set-up">
+<h2>Set Up<a class="headerlink" href="#set-up" title="Permalink to this headline">¶</a></h2>
+<p>Before installing the project’s packages we need to make sure everyone has set up their environment set up correctly and are
+using the correct tools. We assume you have a basic knowledge of ROS.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The project was developed using <strong>ROS Kinetic running on a native Ubuntu 16.04</strong> os. It was also tested on a <strong>Ubuntu 18.04 VM
+running ROS Melodic</strong>. Given ROS’s backwards comparability it is likely that it should work on your setup as well, but having
+a similar setup is likely to minimize possible problems.</p>
+</div>
+<p>First you will need to install <code class="docutils literal notranslate"><span class="pre">catkin</span> <span class="pre">tools</span></code>. Catkin tools is the preferred build system used by the ASL lab at ETHz.
+It provides additional functionality (<code class="docutils literal notranslate"><span class="pre">catkin</span> <span class="pre">clean</span></code>) and greater control over build configs.</p>
+<p>Please refer to <a class="reference external" href="https://catkin-tools.readthedocs.io/en/latest/installing.html">documentation</a> for details on installation and usage</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The default <code class="docutils literal notranslate"><span class="pre">catkin_make</span></code> and catkin tools build systems are not compatible. It is not recommended to mix the two.
+Please make sure you only use the <code class="docutils literal notranslate"><span class="pre">catkin</span> <span class="pre">build</span></code> command to build your src.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If for some reason you end up mixing the two or the project generally begins to break down, you can manually reset it by
+deleting the <code class="docutils literal notranslate"><span class="pre">build</span></code>, <code class="docutils literal notranslate"><span class="pre">devel</span></code> and <code class="docutils literal notranslate"><span class="pre">logs</span></code> folders. Running the <code class="docutils literal notranslate"><span class="pre">catkin</span> <span class="pre">clean</span></code> command from terminal provides similar
+functionality.</p>
+</div>
+<p>We will also add some code to your <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>, to automate some of the background installation work. From your home directory, open
+<code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> with your favorite text editor:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gedit ~/.bashrc
+</pre></div>
+</div>
+<p>Copy paste the following two lines at the bottom:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> /opt/ros/kinetic/setup.bash
+<span class="nb">source</span> ~/de3_ws/devel/setup.bash
+</pre></div>
+</div>
+<p>Then close and save.</p>
+<p>Assuming you now have <code class="docutils literal notranslate"><span class="pre">catkin</span> <span class="pre">tools</span></code> installed and your <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> edited, we can begin the setup process. First create
+a new workspace and initialize it. From within your desired directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir de3_workspace
+<span class="nb">cd</span> de3_workspace
+mkdir src
+catkin init
+</pre></div>
+</div>
+<p>Build the workspace:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>catkin build
+</pre></div>
+</div>
+<p>You should now see in addition to your <code class="docutils literal notranslate"><span class="pre">src</span></code> folder, <code class="docutils literal notranslate"><span class="pre">build</span></code>, <code class="docutils literal notranslate"><span class="pre">devel</span></code> and <code class="docutils literal notranslate"><span class="pre">logs</span></code> folders.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Remember to <code class="docutils literal notranslate"><span class="pre">source</span></code> your workspace after building to let ROS know you have made changes. From your workspace directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> devel/setup.bash
+</pre></div>
+</div>
+<p>We list it here once and assume you will do it after each <code class="docutils literal notranslate"><span class="pre">catkin</span> <span class="pre">build</span></code> in this tutorial. Note that generally during
+development you will not need to re-source your workspace, especially when writing python scripts. You are required,
+however to re-source your workspace when creating new packages or messages.</p>
+<p>As a rule of thumb, if ROS commands like <code class="docutils literal notranslate"><span class="pre">roscd</span></code> aren’t working, and you are getting <code class="docutils literal notranslate"><span class="pre">module</span> <span class="pre">not</span> <span class="pre">found</span></code> errors when
+you try to import custom messages, try and also re-source your workspace.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the setup we added the following code to your <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> /opt/ros/kinetic/setup.bash
+<span class="nb">source</span> ~/de3_ws/devel/setup.bash
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> is run every time you start a new terminal session. That means instead of manually re-sourcing your workspace, you can simply close and open a new terminal,
+and ROS will update it self. If you decide to continue working in the same terminal session, however, you will need to run the aforementioned code.</p>
+</div>
+<p>Congrats, you have created and built your ROS workspace! In the <code class="docutils literal notranslate"><span class="pre">src</span></code> folder is where you now will install all relevant ROS packages.</p>
+</div>
+<div class="section" id="installing-project-packages">
+<h2>Installing Project Packages<a class="headerlink" href="#installing-project-packages" title="Permalink to this headline">¶</a></h2>
+<p>First we install the custom packages written for this project. Find links to the three packages and download using git</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/de3-robo/arm_master">arm_master</a></p></li>
+<li><p><a class="reference external" href="https://github.com/de3-robo/brick_manager">brick_manager</a></p></li>
+<li><p><a class="reference external" href="https://github.com/de3-robo/spawn_mnger">spawn_manager</a></p></li>
+<li><p><a class="reference external" href="https://github.com/de3-robo/de_msgs">de_msgs</a></p></li>
+</ul>
+<p>Example for arm master. First move into src directory</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> de3_workspace/src
+</pre></div>
+</div>
+<p>Then clone</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/de3-robo/arm_master.git
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Use <em>ctrl-shift-v</em> to paste the github link into terminal</p>
+</div>
+<p>At this point you should now have all 4 packages installed in your <code class="docutils literal notranslate"><span class="pre">workspace/src</span></code> folder. Lets build what we have
+to make sure its working</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>catkin build
+</pre></div>
+</div>
+<p>If it worked, great job!</p>
+</div>
+<div class="section" id="installing-3rd-party-packages">
+<h2>Installing 3rd Party Packages<a class="headerlink" href="#installing-3rd-party-packages" title="Permalink to this headline">¶</a></h2>
+<p>Now we will install the 3rd party packages required for path planning and interfacing with Panda. These may or may not already be installed in your computer.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here we will only install necessary packages required to run Panda in Gazebo. Refer to the <strong>Running on Real Panda</strong> section to see setup for
+running on the real Panda.</p>
+</div>
+<p>First we download <em>MoveIt</em>. Please refer to <a class="reference external" href="https://ros-planning.github.io/MoveIt_tutorials/doc/getting_started/getting_started.html">MoveIt documentation</a> for installation guide. We can also highly recommend walking
+through the <a class="reference external" href="https://ros-planning.github.io/MoveIt_tutorials/doc/move_group_python_interface/move_group_python_interface_tutorial.html">MoveIt python tutorial</a>.</p>
+<p>You will now need to install:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/de3-robo/franka_gazebo">franka_gazebo</a></p></li>
+<li><p><a class="reference external" href="https://github.com/de3-robo/panda_moveit_config">panda_moveit_config</a></p></li>
+</ul>
+<p>as before use the git command line calls and then build the package:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/de3-robo/franka_gazebo.git
+...
+
+catkin build
+</pre></div>
+</div>
+<p>Great job! your almost there.</p>
+</div>
+<div class="section" id="installing-additional-files">
+<h2>Installing Additional Files<a class="headerlink" href="#installing-additional-files" title="Permalink to this headline">¶</a></h2>
+<p>First we will install the brick which is used to place build the wall in <em>Gazebo</em>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note the brick provided on the course box folder needs to have its friction and mass parameters tuned to actually work in simulation.
+The brick we provided is not perfect, but should be sufficient as a starting point.</p>
+</div>
+<p>Navigate to your <code class="docutils literal notranslate"><span class="pre">models</span></code> folder in your <code class="docutils literal notranslate"><span class="pre">.gazebo</span></code> installation. On my computer <code class="docutils literal notranslate"><span class="pre">.gazebo</span></code> is accessible from the home directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> .gazebo/models/
+</pre></div>
+</div>
+<p>Then clone the brick into the <a class="reference external" href="https://github.com/de3-robo/Brick">brick model directory</a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/de3-robo/Brick.git
+</pre></div>
+</div>
+<p>Finally we need to install a new gazebo world and launch file with tables like those found on level 3 in the Dyson School.
+Download the code from the following <a class="reference external" href="https://github.com/de3-robo/walltableworldlaunch">table repo</a> into your computer:</p>
+<ul class="simple">
+<li><p>Move file <code class="docutils literal notranslate"><span class="pre">wall_table_world.launch</span></code> into <code class="docutils literal notranslate"><span class="pre">/opt/ros/kinetic/share/gazebo_ros/launch</span></code> directory. Make sure to enter in your correct ROS version.</p></li>
+<li><p>Move file <code class="docutils literal notranslate"><span class="pre">wall_table.world</span></code> into <code class="docutils literal notranslate"><span class="pre">/usr/share/gazebo-9/worlds</span></code> directory.</p></li>
+</ul>
+<p>If you made it this far, you’re doing great! Lets run the code now.</p>
+</div>
+<div class="section" id="running-the-code-in-gazebo-simulation">
+<h2>Running the Code in Gazebo simulation<a class="headerlink" href="#running-the-code-in-gazebo-simulation" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This assumes that you already have Gazebo installed within Ubuntu / virtual machine.</p>
+</div>
+<p>We will now go through how to launch the actual simulation in Gazebo, which is a virtual simulation with laws of physics
+applied to objects within the environment, such as the Panda arm and bricks. This allows for the code to be safely tested
+in an environment with no risk of physical damage, before it is actually run on a real robot.</p>
+<p>All the code can be run by 3 launch files located in the <code class="docutils literal notranslate"><span class="pre">arm_master</span></code> package. <strong>Make sure to run the code in order listed.</strong>
+In 3 separate terminals <em>copy-paste</em> the following commands:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch arm_master panda_one_brick.launch
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This part is essential. The code will not work if you do not have the <em>MoveIt</em> motion planner module activated in rviz. To activate, click on
+<em>add</em> at the bottom of the display and then add the motion planning module. Use <em>crtl-s</em> to save the rviz config. Refer to installation video for
+more details.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Wait for each launch file to fully load before launching the next one.</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch arm_master sim.launch
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch arm_master light.launch
+</pre></div>
+</div>
+</div>
+<div class="section" id="additional-resources">
+<h2>Additional Resources<a class="headerlink" href="#additional-resources" title="Permalink to this headline">¶</a></h2>
+<p>Great <a class="reference external" href="http://www.rsl.ethz.ch/education-students/lectures/ros.html">intro to ROS</a> by ETHz Autonomous Systems Lab</p>
+<p>API reference for <a class="reference external" href="http://docs.ros.org/jade/api/moveit_commander/html/classmoveit__commander_1_1move__group_1_1MoveGroupCommander.html">python movegroup interface</a>, (has all the useful command you need for using MoveIt with python):</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="gazebo_problems.html" class="btn btn-neutral float-left" title="Running on Gazebo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Medad Newman, Barty Pitt, Josh Moody, Aida Manzano Kharman, Felix Murray, Mia Taicher
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
