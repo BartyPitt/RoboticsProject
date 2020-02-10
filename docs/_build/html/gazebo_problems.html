@@ -1,0 +1,316 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Running on Gazebo &mdash; Connect-four played by Panda Robot  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Getting Started" href="getting_start.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Connect-four played by Panda Robot
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_start.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Running on Gazebo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#arm-experiencing-vibration-jittering">Arm experiencing vibration / ‘jittering’</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#brick-model-friction-issues">Brick model friction issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gripper-friction-friction-issues">Gripper Friction friction issues</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Connect-four played by Panda Robot</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Running on Gazebo</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/gazebo_problems.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="running-on-gazebo">
+<h1>Running on Gazebo<a class="headerlink" href="#running-on-gazebo" title="Permalink to this headline">¶</a></h1>
+<p><em>“Failing to plan is planning to fail”</em></p>
+<p><em>- Alan Lakein</em></p>
+<p>Before testing our code on the real Panda robot, we ran it on on a digital simulation, to validate that it would function
+as expected. This was incredibly helpful as using a physically moving robot with unknown risks / movements would be a major risk.</p>
+<p>In theory simulation works well, but in practice there were many problems that were encountered by the team when attempting to perform simulations in Gazebo.</p>
+<div class="section" id="arm-experiencing-vibration-jittering">
+<h2>Arm experiencing vibration / ‘jittering’<a class="headerlink" href="#arm-experiencing-vibration-jittering" title="Permalink to this headline">¶</a></h2>
+<p>This was mostly likely due to the fact that the PID settings for the robot’s joints were not well tuned. Therefore,
+this was investigated alongside the Gazebo simulations.</p>
+<p>The ‘default’ PID values for the robot arm can be configured in <code class="docutils literal notranslate"><span class="pre">franka_gazebo/config/default.yaml</span></code> within the
+<code class="docutils literal notranslate"><span class="pre">franka_gazebo</span></code> ROS package.</p>
+<p>During the simulation, a convenient graphical interface with sliders can be utilised to finetune PID values, by
+running the following in another terminal:
+<code class="docutils literal notranslate"><span class="pre">rosrun</span> <span class="pre">rqt_reconfigure</span> <span class="pre">rqt_reconfigure</span></code></p>
+<p>Once the <code class="docutils literal notranslate"><span class="pre">rqt_reconfigure</span></code> window is open, the slider interfaces can be found within <code class="docutils literal notranslate"><span class="pre">gazebo_ros_control/pid_gains</span></code>
+in the menu on the left hand side.</p>
+<div class="align-center figure">
+<img alt="_static/gazebo_pid_interface.png" src="_static/gazebo_pid_interface.png" />
+</div>
+<p>In order to fix this issue we took a number of approaches. In the first case we simply let the robot run and visually tuned the PID values
+using the <code class="docutils literal notranslate"><span class="pre">rqt_reconfigure</span></code> window. It soon became clear that this would be impractical for tuning all 7 joints.</p>
+<p>We decided to take a more disciplined approach and tune each joint in isolation. For this process we worked from the end effector down to the robot
+base. To start we locked all the joints bellow the joint in question and set the joints <em>PID</em> constants to zero. We would then send a joint signal in a characteristic square wave to visually
+characterize the joint behavior to perturbations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sq_wave</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="n">const</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="n">t</span>
+    <span class="n">delta_angle</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">const</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">const</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">const</span><span class="p">)</span><span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">7</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="n">const</span><span class="p">))</span>
+    <span class="c1"># delta_angle = np.sin(np.pi*f*t)</span>
+    <span class="k">return</span> <span class="n">delta_angle</span>
+</pre></div>
+</div>
+<p><em>P</em> would be increased until the joint had minimal overshoot and small oscillations. We would then add
+sufficient <em>D</em> till the joint was critically damped. This worked for the first 2 joints but the maximum <em>P</em> constant in the
+dynamic tuning window was limited and were not able to continue increasing <em>P</em> to a suitable level for the lower larger joints. The reason for requiring such a high <em>P</em> was most likely
+due to modelling errors in the physical simulation</p>
+<p>Ultimately we returned to the default values found in <code class="docutils literal notranslate"><span class="pre">franka_gazebo</span></code> package. Using these values as a starting point we added a small amount of
+<em>I</em> gain because we noticed that the end effector had trouble converging on the commanded position. The resulting performance was sufficiently to accurate
+build a 5 high wall.</p>
+</div>
+<div class="section" id="brick-model-friction-issues">
+<h2>Brick model friction issues<a class="headerlink" href="#brick-model-friction-issues" title="Permalink to this headline">¶</a></h2>
+<p>This was a major issue in simulations, as otherwise the Panda’s gripper would fail to pick up a brick and carry it in
+its grip effectively.</p>
+<p>The solution was to edit the brick object file and change its parameters regarding surface friction.</p>
+<p>The file could be located in the following filepath: <code class="docutils literal notranslate"><span class="pre">~/.gazebo/models/Brick/model-1_4.sdf</span></code></p>
+<p>With the model file <code class="docutils literal notranslate"><span class="pre">model-1_4.sdf</span></code>, the following were changed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">surface</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">friction</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">ode</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">mu</span><span class="o">&gt;</span><span class="mi">100</span><span class="o">&lt;/</span><span class="n">mu</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">mu2</span><span class="o">&gt;</span><span class="mi">50</span><span class="o">&lt;/</span><span class="n">mu2</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">fdir1</span><span class="o">&gt;</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span><span class="o">&lt;/</span><span class="n">fdir1</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">slip1</span><span class="o">&gt;</span><span class="mf">0.0</span><span class="o">&lt;/</span><span class="n">slip1</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">slip2</span><span class="o">&gt;</span><span class="mf">0.0</span><span class="o">&lt;/</span><span class="n">slip2</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">ode</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">friction</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">contact</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">ode</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">kp</span><span class="o">&gt;</span><span class="mf">100000.000000</span><span class="o">&lt;/</span><span class="n">kp</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">kd</span><span class="o">&gt;</span><span class="mf">10.00000</span><span class="o">&lt;/</span><span class="n">kd</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">max_vel</span><span class="o">&gt;</span><span class="mf">2.000000</span><span class="o">&lt;/</span><span class="n">max_vel</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">min_depth</span><span class="o">&gt;</span><span class="mf">0.0001</span><span class="o">&lt;/</span><span class="n">min_depth</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">ode</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">contact</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">surface</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>We increased <code class="docutils literal notranslate"><span class="pre">&lt;mu&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;mu2&gt;</span></code> parameters. These are the static friction co-efficients used by the physics engine.</p>
+<p>We increased <code class="docutils literal notranslate"><span class="pre">&lt;kp&gt;</span></code> to increase the stiffness of the collision and increased <code class="docutils literal notranslate"><span class="pre">&lt;kd&gt;</span></code> to add dampening.</p>
+<p>Perhaps most importantly we set <code class="docutils literal notranslate"><span class="pre">&lt;max_vel&gt;</span></code> to a value larger then 0, and <code class="docutils literal notranslate"><span class="pre">&lt;min_depth&gt;</span></code> to a reasonable value. All bodies in Gazebo are soft, so when they collide there is
+always some penetration past the surface boundary line. This is motion is counteracted a spring force. <code class="docutils literal notranslate"><span class="pre">&lt;max_vel&gt;</span></code> is the maximum velocity that an object can reach as
+a result of that spring force. In earlier testing when we had wrongly tuned this parameter to zero, bricks would sink through the floor and continuing to vibrate indefinitely
+upon being dropped. This <em>unrealistic</em> value seems to break the physics engine.</p>
+<p>The total sum of these improvements allowed the brick to be grasped more effectively, and were less likely to slip from Panda’s
+gripper.</p>
+</div>
+<div class="section" id="gripper-friction-friction-issues">
+<h2>Gripper Friction friction issues<a class="headerlink" href="#gripper-friction-friction-issues" title="Permalink to this headline">¶</a></h2>
+<p>Friction is a function of both surfaces in contact. Thus it wasn’t enough to just fix the brick, we also needed to consider the gripper.</p>
+<p>Before considering fiction, however, we first addressed the fact that the gripper didn’t open wide enough to pick up the brick. We fixed this by editing the <code class="docutils literal notranslate"><span class="pre">hand.xacro</span></code> file in the
+<code class="docutils literal notranslate"><span class="pre">franka_gazebo</span></code> package. Here we increased the maximum joint limit to give the gripper a 0.12 m span:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">limit</span> <span class="n">effort</span><span class="o">=</span><span class="s2">&quot;400&quot;</span> <span class="n">lower</span><span class="o">=</span><span class="s2">&quot;-0.001&quot;</span> <span class="n">upper</span><span class="o">=</span><span class="s2">&quot;0.06&quot;</span> <span class="n">velocity</span><span class="o">=</span><span class="s2">&quot;0.1&quot;</span><span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>Knowing that friction is a function of normal force, we increased the maximum allowable effort here as well. Never the less, while the gripper could
+now open wide enough to pick up the brick, there wasn’t enough friction to hold on.</p>
+<p>Specifically we noticed that the gripper seemed to lack torsional friction. When it picked up the brick directly around the center of mass, the brick would
+stay in longer. However, when it pick it up at an offset it would quickly rotate out.</p>
+<p>In order to fix this issue we changed the torsion friction parameters of the gripper. Again in the <code class="docutils literal notranslate"><span class="pre">hand.xacro</span></code> file we added the following code to
+overwrite the default:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;gazebo reference=&quot;${ns}_leftfinger&quot;&gt;
+  &lt;mu1&gt;100&lt;/mu1&gt;
+    &lt;mu2&gt;100&lt;/mu2&gt;
+    &lt;kp&gt;100000&lt;/kp&gt;
+    &lt;!-- &lt;fdir1&gt;0 0 0&lt;/fdir1&gt; --&gt;
+    &lt;collision name=&quot;${ns}__leftfinger_collision&quot;&gt;
+  &lt;surface&gt;
+    &lt;friction&gt;
+      &lt;torsional&gt;
+        &lt;coefficient&gt;100&lt;/coefficient&gt;
+        &lt;use_patch_radius&gt;true&lt;/use_patch_radius&gt;
+        &lt;patch_radius&gt;0.1&lt;/patch_radius&gt;
+        &lt;surface_radius&gt;0.1&lt;/surface_radius&gt;
+</pre></div>
+</div>
+<p>While extremely optimistic with the values we set for the torsional friction - after this change, the gripper was able to consistently pick up the brick.
+These changes didn’t necessary reflect reality, but we felt validated as we knew in practice the brick would not fall out of the gripper. This belief was
+eventually confirmed when we ran our simulated robot on the real Franka Panda.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="getting_start.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Medad Newman, Barty Pitt, Josh Moody, Aida Manzano Kharman, Felix Murray, Mia Taicher
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

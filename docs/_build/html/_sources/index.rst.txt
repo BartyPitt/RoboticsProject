@@ -3,13 +3,16 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to connect_four_panda_robot's documentation!
+How to teach your robot to play connect four
 ====================================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   
 
+   getting_start
+   gazebo_problems
 
 
 Indices and tables
