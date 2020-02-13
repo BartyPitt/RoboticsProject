@@ -37,9 +37,27 @@ Pseudocode
 '''
 Code
 '''
+
+
+
 # Import required python files
 from c4_bot_functions import *
-from c4class import Connect4Robot
+from c4_class import Connect4Robot
+
+# Import libraries
+
+import sys
+import copy
+import rospy
+import moveit_commander
+import moveit_msgs.msg
+import geometry_msgs.msg
+import tf
+from time import sleep
+from math import pi
+from std_msgs.msg import String, Float64MultiArray, MultiArrayDimension, Float64
+from moveit_commander.conversions import pose_to_list
+
 
 # Set up Franka Robot
 moveit_commander.roscpp_initialize(sys.argv)
@@ -54,6 +72,25 @@ gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
 display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',moveit_msgs.msg.DisplayTrajectory,queue_size=20)
 
 rospy.sleep(2)
+
+
+# Add positions and relative names
+PandaRobot = Connect4Robot()
+PandaRobot.AddPosition("Neutral" , [0.3, 0.4, 0.7, pi, 0, pi/4])
+PandaRobot.AddPosition("DiskCollection" , [0.3, 0.4, 0.15, pi, 0, pi/4])
+PandaRobot.AddPosition("AboveBoard" , [0.6, 0, 0.7, pi, 0, pi/4])
+PandaRobot.AddPosition("Column1" , [0.6, 0, col_dist, pi, 0, pi/4])
+# Need to add coordinates of other columns here
+
+
+
+# Calibration positions
+PandaRobot.closegrip()
+PandaRobot.movejoints(0.5945, 0.4944, -0.09639, -1.2919, 0.0286, 1.8412, -0.2622)
+sleep(5)
+PandaRobot.movejoints(-0.0336, 0.2612, -0.1809, -1.6607, 0.01549, 1.9535, -0.9906)
+sleep(5)
+
 
 # Get object frames
 p = geometry_msgs.msg.PoseStamped()
@@ -116,13 +153,6 @@ while not game_over:
             row = get_next_open_row(board, col)
             drop_piece(board, row, col, BOT_PIECE)
 
-            # Add positions and relative names
-            PandaRobot = Connect4Robot()
-            PandaRobot.AddPosition("Neutral" , [0.3, 0.4, 0.7, pi, 0, pi/4])
-            PandaRobot.AddPosition("DiskCollection" , [0.3, 0.4, 0.15, pi, 0, pi/4])
-            PandaRobot.AddPosition("AboveBoard" , [0.6, 0, 0.7, pi, 0, pi/4])
-            PandaRobot.AddPosition("ChosenColumn" , [0.6, 0, col_dist, pi, 0, pi/4])
-        
             # Execute motion sequence
             PandaRobot.MoveToPosition("Neutral")
             PandaRobot.opengrip()
