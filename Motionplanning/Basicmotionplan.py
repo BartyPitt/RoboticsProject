@@ -110,6 +110,24 @@ if __name__=="__main__":
 	gripper_msg = Float64MultiArray()
 	gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
 
+
+	display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',moveit_msgs.msg.DisplayTrajectory,queue_size=20)
+
+	rospy.sleep(2)
+	
+	p = geometry_msgs.msg.PoseStamped()
+	p.header.frame_id = robot.get_planning_frame()
+	p.pose.position.x = 0.153745
+	p.pose.position.y = -0.301298
+	p.pose.position.z = 0.
+	p.pose.orientation.x =  0.6335811
+	p.pose.orientation.y = 0
+	p.pose.orientation.z = 0.6335811
+	p.pose.orientation.w = 0.4440158
+	scene.add_mesh("Connect4", p,"Connect 4 Simple Assembly.STL")
+
+	rospy.sleep(3)
+
 	PandaRobot = Connect4Robot()
 	PandaRobot.AddPosition("Neutral" ,[ 0.3,0.4,0.7,pi,0,pi/4])
 	PandaRobot.AddPosition("DiskCollection" ,[0.3,0.4,0.15,pi,0,pi/4])
