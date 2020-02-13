@@ -124,7 +124,7 @@ if __name__=="__main__":
 	p.pose.orientation.y = 0
 	p.pose.orientation.z = 0.6335811
 	p.pose.orientation.w = 0.4440158
-	scene.add_mesh("Connect4", p,"Connect 4 Simple Assembly.STL")
+	scene.add_mesh("Connect4", p,"connect4.STL")
 
 	rospy.sleep(3)
 
@@ -137,9 +137,9 @@ if __name__=="__main__":
 
 	# Calibration positions
 	PandaRobot.closegrip()
-	PandaRobot.movejoints(0.5945, 0.4944, -0.09639, -1.2919, 0.0286, 1.8412, -0.2622)
+	PandaRobot.moveto(0.62355, 0.347412681245, 0.65, pi,0,pi/4)
 	sleep(5)
-	PandaRobot.movejoints(-0.0336, 0.2612, -0.1809, -1.6607, 0.01549, 1.9535, -0.9906)
+	PandaRobot.moveto(0.62355, -0.118074733645, 0.65, pi,0,pi/4)
 	sleep(5)
 
 	# Main code

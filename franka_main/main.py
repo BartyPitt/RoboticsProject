@@ -76,38 +76,36 @@ PandaRobot = Connect4Robot()
 PandaRobot.AddPosition("Neutral" , [0.3, 0.4, 0.7, pi, 0, pi/4])
 PandaRobot.AddPosition("DiskCollection" , [0.3, 0.4, 0.15, pi, 0, pi/4])
 PandaRobot.AddPosition("AboveBoard" , [0.6, 0, 0.7, pi, 0, pi/4])
-PandaRobot.AddPosition("1" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
-PandaRobot.AddPosition("2" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
-PandaRobot.AddPosition("3" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
-PandaRobot.AddPosition("4" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
-PandaRobot.AddPosition("5" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
-PandaRobot.AddPosition("6" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
-PandaRobot.AddPosition("7" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
-
-# Calculate the distance from the edge of the board to the column chosen by the bot
-    #col_dist = 0.53 + (col+1 * 0.78)
+PandaRobot.AddPosition("1" , [0.624, 0.347, 0.65, pi,0,pi/4]) # Not the right numbers
+PandaRobot.AddPosition("2" , [0.6, 0.269, 0.7, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("3" , [0.6, 0.191, 0.7, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("4" , [0.6, 0.113, 0.7, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("5" , [0.6, 0.035, 0.7, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("6" , [0.6, -0.043, 0.7, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("7" , [0.624, -0.118, 0.65, pi,0,pi/4]) # Not the right numbers
 
 # Calibration positions
 PandaRobot.closegrip()
-PandaRobot.movejoints(0.5945, 0.4944, -0.09639, -1.2919, 0.0286, 1.8412, -0.2622)
+PandaRobot.moveto(0.624, 0.347, 0.65, pi,0,pi/4)
 sleep(5)
-PandaRobot.movejoints(-0.0336, 0.2612, -0.1809, -1.6607, 0.01549, 1.9535, -0.9906)
+PandaRobot.moveto(0.624, -0.118, 0.65, pi,0,pi/4)
 sleep(5)
 
 
-# Get object frames
-p = geometry_msgs.msg.PoseStamped()
-p.header.frame_id = robot.get_planning_frame()
-p.pose.position.x = 0.153745
-p.pose.position.y = -0.301298
-p.pose.position.z = 0.
-p.pose.orientation.x =  0.6335811
-p.pose.orientation.y = 0
-p.pose.orientation.z = 0.6335811
-p.pose.orientation.w = 0.4440158
-scene.add_mesh("Connect4", p,"connect4.STL")
 
-rospy.sleep(3)
+# # Get object frames
+# p = geometry_msgs.msg.PoseStamped()
+# p.header.frame_id = robot.get_planning_frame()
+# p.pose.position.x = 0.153745
+# p.pose.position.y = -0.301298
+# p.pose.position.z = 0.
+# p.pose.orientation.x =  0.6335811
+# p.pose.orientation.y = 0
+# p.pose.orientation.z = 0.6335811
+# p.pose.orientation.w = 0.4440158
+# scene.add_mesh("Connect4", p,"connect4.STL")
+
+# rospy.sleep(3)
 
 # Set static variables
 PLAYER = 0
@@ -161,7 +159,7 @@ while not game_over:
             PandaRobot.closegrip()
             PandaRobot.MoveToPosition("Neutral")
             PandaRobot.MoveToPosition("AboveBoard")
-            PandaRobot.MoveToPosition("ChosenColumn")
+            PandaRobot.MoveToPosition(str(col-1))
             PandaRobot.opengrip()
             PandaRobot.MoveToPosition("Neutral")
 
