@@ -6,6 +6,7 @@ import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
 import tf
+from time import sleep
 from math import pi
 from std_msgs.msg import String, Float64MultiArray, MultiArrayDimension, Float64
 from moveit_commander.conversions import pose_to_list
@@ -53,25 +54,45 @@ class Connect4Robot():
 		# It is always good to clear your targets after planning with poses.
 		group.clear_pose_targets()
 
-	def movejoints(self, joint1, joint2, joint3, joint4, joint5, joint6, joint7, finger_joint1, finger_joint2):
+	def movejoints(self, joint1, joint2, joint3, joint4, joint5, joint6, joint7):
 		'''Takes in joint angles and moves to that pose'''
-		joint_goal = [joint1, joint2, joint3, joint4, joint5, joint6, joint7, finger_joint1, finger_joint2]
+		joint_goal = group.get_current_joint_values()
+		joint_goal = [joint1, joint2, joint3, joint4, joint5, joint6, joint7]
 		group.go(joint_goal, wait=True)
 		group.stop()
 
-	def closegrip(self , GripOveride = None):
-		if GripOveride == None:
-			GripOveride = self.GripperSizeRetracted
-		gripper_msg.data = [GripOveride, GripOveride]
-		gripper_publisher.publish(gripper_msg)
-		rospy.sleep(2)
 
-	def opengrip(self, GripOveride = None):
-		if GripOveride == None:
-			GripOveride = self.GripperSizeExtended
-		gripper_msg.data = [GripOveride, GripOveride]
-		gripper_publisher.publish(gripper_msg)
-		rospy.sleep(2)
+	def closegrip(self, simulation=True, GripOveride=None):
+	    if simulation:
+			if GripOveride == None:
+				GripOveride = self.GripperSizeRetracted
+			gripper_msg.data = [GripOveride, GripOveride]
+			gripper_publisher.publish(gripper_msg)
+			rospy.sleep(2)
+	    else:
+	        group2 = moveit_commander.MoveGroupCommander("hand")
+	        joint_goal = group2.get_current_joint_values()
+	        joint_goal[0] = self.GripperSizeRetracted
+	        joint_goal[1] = self.GripperSizeRetracted
+
+	        group2.go(joint_goal, wait=True)
+	        group2.stop()
+
+	def opengrip(self, simulation=True, GripOveride=None):
+	    if simulation:
+			if GripOveride == None:
+				GripOveride = self.GripperSizeExtended
+			gripper_msg.data = [GripOveride, GripOveride]
+			gripper_publisher.publish(gripper_msg)
+			rospy.sleep(2)
+	    else:
+	        group2 = moveit_commander.MoveGroupCommander("hand")
+	        joint_goal = group2.get_current_joint_values()
+	        joint_goal[0] = self.GripperSizeExtended
+	        joint_goal[1] = self.GripperSizeExtended
+
+	        group2.go(joint_goal, wait=True)
+	        group2.stop()
 
 
 
@@ -97,10 +118,10 @@ if __name__=="__main__":
 
 
 	# Calibration positions
-
-	movejoints(0.5945, 0.4944, -0.09639, -1.2919, 0.0286, 1.8412, -0.2622, 3.2505e-05, 3.2505e-05)
+	PandaRobot.closegrip()
+	PandaRobot.movejoints(0.5945, 0.4944, -0.09639, -1.2919, 0.0286, 1.8412, -0.2622)
 	sleep(5)
-	movejoints(-0.0336, 0.2612, -0.1809, -1.6607, 0.01549, 1.9535, -0.9906, 3.2505e-05, 3.2505e-05)
+	PandaRobot.movejoints(-0.0336, 0.2612, -0.1809, -1.6607, 0.01549, 1.9535, -0.9906)
 	sleep(5)
 
 	# Main code
@@ -112,7 +133,7 @@ if __name__=="__main__":
 		PandaRobot.closegrip()
 		PandaRobot.MoveToPosition("Neutral")
 		PandaRobot.MoveToPosition("AboveBoard")
-		PandaRobot.MoveToPosition("Colunm1")
+		PandaRobot.MoveToPosition("Column1")
 		PandaRobot.opengrip()
 		PandaRobot.MoveToPosition("Neutral")
 	
