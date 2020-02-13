@@ -76,10 +76,16 @@ PandaRobot = Connect4Robot()
 PandaRobot.AddPosition("Neutral" , [0.3, 0.4, 0.7, pi, 0, pi/4])
 PandaRobot.AddPosition("DiskCollection" , [0.3, 0.4, 0.15, pi, 0, pi/4])
 PandaRobot.AddPosition("AboveBoard" , [0.6, 0, 0.7, pi, 0, pi/4])
-PandaRobot.AddPosition("Column1" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
-# Need to add coordinates of other columns here
+PandaRobot.AddPosition("1" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("2" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("3" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("4" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("5" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("6" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("7" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
 
-
+# Calculate the distance from the edge of the board to the column chosen by the bot
+    #col_dist = 0.53 + (col+1 * 0.78)
 
 # Calibration positions
 PandaRobot.closegrip()
@@ -143,8 +149,6 @@ while not game_over:
         # Ask Ro-Bot (Player 2) to pick the best move based on possible opponent future moves
         col, minimax_score = minimax(board, 4, -9999999, 9999999, True) # A higher value takes longer to run
 
-        # Calculate the distance from the edge of the board to the column chosen by the bot
-        col_dist = 0.53 + (col+1 * 0.78)
 
         if is_valid_location(board, col):
             row = get_next_open_row(board, col)
