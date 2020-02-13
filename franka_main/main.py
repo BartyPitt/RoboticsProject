@@ -77,19 +77,21 @@ PandaRobot.AddPosition("Neutral" , [0.3, 0.4, 0.7, pi, 0, pi/4])
 PandaRobot.AddPosition("DiskCollection" , [0.3, 0.4, 0.15, pi, 0, pi/4])
 PandaRobot.AddPosition("AboveBoard" , [0.6, 0, 0.7, pi, 0, pi/4])
 PandaRobot.AddPosition("1" , [0.624, 0.347, 0.65, pi,0,pi/4]) # Not the right numbers
-PandaRobot.AddPosition("2" , [0.6, 0.269, 0.7, pi, 0, pi/4]) # Not the right numbers
-PandaRobot.AddPosition("3" , [0.6, 0.191, 0.7, pi, 0, pi/4]) # Not the right numbers
-PandaRobot.AddPosition("4" , [0.6, 0.113, 0.7, pi, 0, pi/4]) # Not the right numbers
-PandaRobot.AddPosition("5" , [0.6, 0.035, 0.7, pi, 0, pi/4]) # Not the right numbers
-PandaRobot.AddPosition("6" , [0.6, -0.043, 0.7, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("2" , [0.6, 0.269, 0.65, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("3" , [0.6, 0.191, 0.65, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("4" , [0.6, 0.113, 0.65, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("5" , [0.6, 0.035, 0.65, pi, 0, pi/4]) # Not the right numbers
+PandaRobot.AddPosition("6" , [0.6, -0.043, 0.65, pi, 0, pi/4]) # Not the right numbers
 PandaRobot.AddPosition("7" , [0.624, -0.118, 0.65, pi,0,pi/4]) # Not the right numbers
 
 # Calibration positions
 PandaRobot.closegrip()
-PandaRobot.moveto(0.624, 0.347, 0.65, pi,0,pi/4)
-sleep(5)
-PandaRobot.moveto(0.624, -0.118, 0.65, pi,0,pi/4)
-sleep(5)
+PandaRobot.moveto(0.5, 0.347412681245, 0.65, pi,0,pi/4)
+print('Now in the 1st calibration position')
+sleep(2)
+PandaRobot.moveto(0.5, -0.118074733645, 0.65, pi,0,pi/4)
+print('Now in the 2nd calibration position')
+sleep(2)
 
 
 

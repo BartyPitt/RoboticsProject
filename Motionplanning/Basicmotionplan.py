@@ -13,7 +13,7 @@ from moveit_commander.conversions import pose_to_list
 
 class Connect4Robot():
 
-	def __init__(self,GripperSizeExtended = 0.05 , GripperSizeRetracted = 0): #defult positions added to maintain compability with legacy code
+	def __init__(self,GripperSizeExtended = 0.03 , GripperSizeRetracted = 0): #defult positions added to maintain compability with legacy code
 		'''Sets up the Inital setup conditions for the robot.
 		TODO add in more setup conditions when more are needed.
 		'''
@@ -60,6 +60,29 @@ class Connect4Robot():
 		joint_goal = [joint1, joint2, joint3, joint4, joint5, joint6, joint7]
 		group.go(joint_goal, wait=True)
 		group.stop()
+
+	def goto(self,x,y,z):
+		'''Function which moves to a position by using waypoints'''
+
+		waypoints = []
+
+		# start with the current pose
+		waypoints.append(group.get_current_pose().pose)
+
+		# now definte the target position
+		target = geometry_msgs.msg.Pose()
+		target.position.x = x
+		target.position.y = y
+		target.position.z = z
+		target.orientation.x = waypoints[0].orientation.x #Will need to change these so we can vary the orientation as well
+		target.orientation.y = waypoints[0].orientation.y
+		target.orientation.z = waypoints[0].orientation.z
+		target.orientation.w = waypoints[0].orientation.w
+		waypoints.append(copy.deepcopy(target)) #add target to desired positions
+
+		(plan, fraction) = group.compute_cartesian_path( waypoints, 0.01, 1) # 0.01 is the interpolation distance (1cm), 0 is the jump threshold.
+		group.execute(plan, wait = True) # Carry out the motion plan
+
 
 
 	def closegrip(self, simulation=True, GripOveride=None):
@@ -135,23 +158,27 @@ if __name__=="__main__":
 	PandaRobot.AddPosition("Column1" ,[0.6,0,0.64,pi,0,pi/4])
 
 
-	# Calibration positions
+	# # Calibration positions
 	PandaRobot.closegrip()
-	PandaRobot.moveto(0.62355, 0.347412681245, 0.65, pi,0,pi/4)
-	sleep(5)
-	PandaRobot.moveto(0.62355, -0.118074733645, 0.65, pi,0,pi/4)
-	sleep(5)
+	PandaRobot.moveto(0.5, 0.347412681245, 0.65, pi,0,pi/4)
+	print('Now in the 1st calibration position')
+	sleep(2)
+	PandaRobot.moveto(0.5, -0.118074733645, 0.65, pi,0,pi/4)
+	print('Now in the 2nd calibration position')
+	sleep(2)
 
-	# Main code
+	PandaRobot.goto(0.1, 0.4, 0.3) # Testing milestone function
 
-	for i in range(1):
-		PandaRobot.MoveToPosition("Neutral")
-		PandaRobot.opengrip()
-		PandaRobot.MoveToPosition("DiskCollection")
-		PandaRobot.closegrip()
-		PandaRobot.MoveToPosition("Neutral")
-		PandaRobot.MoveToPosition("AboveBoard")
-		PandaRobot.MoveToPosition("Column1")
-		PandaRobot.opengrip()
-		PandaRobot.MoveToPosition("Neutral")
+	# # Main code
+
+	# for i in range(1):
+	# 	PandaRobot.MoveToPosition("Neutral")
+	# 	PandaRobot.opengrip()
+	# 	PandaRobot.MoveToPosition("DiskCollection")
+	# 	PandaRobot.closegrip()
+	# 	PandaRobot.MoveToPosition("Neutral")
+	# 	PandaRobot.MoveToPosition("AboveBoard")
+	# 	PandaRobot.MoveToPosition("Column1")
+	# 	PandaRobot.opengrip()
+	# 	PandaRobot.MoveToPosition("Neutral")
 	

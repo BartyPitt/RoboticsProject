@@ -8,7 +8,7 @@ import moveit_commander
 
 class Connect4Robot():
 
-	def __init__(self,GripperSizeExtended = 0.05 , GripperSizeRetracted = 0, group = moveit_commander.MoveGroupCommander("panda_arm")): #defult positions added to maintain compability with legacy code
+	def __init__(self,GripperSizeExtended = 0.03 , GripperSizeRetracted = 0, group = moveit_commander.MoveGroupCommander("panda_arm")): #defult positions added to maintain compability with legacy code
 		'''Sets up the Inital setup conditions for the robot.
 		TODO add in more setup conditions when more are needed.
 		'''
