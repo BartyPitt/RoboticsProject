@@ -64,10 +64,7 @@ moveit_commander.roscpp_initialize(sys.argv)
 rospy.init_node('panda_demo', anonymous=True)
 robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface()
-group = moveit_commander.MoveGroupCommander("panda_arm")
-gripper_publisher = rospy.Publisher('/franka/gripper_position_controller/command', Float64MultiArray, queue_size=1)
-gripper_msg = Float64MultiArray()
-gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
+
 
 display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',moveit_msgs.msg.DisplayTrajectory,queue_size=20)
 
@@ -79,7 +76,7 @@ PandaRobot = Connect4Robot()
 PandaRobot.AddPosition("Neutral" , [0.3, 0.4, 0.7, pi, 0, pi/4])
 PandaRobot.AddPosition("DiskCollection" , [0.3, 0.4, 0.15, pi, 0, pi/4])
 PandaRobot.AddPosition("AboveBoard" , [0.6, 0, 0.7, pi, 0, pi/4])
-PandaRobot.AddPosition("Column1" , [0.6, 0, col_dist, pi, 0, pi/4])
+PandaRobot.AddPosition("Column1" , [0.6, 0, 0.7, pi, 0, pi/4]) # Not the right numbers
 # Need to add coordinates of other columns here
 
 
@@ -102,7 +99,7 @@ p.pose.orientation.x =  0.6335811
 p.pose.orientation.y = 0
 p.pose.orientation.z = 0.6335811
 p.pose.orientation.w = 0.4440158
-scene.add_mesh("Connect4", p,"Connect 4 Simple Assembly.STL")
+scene.add_mesh("Connect4", p,"connect4.STL")
 
 rospy.sleep(3)
 
@@ -144,7 +141,7 @@ while not game_over:
     if turn == BOT and not game_over:
 
         # Ask Ro-Bot (Player 2) to pick the best move based on possible opponent future moves
-        col, minimax_score = minimax(board, 4, -math.inf, math.inf, True) # A higher value takes longer to run
+        col, minimax_score = minimax(board, 4, -9999999, 9999999, True) # A higher value takes longer to run
 
         # Calculate the distance from the edge of the board to the column chosen by the bot
         col_dist = 0.53 + (col+1 * 0.78)

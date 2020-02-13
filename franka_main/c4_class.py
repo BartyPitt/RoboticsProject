@@ -1,13 +1,20 @@
 #!/usr/bin/env python
 
+from std_msgs.msg import String, Float64MultiArray, MultiArrayDimension, Float64
+import rospy
+import tf
+import geometry_msgs.msg
+import moveit_commander
+
 class Connect4Robot():
 
-	def __init__(self,GripperSizeExtended = 0.05 , GripperSizeRetracted = 0): #defult positions added to maintain compability with legacy code
+	def __init__(self,GripperSizeExtended = 0.05 , GripperSizeRetracted = 0, group = moveit_commander.MoveGroupCommander("panda_arm")): #defult positions added to maintain compability with legacy code
 		'''Sets up the Inital setup conditions for the robot.
 		TODO add in more setup conditions when more are needed.
 		'''
 		self.GripperSizeRetracted = GripperSizeRetracted
 		self.GripperSizeExtended = GripperSizeExtended
+		self.group = group
 		self.__positions__ = dict() #the __ does nothing , it just signifies that I dont want the user to be writting to the memory location directly.
 	
 	def AddPosition(self , PositionName , PositionCordinates):
@@ -37,24 +44,27 @@ class Connect4Robot():
 		pose_goal.position.y = y
 		pose_goal.position.z = z
 
-		group.set_pose_target(pose_goal) # Set new pose objective
-		plan = group.go(wait=True) # Move to new pose
+		self.group.set_pose_target(pose_goal) # Set new pose objective
+		plan = self.group.go(wait=True) # Move to new pose
 		rospy.sleep(2)
 		# It is always good to clear your targets after planning with poses.
-		group.clear_pose_targets()
+		self.group.clear_pose_targets()
 
 	def movejoints(self, joint1, joint2, joint3, joint4, joint5, joint6, joint7):
 		'''Takes in joint angles and moves to that pose'''
-		joint_goal = group.get_current_joint_values()
+		joint_goal = self.group.get_current_joint_values()
 		joint_goal = [joint1, joint2, joint3, joint4, joint5, joint6, joint7]
-		group.go(joint_goal, wait=True)
-		group.stop()
+		self.group.go(joint_goal, wait=True)
+		self.group.stop()
 
 
 	def closegrip(self, simulation=True, GripOveride=None):
 	    if simulation:
 			if GripOveride == None:
 				GripOveride = self.GripperSizeRetracted
+			gripper_publisher = rospy.Publisher('/franka/gripper_position_controller/command', Float64MultiArray, queue_size=1)
+			gripper_msg = Float64MultiArray()
+			gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
 			gripper_msg.data = [GripOveride, GripOveride]
 			gripper_publisher.publish(gripper_msg)
 			rospy.sleep(2)
@@ -71,6 +81,9 @@ class Connect4Robot():
 	    if simulation:
 			if GripOveride == None:
 				GripOveride = self.GripperSizeExtended
+			gripper_publisher = rospy.Publisher('/franka/gripper_position_controller/command', Float64MultiArray, queue_size=1)
+			gripper_msg = Float64MultiArray()
+			gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
 			gripper_msg.data = [GripOveride, GripOveride]
 			gripper_publisher.publish(gripper_msg)
 			rospy.sleep(2)
@@ -82,5 +95,4 @@ class Connect4Robot():
 
 	        group2.go(joint_goal, wait=True)
 	        group2.stop()
-
 
