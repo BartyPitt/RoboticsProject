@@ -43,7 +43,7 @@ class Connect4Robot():
 	def MoveToPosition(self ,Position):
 		'''Takes the name of the position and moves the robot to that position.'''
 		Cordinates = self.__positions__[Position]
-		self.moveto(*Cordinates)
+		self.CartesianPath(Cordinates)
 
 	def CordinatesToPose(self,Position):
 		'''Takes in a cordinate and transforms it into a pose'''
@@ -57,7 +57,6 @@ class Connect4Robot():
 		pose.position.x = x
 		pose.position.y = y
 		pose.position.z = z
-
 		return pose
 
 
@@ -188,19 +187,19 @@ if __name__=="__main__":
 	print('Now in the 2nd calibration position')
 	sleep(2)
 
-	PandaRobot.CartesianPath([0.5, 0.347412681245, 0.65, pi,0,pi/4])
-	PandaRobot.CartesianPath([0.5, -0.118074733645, 0.65, pi,0,pi/4])
+	#PandaRobot.CartesianPath([0.5, 0.347412681245, 0.65, pi,0,pi/4])
+	#PandaRobot.CartesianPath([0.5, -0.118074733645, 0.65, pi,0,pi/4])
 
 	# # Main code
 
-	# for i in range(1):
-	# 	PandaRobot.MoveToPosition("Neutral")
-	# 	PandaRobot.opengrip()
-	# 	PandaRobot.MoveToPosition("DiskCollection")
-	# 	PandaRobot.closegrip()
-	# 	PandaRobot.MoveToPosition("Neutral")
-	# 	PandaRobot.MoveToPosition("AboveBoard")
-	# 	PandaRobot.MoveToPosition("Column1")
-	# 	PandaRobot.opengrip()
-	# 	PandaRobot.MoveToPosition("Neutral")
+	for i in range(10):
+	 	PandaRobot.MoveToPosition("Neutral")
+	 	PandaRobot.opengrip()
+	 	PandaRobot.MoveToPosition("DiskCollection")
+	 	PandaRobot.closegrip()
+		PandaRobot.MoveToPosition("Neutral")
+		PandaRobot.MoveToPosition("AboveBoard")
+		PandaRobot.MoveToPosition("Column1")
+		PandaRobot.opengrip()
+		PandaRobot.MoveToPosition("Neutral")
 	
