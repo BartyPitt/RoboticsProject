@@ -54,10 +54,10 @@ class Connect4Robot():
 		# It is always good to clear your targets after planning with poses.
 		group.clear_pose_targets()
 
-	def movejoints(self, joint1, joint2, joint3, joint4, joint5, joint6, joint7):
+	def movejoints(self, jointAngles):
 		'''Takes in joint angles and moves to that pose'''
 		joint_goal = group.get_current_joint_values()
-		joint_goal = [joint1, joint2, joint3, joint4, joint5, joint6, joint7]
+		joint_goal = jointAngles
 		group.go(joint_goal, wait=True)
 		group.stop()
 
