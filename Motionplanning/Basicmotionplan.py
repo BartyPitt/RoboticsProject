@@ -172,10 +172,16 @@ if __name__=="__main__":
 	rospy.sleep(3)
 
 	PandaRobot = Connect4Robot()
-	PandaRobot.AddPosition("Neutral" ,[ 0.3,0.4,0.7,pi,0,pi/4])
-	PandaRobot.AddPosition("DiskCollection" ,[0.3,0.4,0.15,pi,0,pi/4])
-	PandaRobot.AddPosition("AboveBoard" , [0.6,0,0.7,pi,0,pi/4])
-	PandaRobot.AddPosition("Column1" ,[0.6,0,0.64,pi,0,pi/4])
+	PandaRobot.AddPosition("Neutral" ,        [0.3, 0.4, 0.8, pi, 0, pi/4])
+	PandaRobot.AddPosition("DiskCollection" , [0.3, 0.4, 0.25, pi, 0, pi/4])
+	PandaRobot.AddPosition("AboveBoard" ,     [0.6, 0, 0.8, pi, 0, pi/4])
+	PandaRobot.AddPosition("1" ,              [0.624, 0.347, 0.6, pi,0,pi/4]) # Not the right numbers
+	PandaRobot.AddPosition("2" ,              [0.6, 0.269, 0.6, pi, 0, pi/4]) # Not the right numbers
+	PandaRobot.AddPosition("3" ,              [0.6, 0.191, 0.6, pi, 0, pi/4]) # Not the right numbers
+	PandaRobot.AddPosition("4" ,              [0.6, 0.113, 0.6, pi, 0, pi/4]) # Not the right numbers
+	PandaRobot.AddPosition("5" ,              [0.6, 0.035, 0.6, pi, 0, pi/4]) # Not the right numbers
+	PandaRobot.AddPosition("6" ,              [0.6, -0.043, 0.6, pi, 0, pi/4]) # Not the right numbers
+	PandaRobot.AddPosition("7" ,              [0.624, -0.118, 0.6, pi,0,pi/4]) # Not the right numbers
 
 
 	# # Calibration positions
@@ -192,14 +198,14 @@ if __name__=="__main__":
 
 	# # Main code
 
-	for i in range(10):
+	for i in range(14):
 	 	PandaRobot.MoveToPosition("Neutral")
 	 	PandaRobot.opengrip()
 	 	PandaRobot.MoveToPosition("DiskCollection")
 	 	PandaRobot.closegrip()
 		PandaRobot.MoveToPosition("Neutral")
 		PandaRobot.MoveToPosition("AboveBoard")
-		PandaRobot.MoveToPosition("Column1")
+		PandaRobot.MoveToPosition(str(i%7 + 1))
 		PandaRobot.opengrip()
 		PandaRobot.MoveToPosition("Neutral")
 	
