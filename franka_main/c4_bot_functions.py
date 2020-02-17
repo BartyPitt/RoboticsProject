@@ -163,7 +163,7 @@ def minimax(board, depth, alpha, beta, maximisingPlayer):
             return (None, score_position(board, BOT_PIECE))
 
     if maximisingPlayer:
-        value = -math.inf
+        value = -9999999
         # Randomise column to start
         column = random.choice(valid_locations)
         for col in valid_locations:
@@ -183,7 +183,7 @@ def minimax(board, depth, alpha, beta, maximisingPlayer):
         return column, value
 
     else: # Minimising player
-        value = math.inf
+        value = 9999999
         # Randomise column to start
         column = random.choice(valid_locations)
         for col in valid_locations:
