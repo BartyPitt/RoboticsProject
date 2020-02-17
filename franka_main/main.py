@@ -41,7 +41,7 @@ Code
 
 
 # Import required python files
-from c4_bot_functions import *
+import c4_bot_functions as botfunc
 from c4_class import Connect4Robot
 
 # Import libraries
@@ -132,11 +132,11 @@ while not game_over:
         col = OpenCV output
         '''
 
-        if is_valid_location(board, col):
-            row = get_next_open_row(board, col)
-            drop_piece(board, row, col, PLAYER_PIECE)
+        if botfunc.is_valid_location(board, col):
+            row = botfunc.get_next_open_row(board, col)
+            botfunc.drop_piece(board, row, col, PLAYER_PIECE)
 
-            if winning_move(board, PLAYER_PIECE):
+            if botfunc.winning_move(board, PLAYER_PIECE):
                 game_over = True
                 print("Human Wins!")
 
@@ -147,12 +147,12 @@ while not game_over:
     if turn == BOT and not game_over:
 
         # Ask Ro-Bot (Player 2) to pick the best move based on possible opponent future moves
-        col, minimax_score = minimax(board, 4, -9999999, 9999999, True) # A higher value takes longer to run
+        col, minimax_score = botfunc.minimax(board, 4, -9999999, 9999999, True) # A higher value takes longer to run
 
 
-        if is_valid_location(board, col):
-            row = get_next_open_row(board, col)
-            drop_piece(board, row, col, BOT_PIECE)
+        if botfunc.is_valid_location(board, col):
+            row = botfunc.get_next_open_row(board, col)
+            botfunc.drop_piece(board, row, col, BOT_PIECE)
 
             # Execute motion sequence
             PandaRobot.MoveToPosition("Neutral")
@@ -165,7 +165,7 @@ while not game_over:
             PandaRobot.opengrip()
             PandaRobot.MoveToPosition("Neutral")
 
-            if winning_move(board, BOT_PIECE):
+            if botfunc.winning_move(board, BOT_PIECE):
                 game_over = True
                 #print("Ro-Bot Wins!")
 
