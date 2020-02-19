@@ -71,27 +71,16 @@ display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path
 rospy.sleep(2)
 
 
-# Add positions and relative names
 PandaRobot = Connect4Robot()
-PandaRobot.AddPosition("Neutral" , [0.3, 0.4, 0.7, pi, 0, pi/4])
-PandaRobot.AddPosition("DiskCollection" , [0.3, 0.4, 0.15, pi, 0, pi/4])
-PandaRobot.AddPosition("AboveBoard" , [0.6, 0, 0.7, pi, 0, pi/4])
-PandaRobot.AddPosition("1" , [0.624, 0.347, 0.65, pi,0,pi/4]) # Not the right numbers
-PandaRobot.AddPosition("2" , [0.6, 0.269, 0.65, pi, 0, pi/4]) # Not the right numbers
-PandaRobot.AddPosition("3" , [0.6, 0.191, 0.65, pi, 0, pi/4]) # Not the right numbers
-PandaRobot.AddPosition("4" , [0.6, 0.113, 0.65, pi, 0, pi/4]) # Not the right numbers
-PandaRobot.AddPosition("5" , [0.6, 0.035, 0.65, pi, 0, pi/4]) # Not the right numbers
-PandaRobot.AddPosition("6" , [0.6, -0.043, 0.65, pi, 0, pi/4]) # Not the right numbers
-PandaRobot.AddPosition("7" , [0.624, -0.118, 0.65, pi,0,pi/4]) # Not the right numbers
-
 # Calibration positions
 PandaRobot.closegrip()
-PandaRobot.moveto(0.5, 0.347412681245, 0.65, pi,0,pi/4)
-print('Now in the 1st calibration position')
-sleep(2)
-PandaRobot.moveto(0.5, -0.118074733645, 0.65, pi,0,pi/4)
-print('Now in the 2nd calibration position')
-sleep(2)
+PandaRobot.Calibration([0.3, 0.35, 0.3, pi,0,pi/4])
+
+
+PandaRobot.AddPosition("DiskCollection" ,[PandaRobot.x1,PandaRobot.y1 + 0.2 ,PandaRobot.z1 + 0.1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
+PandaRobot.AddPosition("AboveBoard" , [PandaRobot.x1,PandaRobot.y1,PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
+for i in range(1,7):
+    PandaRobot.AddPosition(str(i) ,[PandaRobot.x1,PandaRobot.y1 - PandaRobot.interpolation(i),PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 
 
 
@@ -117,7 +106,7 @@ PLAYER_PIECE = 1
 BOT_PIECE = 2
 
 # Initialise game
-board = create_board()
+board = botfunc.create_board()
 game_over = False
 turn = 0 # Human goes first
 
@@ -155,15 +144,13 @@ while not game_over:
             botfunc.drop_piece(board, row, col, BOT_PIECE)
 
             # Execute motion sequence
-            PandaRobot.MoveToPosition("Neutral")
             PandaRobot.opengrip()
             PandaRobot.MoveToPosition("DiskCollection")
             PandaRobot.closegrip()
-            PandaRobot.MoveToPosition("Neutral")
             PandaRobot.MoveToPosition("AboveBoard")
-            PandaRobot.MoveToPosition(str(col-1))
+            PandaRobot.MoveToPosition(str(col+1))
             PandaRobot.opengrip()
-            PandaRobot.MoveToPosition("Neutral")
+    
 
             if botfunc.winning_move(board, BOT_PIECE):
                 game_over = True
