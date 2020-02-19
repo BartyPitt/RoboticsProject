@@ -13,7 +13,7 @@ from geometry_msgs.msg import (PoseStamped, Pose, Point, Quaternion,)
 import tf
 
 
-def load_gazebo_models(c4_pose=Pose(position=Point(x=0.1, y=-0.35, z=0)),
+def load_gazebo_models(c4_pose=Pose(position=Point(x=0.1, y=-0.35, z=-.3)),
                        c4_reference_frame="world"):
     test = tf.transformations.quaternion_from_euler(0, 0, 0)
     c4_pose.orientation.x = test[0]

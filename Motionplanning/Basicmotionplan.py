@@ -40,22 +40,23 @@ class Connect4Robot():
 		'''A setter funciton that sets up the positions for the robot to travel to'''
 		self.__positions__[PositionName] = PositionCordinates
 
-	def interpolation(column):
+	def interpolation(self, column):
 		ydistance = (self.y2-self.y1)/6 * (column-1)
 		return self.y1 + ydistance
 
 
-	def Calibration(self , LeftCorner,dx = 0.468 , dy = 0 , dz = 0):
+	def Calibration(self , LeftCorner,dx = 0 , dy = -0.468 , dz = 0):
 		''''''
+		[x,y,z,roll,pitch,yaw] = LeftCorner 
 		RightCorner = [x+dx,y+dy,z+dz,roll,pitch,yaw]
 		self.__positions__["LeftCorner"] = LeftCorner
 		self.__positions__["RightCorner"] = RightCorner
 		[self.x1 ,self.y1 ,self.z1 ,self.roll1 ,self.pitch1 ,self.yaw1]    = LeftCorner
 		[self.x2 , self.y2 , self.z2 , self.roll2 , self.pitch2, self.yaw2] = RightCorner
 
-		moveto(x1,y1,z1,roll1,pitch1,yaw1)
+		self.moveto([self.x1,self.y1,self.z1,self.roll1,self.pitch1,self.yaw1])
 		sleep(5)
-		moveto(x2,y2,z2,roll2,pitch2,yaw2)
+		self.moveto([self.x2,self.y2,self.z2,self.roll2,self.pitch2,self.yaw2])
 		sleep(5)
 	
 	def MoveToPosition(self ,Position):
@@ -192,28 +193,23 @@ if __name__=="__main__":
 	PandaRobot = Connect4Robot()
 	# Calibration positions
 	PandaRobot.closegrip()
-	PandaRobot.Calibration([0.5945, 0.4944, -0.09639, -1.2919, 0.0286, 1.8412, -0.2622])
+	PandaRobot.Calibration([0.3, 0.35, 0.3, pi,0,pi/4])
 
 
-	PandaRobot.AddPosition("Neutral" ,[PandaRobot.x1,PandaRobot.y1 + 0.2 ,PandaRobot.z1 + 0.1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
-	PandaRobot.AddPosition("DiskCollection" ,[PandaRobot.x1,PandaRobot.y1 + 0.2 ,PandaRobot.z1 - 0.4,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
+	PandaRobot.AddPosition("DiskCollection" ,[PandaRobot.x1,PandaRobot.y1 + 0.2 ,PandaRobot.z1 + 0.1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 	PandaRobot.AddPosition("AboveBoard" , [PandaRobot.x1,PandaRobot.y1,PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 	for i in range(1,7):
-		PandaRobot.AddPosition(str(i) ,[PandaRobot.x1,PandaRobot.y1 + PandaRobot.interpolation(i),PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
+		PandaRobot.AddPosition(str(i) ,[PandaRobot.x1,PandaRobot.y1 - PandaRobot.interpolation(i),PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 
 	#PandaRobot.CartesianPath([0.5, 0.347412681245, 0.65, pi,0,pi/4])
 	#PandaRobot.CartesianPath([0.5, -0.118074733645, 0.65, pi,0,pi/4])
 
 	# # Main code
-
+	PandaRobot.opengrip()
 	for i in range(14):
-	 	PandaRobot.MoveToPosition("Neutral")
-	 	PandaRobot.opengrip()
 	 	PandaRobot.MoveToPosition("DiskCollection")
 	 	PandaRobot.closegrip()
-		PandaRobot.MoveToPosition("Neutral")
 		PandaRobot.MoveToPosition("AboveBoard")
 		PandaRobot.MoveToPosition("1")
 		PandaRobot.opengrip()
-		PandaRobot.MoveToPosition("Neutral")
 	
