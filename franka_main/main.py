@@ -178,3 +178,4 @@ while not game_over:
     # When game finishes, wait for 30 seconds
     if game_over:
         print('Game finished!')
+
