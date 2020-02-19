@@ -39,6 +39,24 @@ class Connect4Robot():
 	def AddPosition(self , PositionName , PositionCordinates):
 		'''A setter funciton that sets up the positions for the robot to travel to'''
 		self.__positions__[PositionName] = PositionCordinates
+
+	def interpolation(column):
+		ydistance = (self.y2-self.y1)/6 * (column-1)
+		return self.y1 + ydistance
+
+
+	def Calibration(self , LeftCorner,dx = 0.468 , dy = 0 , dz = 0):
+		''''''
+		RightCorner = [x+dx,y+dy,z+dz,roll,pitch,yaw]
+		self.__positions__["LeftCorner"] = LeftCorner
+		self.__positions__["RightCorner"] = RightCorner
+		[self.x1 ,self.y1 ,self.z1 ,self.roll1 ,self.pitch1 ,self.yaw1]    = LeftCorner
+		[self.x2 , self.y2 , self.z2 , self.roll2 , self.pitch2, self.yaw2] = RightCorner
+
+		moveto(x1,y1,z1,roll1,pitch1,yaw1)
+		sleep(5)
+		moveto(x2,y2,z2,roll2,pitch2,yaw2)
+		sleep(5)
 	
 	def MoveToPosition(self ,Position):
 		'''Takes the name of the position and moves the robot to that position.'''
@@ -172,26 +190,16 @@ if __name__=="__main__":
 	rospy.sleep(3)
 
 	PandaRobot = Connect4Robot()
-	PandaRobot.AddPosition("Neutral" ,        [0.3, 0.4, 0.8, pi, 0, pi/4])
-	PandaRobot.AddPosition("DiskCollection" , [0.3, 0.4, 0.25, pi, 0, pi/4])
-	PandaRobot.AddPosition("AboveBoard" ,     [0.6, 0, 0.8, pi, 0, pi/4])
-	PandaRobot.AddPosition("1" ,              [0.624, 0.347, 0.6, pi,0,pi/4]) # Not the right numbers
-	PandaRobot.AddPosition("2" ,              [0.6, 0.269, 0.6, pi, 0, pi/4]) # Not the right numbers
-	PandaRobot.AddPosition("3" ,              [0.6, 0.191, 0.6, pi, 0, pi/4]) # Not the right numbers
-	PandaRobot.AddPosition("4" ,              [0.6, 0.113, 0.6, pi, 0, pi/4]) # Not the right numbers
-	PandaRobot.AddPosition("5" ,              [0.6, 0.035, 0.6, pi, 0, pi/4]) # Not the right numbers
-	PandaRobot.AddPosition("6" ,              [0.6, -0.043, 0.6, pi, 0, pi/4]) # Not the right numbers
-	PandaRobot.AddPosition("7" ,              [0.624, -0.118, 0.6, pi,0,pi/4]) # Not the right numbers
-
-
-	# # Calibration positions
+	# Calibration positions
 	PandaRobot.closegrip()
-	PandaRobot.moveto([0.5, 0.347412681245, 0.65, pi,0,pi/4])
-	print('Now in the 1st calibration position')
-	sleep(2)
-	PandaRobot.moveto([0.5, -0.118074733645, 0.65, pi,0,pi/4])
-	print('Now in the 2nd calibration position')
-	sleep(2)
+	PandaRobot.Calibration([0.5945, 0.4944, -0.09639, -1.2919, 0.0286, 1.8412, -0.2622])
+
+
+	PandaRobot.AddPosition("Neutral" ,[PandaRobot.x1,PandaRobot.y1 + 0.2 ,PandaRobot.z1 + 0.1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
+	PandaRobot.AddPosition("DiskCollection" ,[PandaRobot.x1,PandaRobot.y1 + 0.2 ,PandaRobot.z1 - 0.4,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
+	PandaRobot.AddPosition("AboveBoard" , [PandaRobot.x1,PandaRobot.y1,PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
+	for i in range(1,7):
+		PandaRobot.AddPosition(str(i) ,[PandaRobot.x1,PandaRobot.y1 + PandaRobot.interpolation(i),PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 
 	#PandaRobot.CartesianPath([0.5, 0.347412681245, 0.65, pi,0,pi/4])
 	#PandaRobot.CartesianPath([0.5, -0.118074733645, 0.65, pi,0,pi/4])
@@ -205,7 +213,7 @@ if __name__=="__main__":
 	 	PandaRobot.closegrip()
 		PandaRobot.MoveToPosition("Neutral")
 		PandaRobot.MoveToPosition("AboveBoard")
-		PandaRobot.MoveToPosition(str(i%7 + 1))
+		PandaRobot.MoveToPosition("1")
 		PandaRobot.opengrip()
 		PandaRobot.MoveToPosition("Neutral")
 	
