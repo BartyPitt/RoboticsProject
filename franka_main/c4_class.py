@@ -6,7 +6,17 @@ import tf
 import geometry_msgs.msg
 import moveit_commander
 
+def MultiVaribleInterpolation(Point1 , Point2 , Percent):
+	Output = []
+	for cord in zip(Point1,Point2):
+		Output.append(Cord[0] + (Cord[0] - Cord[1]) * Percent)
+	return Output
+
+
 class Connect4Robot():
+
+	def MultiVaribleInterpolationPanda(self, Name1 , Name2 , Percent):
+		return MultiVaribleInterpolation(self.__positions__[Name1] , self.__positions__[Name2] , Percent)
 
 	def __init__(self,GripperSizeExtended = 0.03 , GripperSizeRetracted = 0, group = None): #defult positions added to maintain compability with legacy code
 		'''Sets up the Inital setup conditions for the robot.
@@ -30,14 +40,6 @@ class Connect4Robot():
 		'''A setter funciton that sets up the positions for the robot to travel to'''
 		self.__positions__[PositionName] = PositionCordinates
 
-	def MultiVaribleInterpolation(Point1 , Point2 , Percent)
-		Output = []
-		for cord in zip(Point1,Point2):
-			Output.append(Cord[0] + (Cord[0] - Cord[1]) * Percent)
-		return Output
-
-
-
 	def interpolationPercentGen(self, column):
 		ydistance = (100)/6 * (column-1)
 		return ydistance
@@ -55,7 +57,6 @@ class Connect4Robot():
 		rospy.sleep(5)
 		self.moveto(RightCorner)
 		rospy.sleep(5)
-	
 	
 	def MoveToPosition(self ,Position):
 		'''Takes the name of the position and moves the robot to that position.'''

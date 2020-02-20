@@ -42,7 +42,7 @@ Code
 
 # Import required python files
 import c4_bot_functions as botfunc
-from c4_class import Connect4Robot
+from c4_class import Connect4Robot , MultiVaribleInterpolation
 
 # Import libraries
 
@@ -74,8 +74,7 @@ PandaRobot.Calibration([0.3, 0.35, 0.3, pi,0,pi/4])
 PandaRobot.AddPosition("DiskCollection" ,[PandaRobot.x1,PandaRobot.y1 + 0.2 ,PandaRobot.z1 + 0.1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 PandaRobot.AddPosition("AboveBoard" , [PandaRobot.x1,PandaRobot.y1,PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 for i in range(1,7):
-    #TODO Barty Fix this line. Please
-    PandaRobot.AddPosition(str(i) ,PandaRobot.MultiVaribleInterpolation(PandaRobot.))
+    PandaRobot.AddPosition(str(i) ,PandaRobot.MultiVaribleInterpolationPanda("LeftCorner","RightCorner",PandaRobot.interpolationPercentGen(i)))
 
 
 
