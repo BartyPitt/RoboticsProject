@@ -8,37 +8,52 @@ import moveit_commander
 
 class Connect4Robot():
 
-	def __init__(self,GripperSizeExtended = 0.03 , GripperSizeRetracted = 0, group = moveit_commander.MoveGroupCommander("panda_arm")): #defult positions added to maintain compability with legacy code
+	def __init__(self,GripperSizeExtended = 0.03 , GripperSizeRetracted = 0, group = None): #defult positions added to maintain compability with legacy code
 		'''Sets up the Inital setup conditions for the robot.
 		TODO add in more setup conditions when more are needed.
 		'''
+		moveit_commander.roscpp_initialize(sys.argv)
+		rospy.init_node('panda_demo', anonymous=True)
+		self.robot = moveit_commander.RobotCommander()
+		self.scene = moveit_commander.PlanningSceneInterface()
 		self.GripperSizeRetracted = GripperSizeRetracted
 		self.GripperSizeExtended = GripperSizeExtended
+		if group == None:
+			self.group = moveit_commander.MoveGroupCommander("panda_arm")
+		else:
+			self.group = group
 		self.group = group
 		self.__positions__ = dict() #the __ does nothing , it just signifies that I dont want the user to be writting to the memory location directly.
-
+		display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',moveit_msgs.msg.DisplayTrajectory,queue_size=20)
 	
 	def AddPosition(self , PositionName , PositionCordinates):
 		'''A setter funciton that sets up the positions for the robot to travel to'''
 		self.__positions__[PositionName] = PositionCordinates
 
-	def interpolation(self, column):
-		ydistance = (self.y2-self.y1)/6 * (column-1)
-		return self.y1 + ydistance
+	def MultiVaribleInterpolation(Point1 , Point2 , Percent)
+		Output = []
+		for cord in zip(Point1,Point2):
+			Output.append(Cord[0] + (Cord[0] - Cord[1]) * Percent)
+		return Output
+
+
+
+	def interpolationPercentGen(self, column):
+		ydistance = (100)/6 * (column-1)
+		return ydistance
 
 
 	def Calibration(self , LeftCorner,dx = 0 , dy = -0.468 , dz = 0):
 		'''Defines top left corner or board (relative to robot) and moves to calibration points'''
 		[x,y,z,roll,pitch,yaw] = LeftCorner 
-		RightCorner = [x+dx,y+dy,z+dz,roll,pitch,yaw]
+		RightCorner = [x + dx,y + dy,z + dz,roll,pitch,yaw]
+
 		self.__positions__["LeftCorner"] = LeftCorner
 		self.__positions__["RightCorner"] = RightCorner
-		[self.x1 ,self.y1 ,self.z1 ,self.roll1 ,self.pitch1 ,self.yaw1]    = LeftCorner
-		[self.x2 , self.y2 , self.z2 , self.roll2 , self.pitch2, self.yaw2] = RightCorner
 
-		self.moveto([self.x1,self.y1,self.z1,self.roll1,self.pitch1,self.yaw1])
+		self.moveto(LeftCorner)
 		rospy.sleep(5)
-		self.moveto([self.x2,self.y2,self.z2,self.roll2,self.pitch2,self.yaw2])
+		self.moveto(RightCorner)
 		rospy.sleep(5)
 	
 	
