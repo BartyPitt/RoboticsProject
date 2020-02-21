@@ -61,7 +61,7 @@ class Connect4Robot():
 	def MoveToPosition(self ,Position):
 		'''Takes the name of the position and moves the robot to that position.'''
 		Cordinates = self.__positions__[Position]
-		self.moveto(Cordinates)
+		self.CartesianPath(Cordinates)
 
 	def CordinatesToPose(self,Position):
 		'''Takes in a cordinate and transforms it into a pose'''
@@ -97,7 +97,7 @@ class Connect4Robot():
 		group.go(joint_goal, wait=True)
 		group.stop()
 
-	def CartesianPath(self, Endposition , StartPosition = None):
+	def CartesianPath(self, Endposition , StartPosition = None,SubPoints = 50):
 		
 	    if StartPosition:
 			StartPosition = self.CordinatesToPose(StartPosition)
@@ -110,7 +110,9 @@ class Connect4Robot():
 		# start with the current pose
 	    waypoints.append(StartPosition)
 		
-		#TODO add in a level of path interpolation.
+		for i in range(SubPoints):
+			Percent = i/SubPoints
+			waypoints.append(MultiVaribleInterpolation(StartPosition,Endposition,Percent))
 		
 	    waypoints.append(Endposition)
 		
