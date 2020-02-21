@@ -7,3 +7,6 @@
 [submodule "catkin_ws/src/brick_manager"]
 	path = catkin_ws/src/brick_manager
 	url = https://github.com/de3-robo/brick_manager.git
+[submodule "catkin_ws/src/arm_master"]
+	path = catkin_ws/src/arm_master
+	url = https://github.com/de3-robo/arm_master.git
