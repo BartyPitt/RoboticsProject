@@ -1,3 +1,9 @@
-[submodule "catkin_ws/src/arm_master"]
-	path = catkin_ws/src/arm_master
-	url = https://github.com/de3-robo/arm_master.git
+[submodule "catkin_ws/src/de_msgs"]
+	path = catkin_ws/src/de_msgs
+	url = https://github.com/de3-robo/de_msgs.git
+[submodule "catkin_ws/src/spawn_mnger"]
+	path = catkin_ws/src/spawn_mnger
+	url = https://github.com/de3-robo/spawn_mnger.git
+[submodule "catkin_ws/src/brick_manager"]
+	path = catkin_ws/src/brick_manager
+	url = https://github.com/de3-robo/brick_manager.git
