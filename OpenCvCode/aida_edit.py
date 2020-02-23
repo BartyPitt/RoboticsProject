@@ -45,6 +45,7 @@ def ConvectionFunction(Image ,LowerBound , UpperBound):
 
 
 def ContourInfo(contours ,minArea):
+    
     '''
     Takes in a set of contours returns the cordinate for the centre of the the ones above a certain size
     TODO ADD TEST FOR IF IT IS A CIRCLE RATHER THAN JUST doing it by overal area
@@ -66,19 +67,37 @@ def ContourInfo(contours ,minArea):
                 pass
     return output
 
-#def plot_centre_line(coordinates):
-    #coordinates
+#def plot_centre_line(row, column):
+#    for i in row:
+#        point1 = 
 
-def column_row_finder(coordinates):
+def get_x_and_y_coord_from_contours(coordinates):   
     counter = -1
-    col, row = 0, 0
+    coords = []
     for i in coordinates:
         counter += 1
         y_coord = coordinates[counter][0][1]
         x_coord = coordinates[counter][0][0]
+        coords.append([x_coord, y_coord])       
+    return coords
+    
+def get_row_and_col(coordinates):
+    counter = -1
+    x = []
+    y = []
+    col_no = []
+    row_no = []
+    for i in coordinates:
         
-        #print("x", x_coord)
-        #print("y", y_coord)
+        counter += 1
+        #print(counter)
+        y_coord = coordinates[counter][1]
+        y.append(y_coord)
+        x_coord = coordinates[counter][0]
+        #print(x_coord)
+        x.append(x_coord)
+    for x_coord in x:
+        
         if 50 < x_coord < 60:
             col = 1
         elif 150 < x_coord < 160:
@@ -93,7 +112,10 @@ def column_row_finder(coordinates):
             col = 6
         elif 630 < x_coord < 650:
             col = 7
-             
+        col_no.append(col)
+    
+    for y_coord in y:
+        #print(y_coord ,'test')
         if 250 < y_coord < 260:
             row = 1
         elif 340 < y_coord < 360:
@@ -106,10 +128,11 @@ def column_row_finder(coordinates):
             row = 5
         elif 740 < y_coord < 760:
             row = 6
-        print("row", row, "col", col)
- 
-    return col, row
+        row_no.append(row)
 
+    result = [list(x) for x in zip(row_no, col_no)]
+    #print(result)
+    return  result
     
 def TransformTheImage(img,Extension):  
     '''Takes the image and transforms it , extension if you want to see above the grid.  ''' 
@@ -153,8 +176,9 @@ def GetPossitions(ImageLocation):
     
     blueContours = ConvectionFunction(SquareImage,lower_blue , upper_blue)
     blue_cordinates = ContourInfo(blueContours , 500)
-    row_blue, column_blue = column_row_finder(blue_cordinates)
-    #print(row, column)
+    blue_points = get_x_and_y_coord_from_contours(blue_cordinates)
+    blue_cols_and_rows = get_row_and_col(blue_points)   
+    print('BLUE COLS AND ROWS', blue_cols_and_rows)
 
 
     #The Yellow Mask
@@ -163,11 +187,8 @@ def GetPossitions(ImageLocation):
     
     yellowContours = ConvectionFunction(SquareImage,lower_yellow, upper_yellow)
     yellow_cordinates = ContourInfo(yellowContours , 500)
-    row_yellow, column_yellow = column_row_finder(yellow_cordinates)
-    #print(yellow_coordinates)
-    #End of barty Code I am unsure what you want me to return aida.
-
-
-
+    yellow_points = get_x_and_y_coord_from_contours(yellow_cordinates)
+    yellow_cols_and_rows = get_row_and_col(yellow_points)
+    print('YELLOW COLS AND ROWS', yellow_cols_and_rows)
 
 GetPossitions('/Users/aidam/Desktop/Robotics Coursework/Images/WithRedDot/Grid1.jpg')
