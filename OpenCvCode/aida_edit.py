@@ -9,6 +9,129 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
+def get_x_and_y_coord_from_contours(coordinates):   
+    counter = -1
+    coords = []
+    for i in coordinates:
+        counter += 1
+        y_coord = coordinates[counter][0][1]
+        x_coord = coordinates[counter][0][0]
+        coords.append([x_coord, y_coord])       
+    return coords
+
+def get_row_and_col(coordinates):
+    counter = -1
+    x = []
+    y = []
+    col_no = []
+    row_no = []
+    for i in coordinates:
+        
+        counter += 1
+        #print(counter)
+        y_coord = coordinates[counter][1]
+        y.append(y_coord)
+        x_coord = coordinates[counter][0]
+        x.append(x_coord)
+    for x_coord in x:        
+        if 50 < x_coord < 60:
+            col = 1
+        elif 150 < x_coord < 160:
+            col = 2   
+        elif 245 < x_coord < 260:
+            col = 3   
+        elif 330 < x_coord < 360:
+            col = 4
+        elif 440 < x_coord < 460:
+            col = 5
+        elif 540 < x_coord < 550:
+            col = 6
+        elif 630 < x_coord < 650:
+            col = 7
+        col_no.append(col)
+    
+    for y_coord in y:
+        if 250 < y_coord < 260:
+            row = 1
+        elif 340 < y_coord < 360:
+            row = 2
+        elif 440 < y_coord < 460:
+            row = 3
+        elif 540 < y_coord < 560:
+            row = 4
+        elif 640 < y_coord < 660:
+            row = 5
+        elif 740 < y_coord < 760:
+            row = 6
+        row_no.append(row)
+
+    new_lst = [list(x) for x in zip(row_no, col_no)]
+    #print(new_lst)
+    return  col_no, row_no, new_lst
+
+def find_top_and_bottom_coord_of_each_col(col_no, row_no, new_lst, points):
+    '''Function that finds the top and bottom disk coordinates of each column. 
+      Returns an array for each column with the coordinate of the  top and bottom disk'''
+    col_1 = []
+    col_2 = []
+    col_3 = []
+    col_4 = []
+    col_5 = []
+    col_6 = []
+    
+    for i in range(len(row_no)):
+        #print(i)
+        
+        if new_lst[i][1] == 1 and new_lst[i][0] == 1:
+            col_1.append(points[i])
+            #print('found top disk of column 1', new_lst[i], points[i])
+            
+        if new_lst[i][1] == 1 and new_lst[i][0] == 6:
+            col_1.append(points[i])
+            #print('found bottom disk of column 1', new_lst[i], points[i])
+    
+        if new_lst[i][1] == 2 and new_lst[i][0] == 1:
+            col_2.append(points[i])
+            #print('found top disk of column 2', new_lst[i], points[i])       
+            
+        if new_lst[i][1] == 2 and new_lst[i][0] == 6:
+            col_2.append(points[i])
+            #print('found bottom disk of column 2', new_lst[i], points[i])
+
+        if new_lst[i][1] == 3 and new_lst[i][0] == 1:
+            col_3.append(points[i])
+            #print('found top disk of column 3', new_lst[i], points[i])
+       
+        if new_lst[i][1] == 3 and new_lst[i][0] == 6:
+            col_3.append(points[i])
+            #print('found bottom disk of column 3', new_lst[i], points[i])     
+        
+        if new_lst[i][1] == 4 and new_lst[i][0] == 1:
+            col_4.append(points[i])
+            #print('found top disk of column 4', new_lst[i], points[i])
+        
+        if new_lst[i][1] == 4 and new_lst[i][0] == 6:
+            col_4.append(points[i])
+            #print('found bottom disk of column 4', new_lst[i], points[i])
+            
+        if new_lst[i][1] == 5 and new_lst[i][0] == 1:
+            col_5.append(points[i])
+            #print('found top disk of column 5', new_lst[i], points[i])
+        
+        if new_lst[i][1] == 5 and new_lst[i][0] == 6:
+            col_5.append(points[i])
+            #print('found bottom disk of column 5', new_lst[i], points[i])
+
+        if new_lst[i][1] == 6 and new_lst[i][0] == 1:
+            col_6.append(points[i])
+            #print('found top disk of column 6', new_lst[i], points[i])
+        
+        if new_lst[i][1] == 5 and new_lst[i][0] == 6:
+            col_6.append(points[i])
+            #print('found bottom disk of column 6', new_lst[i], points[i])
+    print('FINISHED COORDS', 'col 1:', col_1, 'col 2:',col_2, 'col 3:',col_3, 'col 4:', col_4, 'col 5:',col_5, 'col 6:',col_6)    
+    return col_1, col_2, col_3, col_4, col_5, col_6
+    
 
 def ImageInlineShow(Image):
     '''
@@ -43,6 +166,16 @@ def ConvectionFunction(Image ,LowerBound , UpperBound):
     ImageInlineShow(img2)
     return contours
 
+def plot_centre_line(column, ImageLocation): #column, ImageLocation
+    point_1 = tuple(column[0])
+    point_2 = tuple(column[1])
+    color = (0,0,255)
+    img = cv2.imread(ImageLocation)
+    #ImageInlineShow(img)
+    img = cv2.imread(ImageLocation,cv2.IMREAD_COLOR)
+    cv2.line(img, point_1,point_2,color,5)
+    cv2.imshow('image',img)
+    cv2.waitKey(0)
 
 def ContourInfo(contours ,minArea):
     
@@ -59,81 +192,16 @@ def ContourInfo(contours ,minArea):
             try:
                 cX = int(M["m10"] / M["m00"])
                 cY = int(M["m01"] / M["m00"])
-                #print(area)
                 output.append([[cX ,cY],[area]])
-                #print(output)
-                #print('cX:', cX, 'cY:', cY)
             except ZeroDivisionError:
                 pass
     return output
 
-#def plot_centre_line(row, column):
-#    for i in row:
-#        point1 = 
-
-def get_x_and_y_coord_from_contours(coordinates):   
-    counter = -1
-    coords = []
-    for i in coordinates:
-        counter += 1
-        y_coord = coordinates[counter][0][1]
-        x_coord = coordinates[counter][0][0]
-        coords.append([x_coord, y_coord])       
-    return coords
-    
-def get_row_and_col(coordinates):
-    counter = -1
-    x = []
-    y = []
-    col_no = []
-    row_no = []
-    for i in coordinates:
-        
-        counter += 1
-        #print(counter)
-        y_coord = coordinates[counter][1]
-        y.append(y_coord)
-        x_coord = coordinates[counter][0]
-        #print(x_coord)
-        x.append(x_coord)
-    for x_coord in x:
-        
-        if 50 < x_coord < 60:
-            col = 1
-        elif 150 < x_coord < 160:
-            col = 2   
-        elif 245 < x_coord < 260:
-            col = 3   
-        elif 330 < x_coord < 360:
-            col = 4
-        elif 440 < x_coord < 460:
-            col = 5
-        elif 540 < x_coord < 550:
-            col = 6
-        elif 630 < x_coord < 650:
-            col = 7
-        col_no.append(col)
-    
-    for y_coord in y:
-        #print(y_coord ,'test')
-        if 250 < y_coord < 260:
-            row = 1
-        elif 340 < y_coord < 360:
-            row = 2
-        elif 440 < y_coord < 460:
-            row = 3
-        elif 540 < y_coord < 560:
-            row = 4
-        elif 640 < y_coord < 660:
-            row = 5
-        elif 740 < y_coord < 760:
-            row = 6
-        row_no.append(row)
-
-    result = [list(x) for x in zip(row_no, col_no)]
-    #print(result)
-    return  result
-    
+def list_connector(list1, list2):
+    '''Function to merge lists of coordinates. Used to join yellow and blue disk coords'''
+    output = list1+list2
+    return output
+            
 def TransformTheImage(img,Extension):  
     '''Takes the image and transforms it , extension if you want to see above the grid.  ''' 
     #Red Contours
@@ -160,8 +228,6 @@ def TransformTheImage(img,Extension):
 
     return SquareImage
 
-
-
 def GetPossitions(ImageLocation):
     '''Takes In an Image Location and returns what the current layout of the parts is'''
    
@@ -170,25 +236,30 @@ def GetPossitions(ImageLocation):
     SquareImage = TransformTheImage(img,200)
     #If the Extra space at the top starts causing problems. 
 
-    #The Blue ask
+    #The Blue mask
     lower_blue = np.array([90,130,80])
     upper_blue = np.array([115,255,255])
     
     blueContours = ConvectionFunction(SquareImage,lower_blue , upper_blue)
-    blue_cordinates = ContourInfo(blueContours , 500)
-    blue_points = get_x_and_y_coord_from_contours(blue_cordinates)
-    blue_cols_and_rows = get_row_and_col(blue_points)   
-    print('BLUE COLS AND ROWS', blue_cols_and_rows)
-
+    blue_coordinates = ContourInfo(blueContours , 500)
 
     #The Yellow Mask
     lower_yellow = np.array([20,204,150])
     upper_yellow = np.array([54,255,255])
     
     yellowContours = ConvectionFunction(SquareImage,lower_yellow, upper_yellow)
-    yellow_cordinates = ContourInfo(yellowContours , 500)
-    yellow_points = get_x_and_y_coord_from_contours(yellow_cordinates)
-    yellow_cols_and_rows = get_row_and_col(yellow_points)
-    print('YELLOW COLS AND ROWS', yellow_cols_and_rows)
+    yellow_coordinates = ContourInfo(yellowContours , 500)
 
+#--------------------------------------------------------------------------------------------------------#
+    #Joining the contour info output of the yellow and the blue disks
+    coordinates = list_connector(blue_coordinates, yellow_coordinates) 
+    #removing the area and keeping only the x and y centre coordinates
+    points = get_x_and_y_coord_from_contours(coordinates)
+    #converting pixles to rows list (x_), columns list(y_), and merging to list of coordinates in terms of
+    #row and columns. Eg: [55, 750] is now [6, 1]
+    x_, y_ , merged = get_row_and_col(points)
+    #function to find top and bottom position of disks in each column.
+    column1, column2, column3, column4, column5, column6 = find_top_and_bottom_coord_of_each_col(x_, y_ , merged, points)
+    plot_centre_line(column1, ImageLocation)
+    
 GetPossitions('/Users/aidam/Desktop/Robotics Coursework/Images/WithRedDot/Grid1.jpg')
