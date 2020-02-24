@@ -132,6 +132,8 @@ def get_row_and_col(coordinates):
     result = [list(x) for x in zip(row_no, col_no)]
     #print(result)
     return result
+
+#Felix wants most recently played disk column
     
 def TransformTheImage(img,Extension):  
     '''Takes the image and transforms it , extension if you want to see above the grid.  ''' 
