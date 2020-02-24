@@ -113,7 +113,12 @@ turn = 0 # Human goes first
 while not game_over:
     if turn == PLAYER:
 
-        col = int(input("Human (Player 1) choose a column:"))
+        move = int(input("Human (Player 1) choose a column:"))
+        
+        if move in range(0,6):
+            col = move
+        else:
+            move = int(input("Human (Player 1) choose a column:"))
         
         '''
         OpenCV code to go here: compare 'seen' grid with current board state, and update board state
