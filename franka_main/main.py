@@ -40,6 +40,7 @@ Code
 
 # Import required python files
 import c4_bot_functions as botfunc
+import open_cv as vision
 from c4_class import Connect4Robot
 
 # Import libraries
@@ -109,22 +110,26 @@ BOT_PIECE = 2
 board = botfunc.create_board()
 game_over = False
 turn = 0 # Human goes first
+visionworking = False
 
 while not game_over:
     if turn == PLAYER:
 
-        move = int(input("Human (Player 1) choose a column:"))
-        
-        if move in range(0,6):
-            col = move
-        else:
+        if visionworking = False:
             move = int(input("Human (Player 1) choose a column:"))
-        
-        '''
-        OpenCV code to go here: compare 'seen' grid with current board state, and update board state
-        
-        col = OpenCV output
-        '''
+
+            if move in range(0,6):
+                col = move
+            else:
+                move = int(input("Human (Player 1) choose a column:"))
+
+        else:
+            # get new grid state from most recent capture
+            vision.GetPositions('updated_gridstate.jpg')
+            # analyse new grid state and get co-ordinate of most recent move
+            new_move = vision.get_row_and_col()
+            # take the column index from the co-ordinate list, and assign to col
+            col = new_move[1]
 
         if botfunc.is_valid_location(board, col):
             row = botfunc.get_next_open_row(board, col)
@@ -156,7 +161,6 @@ while not game_over:
             PandaRobot.MoveToPosition(str(col+1))
             PandaRobot.opengrip()
     
-
             if botfunc.winning_move(board, BOT_PIECE):
                 game_over = True
                 #print("Ro-Bot Wins!")

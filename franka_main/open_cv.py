@@ -87,8 +87,7 @@ def get_row_and_col(coordinates):
     y = []
     col_no = []
     row_no = []
-    for i in coordinates:
-        
+    for i in coordinates:  
         counter += 1
         #print(counter)
         y_coord = coordinates[counter][1]
@@ -132,7 +131,7 @@ def get_row_and_col(coordinates):
 
     result = [list(x) for x in zip(row_no, col_no)]
     #print(result)
-    return  result
+    return result
     
 def TransformTheImage(img,Extension):  
     '''Takes the image and transforms it , extension if you want to see above the grid.  ''' 
@@ -162,9 +161,8 @@ def TransformTheImage(img,Extension):
 
 
 
-def GetPossitions(ImageLocation):
+def GetPositions(ImageLocation):
     '''Takes In an Image Location and returns what the current layout of the parts is'''
-   
 
     img = cv2.imread(ImageLocation)
     SquareImage = TransformTheImage(img,200)
@@ -180,7 +178,6 @@ def GetPossitions(ImageLocation):
     blue_cols_and_rows = get_row_and_col(blue_points)   
     print('BLUE COLS AND ROWS', blue_cols_and_rows)
 
-
     #The Yellow Mask
     lower_yellow = np.array([20,204,150])
     upper_yellow = np.array([54,255,255])
@@ -191,4 +188,4 @@ def GetPossitions(ImageLocation):
     yellow_cols_and_rows = get_row_and_col(yellow_points)
     print('YELLOW COLS AND ROWS', yellow_cols_and_rows)
 
-GetPossitions('/Users/aidam/Desktop/Robotics Coursework/Images/WithRedDot/Grid1.jpg')
+#GetPositions('Grid1.jpg')
