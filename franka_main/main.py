@@ -72,7 +72,8 @@ rospy.sleep(2)
 PandaRobot = Connect4Robot()
 # Calibration positions
 PandaRobot.closegrip()
-PandaRobot.Calibration([0.3, 0.35, 0.3, pi,0,pi/4])
+PandaRobot.Calibration([0.4
+    , 0.2, 0.3, pi,0,pi/4])
 
 
 PandaRobot.AddPosition("DiskCollection" ,[PandaRobot.x1,PandaRobot.y1 + 0.2 ,PandaRobot.z1 + 0.1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
@@ -136,7 +137,7 @@ while not game_over:
 
         # Ask Ro-Bot (Player 2) to pick the best move based on possible opponent future moves
         col, minimax_score = botfunc.minimax(board, 4, -9999999, 9999999, True) # A higher value takes longer to run
-
+        print("robot is dropping at column {}".format(col))
 
         if botfunc.is_valid_location(board, col):
             row = botfunc.get_next_open_row(board, col)
