@@ -1,8 +1,0 @@
-prefix=/home/user/catkin_ws/install
-
-Name: franka_example_controllers
-Description: Description of franka_example_controllers
-Version: 0.7.0
-Cflags: -I/home/user/catkin_ws/install/include -I/home/user/catkin_ws/src/libfranka/include
-Libs: -L/home/user/catkin_ws/install/lib -lfranka_example_controllers /home/user/catkin_ws/src/libfranka/build/libfranka.so.0.5.0
-Requires: controller_interface dynamic_reconfigure franka_hw geometry_msgs hardware_interface message_runtime pluginlib realtime_tools roscpp
