@@ -166,7 +166,9 @@ def ConvectionFunction(Image ,LowerBound , UpperBound):
     ImageInlineShow(img2)
     return contours
 
-def plot_centre_line(column, ImageLocation): #column, ImageLocation
+def plot_centre_line(column, ImageLocation): 
+    '''THIS FUNCTION IS NOT CURRENTLY WORKING BECAUSE THE IMAGE THAT IT NEEDS TO TAKE IN TO DRAW THE LINE
+    IS NOT BEING OUTPUTTED/SAVED ANYWHERE YET. CURRENTLY WORKING ON FIXING THAT'''
     point_1 = tuple(column[0])
     point_2 = tuple(column[1])
     color = (0,0,255)
@@ -249,6 +251,7 @@ def GetPossitions(ImageLocation):
     
     yellowContours = ConvectionFunction(SquareImage,lower_yellow, upper_yellow)
     yellow_coordinates = ContourInfo(yellowContours , 500)
+    
 
 #--------------------------------------------------------------------------------------------------------#
     #Joining the contour info output of the yellow and the blue disks
@@ -263,3 +266,27 @@ def GetPossitions(ImageLocation):
     plot_centre_line(column1, ImageLocation)
     
 GetPossitions('/Users/aidam/Desktop/Robotics Coursework/Images/WithRedDot/Grid1.jpg')
+
+# =============================================================================
+# TO DO:
+# ROSNODE PUBLISHER AND SUBSCRIBER
+# OUTPUT PROCESSED IMAGES
+# FINISH LINE DRAWING FUNCTION
+# CALL LINE DRAWING ON PROCESSED IMAGE
+# 
+# FUNCTION TO CONVERT DISKS POSITIONS TO ARRAY OF 1S AND -1S
+# SNAPSHOT CODE TO TAKE IMAGE1 AND IMAGE2 AT AN INTERVAL
+# SUBTRACT BOARDS
+# IF DIFFERENCE = 0 RETURN NO DISK PLACED
+# ELSE, FIND AND RETURN COORD OF NEW DISK PLACED
+# 
+# FROM FELIX CODE:
+# IF OUTPUT IS THAT ROBOT HAS PLAYED AND NO NEW DISK DETECTED:
+# CALL LAST MOTION PLAN AGAIN
+# IF ROBOT HAS PLAYED AND NEW DISK DETECTED:
+# FIND ROBOT COORD, DETECTED COORD. 
+# SUBTRACT THEM FROM EACH OTHER
+# IF NOT 0
+# SET ROBOT COORD TO DETCTED COORD
+# CONTINUE GAME FROM THIS COORD
+# =============================================================================
