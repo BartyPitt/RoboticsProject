@@ -1,15 +1,21 @@
 #!/usr/bin/env python
 
 from std_msgs.msg import String, Float64MultiArray, MultiArrayDimension, Float64
+import sys
 import rospy
 import tf
+import moveit_msgs.msg
 import geometry_msgs.msg
 import moveit_commander
+from std_msgs.msg import String, Float64MultiArray, MultiArrayDimension, Float64
+from moveit_commander.conversions import pose_to_list
+
+
 
 def MultiVaribleInterpolation(Point1 , Point2 , Percent):
 	Output = []
-	for cord in zip(Point1,Point2):
-		Output.append(Cord[0] + (Cord[0] - Cord[1]) * Percent)
+	for Chord1 , Chord2 in zip(Point1,Point2):
+		Output.append(Chord1 + (Chord1 - Chord2) * Percent)
 	return Output
 
 
@@ -32,7 +38,6 @@ class Connect4Robot():
 			self.group = moveit_commander.MoveGroupCommander("panda_arm")
 		else:
 			self.group = group
-		self.group = group
 		self.__positions__ = dict() #the __ does nothing , it just signifies that I dont want the user to be writting to the memory location directly.
 		display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',moveit_msgs.msg.DisplayTrajectory,queue_size=20)
 	
@@ -62,6 +67,13 @@ class Connect4Robot():
 		'''Takes the name of the position and moves the robot to that position.'''
 		Cordinates = self.__positions__[Position]
 		self.CartesianPath(Cordinates)
+	def PoseToCordinates(self , Position):
+		Po = Position.orientation
+		roll,pitch,yaw = tf.transformations.euler_from_quaternion([Po.x,Po.y,Po.z,Po.w])
+		x = Position.position.x
+		y = Position.position.y
+		z = Position.position.z
+		return [x,y,z,roll,pitch,yaw]
 
 	def CordinatesToPose(self,Position):
 		'''Takes in a cordinate and transforms it into a pose'''
@@ -98,27 +110,26 @@ class Connect4Robot():
 		group.stop()
 
 	def CartesianPath(self, Endposition , StartPosition = None,SubPoints = 50):
-		
-	    if StartPosition:
+
+		if StartPosition:
 			StartPosition = self.CordinatesToPose(StartPosition)
-	    else:
-			StartPosition = group.get_current_pose().pose
+		else:
+			StartPosition = self.group.get_current_pose().pose
 		
-	    Endposition = self.CordinatesToPose(Endposition)
 		
-	    waypoints = []
+		StartPosition = self.PoseToCordinates(StartPosition)
+		print("Start Possition" , StartPosition)
+		print("end Pos", Endposition)
+		waypoints = []
 		# start with the current pose
-	    waypoints.append(StartPosition)
-		
-		for i in range(SubPoints):
+		for i in range(SubPoints + 1):
 			Percent = i/SubPoints
-			waypoints.append(MultiVaribleInterpolation(StartPosition,Endposition,Percent))
+			waypoints.append(self.CordinatesToPose(MultiVaribleInterpolation(StartPosition,Endposition,Percent)))
+
 		
-	    waypoints.append(Endposition)
-		
-	    max_tries = 10
-	    for i in range(max_tries):
-			(plan, fraction) = group.compute_cartesian_path (
+		max_tries = 10
+		for i in range(max_tries):
+			(plan, fraction) = self.group.compute_cartesian_path (
 									waypoints,   # waypoint poses
 									0.01,        # eef_step
 									0.0,         # jump_threshold
@@ -126,17 +137,17 @@ class Connect4Robot():
 			if fraction == 1:
 				print("Motioned Planned Successfully")
 				break
-	    else:
+		else:
 			print("failed to run")
 			return False
 
-	    self.group.execute(plan , wait = True)
-	    self.group.clear_pose_targets()
-	    return True
+		self.group.execute(plan , wait = True)
+		self.group.clear_pose_targets()
+		return True
 
 
 	def closegrip(self, simulation=True, GripOveride=None):
-	    if simulation:
+		if simulation:
 			if GripOveride == None:
 				GripOveride = self.GripperSizeRetracted
 			gripper_publisher = rospy.Publisher('/franka/gripper_position_controller/command', Float64MultiArray, queue_size=1)
@@ -145,17 +156,17 @@ class Connect4Robot():
 			gripper_msg.data = [GripOveride, GripOveride]
 			gripper_publisher.publish(gripper_msg)
 			rospy.sleep(2)
-	    else:
-	        group2 = moveit_commander.MoveGroupCommander("hand")
-	        joint_goal = group2.get_current_joint_values()
-	        joint_goal[0] = self.GripperSizeRetracted
-	        joint_goal[1] = self.GripperSizeRetracted
+		else:
+			group2 = moveit_commander.MoveGroupCommander("hand")
+			joint_goal = group2.get_current_joint_values()
+			joint_goal[0] = self.GripperSizeRetracted
+			joint_goal[1] = self.GripperSizeRetracted
 
-	        group2.go(joint_goal, wait=True)
-	        group2.stop()
+			group2.go(joint_goal, wait=True)
+			group2.stop()
 
 	def opengrip(self, simulation=True, GripOveride=None):
-	    if simulation:
+		if simulation:
 			if GripOveride == None:
 				GripOveride = self.GripperSizeExtended
 			gripper_publisher = rospy.Publisher('/franka/gripper_position_controller/command', Float64MultiArray, queue_size=1)
@@ -164,12 +175,12 @@ class Connect4Robot():
 			gripper_msg.data = [GripOveride, GripOveride]
 			gripper_publisher.publish(gripper_msg)
 			rospy.sleep(2)
-	    else:
-	        group2 = moveit_commander.MoveGroupCommander("hand")
-	        joint_goal = group2.get_current_joint_values()
-	        joint_goal[0] = self.GripperSizeExtended
-	        joint_goal[1] = self.GripperSizeExtended
+		else:
+			group2 = moveit_commander.MoveGroupCommander("hand")
+			joint_goal = group2.get_current_joint_values()
+			joint_goal[0] = self.GripperSizeExtended
+			joint_goal[1] = self.GripperSizeExtended
 
-	        group2.go(joint_goal, wait=True)
-	        group2.stop()
+			group2.go(joint_goal, wait=True)
+			group2.stop()
 

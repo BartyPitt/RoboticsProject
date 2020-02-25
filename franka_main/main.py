@@ -71,8 +71,8 @@ PandaRobot.closegrip()
 PandaRobot.Calibration([0.3, 0.35, 0.3, pi,0,pi/4])
 
 
-PandaRobot.AddPosition("DiskCollection" ,[PandaRobot.x1,PandaRobot.y1 + 0.2 ,PandaRobot.z1 + 0.1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
-PandaRobot.AddPosition("AboveBoard" , [PandaRobot.x1,PandaRobot.y1,PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
+PandaRobot.AddPosition("DiskCollection" ,PandaRobot.__positions__["LeftCorner"])
+PandaRobot.AddPosition("AboveBoard" , PandaRobot.__positions__["LeftCorner"])
 for i in range(1,7):
     PandaRobot.AddPosition(str(i) ,PandaRobot.MultiVaribleInterpolationPanda("LeftCorner","RightCorner",PandaRobot.interpolationPercentGen(i)))
 
