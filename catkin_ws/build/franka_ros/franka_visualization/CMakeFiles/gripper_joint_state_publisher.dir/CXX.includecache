@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_visualization/src/gripper_joint_state_publisher.cpp
+/home/user/catkin_ws/src/franka_ros/franka_visualization/src/gripper_joint_state_publisher.cpp
 franka/exception.h
 -
 franka/gripper.h
@@ -16,15 +16,13 @@ ros/ros.h
 sensor_msgs/JointState.h
 -
 
-/opt/ros/melodic/include/libfranka/franka/control_types.h
+/home/user/catkin_ws/src/libfranka/include/franka/control_types.h
 array
--
-cmath
 -
 initializer_list
 -
 
-/opt/ros/melodic/include/libfranka/franka/duration.h
+/home/user/catkin_ws/src/libfranka/include/franka/duration.h
 chrono
 -
 cstdint
@@ -32,13 +30,13 @@ cstdint
 ratio
 -
 
-/opt/ros/melodic/include/libfranka/franka/errors.h
+/home/user/catkin_ws/src/libfranka/include/franka/errors.h
 array
 -
 ostream
 -
 
-/opt/ros/melodic/include/libfranka/franka/exception.h
+/home/user/catkin_ws/src/libfranka/include/franka/exception.h
 stdexcept
 -
 string
@@ -46,7 +44,7 @@ string
 franka/log.h
 -
 
-/opt/ros/melodic/include/libfranka/franka/gripper.h
+/home/user/catkin_ws/src/libfranka/include/franka/gripper.h
 cstdint
 -
 memory
@@ -56,7 +54,7 @@ string
 franka/gripper_state.h
 -
 
-/opt/ros/melodic/include/libfranka/franka/gripper_state.h
+/home/user/catkin_ws/src/libfranka/include/franka/gripper_state.h
 cstdint
 -
 ostream
@@ -64,7 +62,7 @@ ostream
 franka/duration.h
 -
 
-/opt/ros/melodic/include/libfranka/franka/log.h
+/home/user/catkin_ws/src/libfranka/include/franka/log.h
 vector
 -
 franka/control_types.h
@@ -72,7 +70,7 @@ franka/control_types.h
 franka/robot_state.h
 -
 
-/opt/ros/melodic/include/libfranka/franka/robot_state.h
+/home/user/catkin_ws/src/libfranka/include/franka/robot_state.h
 array
 -
 ostream
@@ -385,6 +383,8 @@ boost/type_traits/remove_reference.hpp
 -
 
 /opt/ros/melodic/include/ros/platform.h
+windows.h
+-
 stdlib.h
 -
 string

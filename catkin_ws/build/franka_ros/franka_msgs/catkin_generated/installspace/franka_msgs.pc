@@ -1,8 +1,8 @@
-prefix=/home/medad/RoboticsProject/catkin_ws/install
+prefix=/home/user/catkin_ws/install
 
 Name: franka_msgs
 Description: Description of franka_msgs
 Version: 0.7.0
-Cflags: -I${prefix}/include
-Libs: -L${prefix}/lib 
+Cflags: -I/home/user/catkin_ws/install/include
+Libs: -L/home/user/catkin_ws/install/lib 
 Requires: message_runtime std_msgs

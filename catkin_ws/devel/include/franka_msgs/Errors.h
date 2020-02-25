@@ -246,7 +246,7 @@ namespace message_traits
 
 
 // BOOLTRAITS {'IsFixedSize': True, 'IsMessage': True, 'HasHeader': False}
-// {'franka_msgs': ['/home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_msgs/msg'], 'std_msgs': ['/opt/ros/melodic/share/std_msgs/cmake/../msg']}
+// {'franka_msgs': ['/home/user/catkin_ws/src/franka_ros/franka_msgs/msg'], 'std_msgs': ['/opt/ros/melodic/share/std_msgs/cmake/../msg']}
 
 // !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
 
@@ -313,43 +313,43 @@ struct Definition< ::franka_msgs::Errors_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "bool joint_position_limits_violation\n"
-"bool cartesian_position_limits_violation\n"
-"bool self_collision_avoidance_violation\n"
-"bool joint_velocity_violation\n"
-"bool cartesian_velocity_violation\n"
-"bool force_control_safety_violation\n"
-"bool joint_reflex\n"
-"bool cartesian_reflex\n"
-"bool max_goal_pose_deviation_violation\n"
-"bool max_path_pose_deviation_violation\n"
-"bool cartesian_velocity_profile_safety_violation\n"
-"bool joint_position_motion_generator_start_pose_invalid\n"
-"bool joint_motion_generator_position_limits_violation\n"
-"bool joint_motion_generator_velocity_limits_violation\n"
-"bool joint_motion_generator_velocity_discontinuity\n"
-"bool joint_motion_generator_acceleration_discontinuity\n"
-"bool cartesian_position_motion_generator_start_pose_invalid\n"
-"bool cartesian_motion_generator_elbow_limit_violation\n"
-"bool cartesian_motion_generator_velocity_limits_violation\n"
-"bool cartesian_motion_generator_velocity_discontinuity\n"
-"bool cartesian_motion_generator_acceleration_discontinuity\n"
-"bool cartesian_motion_generator_elbow_sign_inconsistent\n"
-"bool cartesian_motion_generator_start_elbow_invalid\n"
-"bool cartesian_motion_generator_joint_position_limits_violation\n"
-"bool cartesian_motion_generator_joint_velocity_limits_violation\n"
-"bool cartesian_motion_generator_joint_velocity_discontinuity\n"
-"bool cartesian_motion_generator_joint_acceleration_discontinuity\n"
-"bool cartesian_position_motion_generator_invalid_frame\n"
-"bool force_controller_desired_force_tolerance_violation\n"
-"bool controller_torque_discontinuity\n"
-"bool start_elbow_sign_inconsistent\n"
-"bool communication_constraints_violation\n"
-"bool power_limit_violation\n"
-"bool joint_p2p_insufficient_torque_for_planning\n"
-"bool tau_j_range_violation\n"
-"bool instability_detected\n"
-;
+    return "bool joint_position_limits_violation\n\
+bool cartesian_position_limits_violation\n\
+bool self_collision_avoidance_violation\n\
+bool joint_velocity_violation\n\
+bool cartesian_velocity_violation\n\
+bool force_control_safety_violation\n\
+bool joint_reflex\n\
+bool cartesian_reflex\n\
+bool max_goal_pose_deviation_violation\n\
+bool max_path_pose_deviation_violation\n\
+bool cartesian_velocity_profile_safety_violation\n\
+bool joint_position_motion_generator_start_pose_invalid\n\
+bool joint_motion_generator_position_limits_violation\n\
+bool joint_motion_generator_velocity_limits_violation\n\
+bool joint_motion_generator_velocity_discontinuity\n\
+bool joint_motion_generator_acceleration_discontinuity\n\
+bool cartesian_position_motion_generator_start_pose_invalid\n\
+bool cartesian_motion_generator_elbow_limit_violation\n\
+bool cartesian_motion_generator_velocity_limits_violation\n\
+bool cartesian_motion_generator_velocity_discontinuity\n\
+bool cartesian_motion_generator_acceleration_discontinuity\n\
+bool cartesian_motion_generator_elbow_sign_inconsistent\n\
+bool cartesian_motion_generator_start_elbow_invalid\n\
+bool cartesian_motion_generator_joint_position_limits_violation\n\
+bool cartesian_motion_generator_joint_velocity_limits_violation\n\
+bool cartesian_motion_generator_joint_velocity_discontinuity\n\
+bool cartesian_motion_generator_joint_acceleration_discontinuity\n\
+bool cartesian_position_motion_generator_invalid_frame\n\
+bool force_controller_desired_force_tolerance_violation\n\
+bool controller_torque_discontinuity\n\
+bool start_elbow_sign_inconsistent\n\
+bool communication_constraints_violation\n\
+bool power_limit_violation\n\
+bool joint_p2p_insufficient_torque_for_planning\n\
+bool tau_j_range_violation\n\
+bool instability_detected\n\
+";
   }
 
   static const char* value(const ::franka_msgs::Errors_<ContainerAllocator>&) { return value(); }

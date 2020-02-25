@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/franka_msgs_generate_messages_cpp"
-  "/home/medad/RoboticsProject/catkin_ws/devel/include/franka_msgs/Errors.h"
-  "/home/medad/RoboticsProject/catkin_ws/devel/include/franka_msgs/FrankaState.h"
+  "/home/user/catkin_ws/devel/include/franka_msgs/FrankaState.h"
+  "/home/user/catkin_ws/devel/include/franka_msgs/Errors.h"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -1,8 +1,8 @@
-# Install script for directory: /home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_ros
+# Install script for directory: /home/user/catkin_ws/src/franka_ros/franka_ros
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/medad/RoboticsProject/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/user/catkin_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,6 +38,6 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/franka_ros" TYPE FILE FILES "/home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_ros/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/franka_ros" TYPE FILE FILES "/home/user/catkin_ws/src/franka_ros/franka_ros/package.xml")
 endif()
 

@@ -1,8 +1,8 @@
-# Install script for directory: /home/medad/RoboticsProject/catkin_ws/src
+# Install script for directory: /home/user/catkin_ws/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/medad/RoboticsProject/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/user/catkin_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -49,96 +49,90 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/medad/RoboticsProject/catkin_ws/install/_setup_util.py")
+   "/home/user/catkin_ws/install/_setup_util.py")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/medad/RoboticsProject/catkin_ws/install" TYPE PROGRAM FILES "/home/medad/RoboticsProject/catkin_ws/build/catkin_generated/installspace/_setup_util.py")
+file(INSTALL DESTINATION "/home/user/catkin_ws/install" TYPE PROGRAM FILES "/home/user/catkin_ws/build/catkin_generated/installspace/_setup_util.py")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/medad/RoboticsProject/catkin_ws/install/env.sh")
+   "/home/user/catkin_ws/install/env.sh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/medad/RoboticsProject/catkin_ws/install" TYPE PROGRAM FILES "/home/medad/RoboticsProject/catkin_ws/build/catkin_generated/installspace/env.sh")
+file(INSTALL DESTINATION "/home/user/catkin_ws/install" TYPE PROGRAM FILES "/home/user/catkin_ws/build/catkin_generated/installspace/env.sh")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/medad/RoboticsProject/catkin_ws/install/setup.bash;/home/medad/RoboticsProject/catkin_ws/install/local_setup.bash")
+   "/home/user/catkin_ws/install/setup.bash")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/medad/RoboticsProject/catkin_ws/install" TYPE FILE FILES
-    "/home/medad/RoboticsProject/catkin_ws/build/catkin_generated/installspace/setup.bash"
-    "/home/medad/RoboticsProject/catkin_ws/build/catkin_generated/installspace/local_setup.bash"
-    )
+file(INSTALL DESTINATION "/home/user/catkin_ws/install" TYPE FILE FILES "/home/user/catkin_ws/build/catkin_generated/installspace/setup.bash")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/medad/RoboticsProject/catkin_ws/install/setup.sh;/home/medad/RoboticsProject/catkin_ws/install/local_setup.sh")
+   "/home/user/catkin_ws/install/setup.sh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/medad/RoboticsProject/catkin_ws/install" TYPE FILE FILES
-    "/home/medad/RoboticsProject/catkin_ws/build/catkin_generated/installspace/setup.sh"
-    "/home/medad/RoboticsProject/catkin_ws/build/catkin_generated/installspace/local_setup.sh"
-    )
+file(INSTALL DESTINATION "/home/user/catkin_ws/install" TYPE FILE FILES "/home/user/catkin_ws/build/catkin_generated/installspace/setup.sh")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/medad/RoboticsProject/catkin_ws/install/setup.zsh;/home/medad/RoboticsProject/catkin_ws/install/local_setup.zsh")
+   "/home/user/catkin_ws/install/setup.zsh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/medad/RoboticsProject/catkin_ws/install" TYPE FILE FILES
-    "/home/medad/RoboticsProject/catkin_ws/build/catkin_generated/installspace/setup.zsh"
-    "/home/medad/RoboticsProject/catkin_ws/build/catkin_generated/installspace/local_setup.zsh"
-    )
+file(INSTALL DESTINATION "/home/user/catkin_ws/install" TYPE FILE FILES "/home/user/catkin_ws/build/catkin_generated/installspace/setup.zsh")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/medad/RoboticsProject/catkin_ws/install/.rosinstall")
+   "/home/user/catkin_ws/install/.rosinstall")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/medad/RoboticsProject/catkin_ws/install" TYPE FILE FILES "/home/medad/RoboticsProject/catkin_ws/build/catkin_generated/installspace/.rosinstall")
+file(INSTALL DESTINATION "/home/user/catkin_ws/install" TYPE FILE FILES "/home/user/catkin_ws/build/catkin_generated/installspace/.rosinstall")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/medad/RoboticsProject/catkin_ws/build/gtest/cmake_install.cmake")
-  include("/home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_description/cmake_install.cmake")
-  include("/home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_ros/cmake_install.cmake")
-  include("/home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_msgs/cmake_install.cmake")
-  include("/home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_gripper/cmake_install.cmake")
-  include("/home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_visualization/cmake_install.cmake")
-  include("/home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_hw/cmake_install.cmake")
-  include("/home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_control/cmake_install.cmake")
-  include("/home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_example_controllers/cmake_install.cmake")
+  include("/home/user/catkin_ws/build/gtest/cmake_install.cmake")
+  include("/home/user/catkin_ws/build/franka_ros/franka_description/cmake_install.cmake")
+  include("/home/user/catkin_ws/build/franka_ros/franka_ros/cmake_install.cmake")
+  include("/home/user/catkin_ws/build/franka_ros/franka_msgs/cmake_install.cmake")
+  include("/home/user/catkin_ws/build/franka_gazebo/cmake_install.cmake")
+  include("/home/user/catkin_ws/build/franka_ros/franka_gripper/cmake_install.cmake")
+  include("/home/user/catkin_ws/build/franka_ros/franka_visualization/cmake_install.cmake")
+  include("/home/user/catkin_ws/build/moveit_tutorials/cmake_install.cmake")
+  include("/home/user/catkin_ws/build/franka_ros/franka_hw/cmake_install.cmake")
+  include("/home/user/catkin_ws/build/franka_ros/franka_control/cmake_install.cmake")
+  include("/home/user/catkin_ws/build/franka_ros/franka_example_controllers/cmake_install.cmake")
+  include("/home/user/catkin_ws/build/panda_moveit_config/cmake_install.cmake")
 
 endif()
 
@@ -150,5 +144,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/medad/RoboticsProject/catkin_ws/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/user/catkin_ws/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

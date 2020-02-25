@@ -1,8 +1,8 @@
-# Install script for directory: /home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_hw/test
+# Install script for directory: /home/user/catkin_ws/src/franka_ros/franka_hw/test
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/medad/RoboticsProject/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/user/catkin_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

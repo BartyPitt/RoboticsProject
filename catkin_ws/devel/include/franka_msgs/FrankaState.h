@@ -382,7 +382,7 @@ namespace message_traits
 
 
 // BOOLTRAITS {'IsFixedSize': False, 'IsMessage': True, 'HasHeader': True}
-// {'franka_msgs': ['/home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_msgs/msg'], 'std_msgs': ['/opt/ros/melodic/share/std_msgs/cmake/../msg']}
+// {'franka_msgs': ['/home/user/catkin_ws/src/franka_ros/franka_msgs/msg'], 'std_msgs': ['/opt/ros/melodic/share/std_msgs/cmake/../msg']}
 
 // !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
 
@@ -449,105 +449,107 @@ struct Definition< ::franka_msgs::FrankaState_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "std_msgs/Header header\n"
-"float64[6] cartesian_collision\n"
-"float64[6] cartesian_contact\n"
-"float64[7] q\n"
-"float64[7] q_d\n"
-"float64[7] dq\n"
-"float64[7] dq_d\n"
-"float64[7] theta\n"
-"float64[7] dtheta\n"
-"float64[7] tau_J\n"
-"float64[7] dtau_J\n"
-"float64[7] tau_J_d\n"
-"float64[6] K_F_ext_hat_K\n"
-"float64[2] elbow\n"
-"float64[2] elbow_d\n"
-"float64[7] joint_collision\n"
-"float64[7] joint_contact\n"
-"float64[6] O_F_ext_hat_K\n"
-"float64[7] tau_ext_hat_filtered\n"
-"float64 m_ee\n"
-"float64[3] F_x_Cee\n"
-"float64[9] I_ee\n"
-"float64 m_load\n"
-"float64[3] F_x_Cload\n"
-"float64[9] I_load\n"
-"float64 m_total\n"
-"float64[3] F_x_Ctotal\n"
-"float64[9] I_total\n"
-"float64[16] O_T_EE\n"
-"float64[16] O_T_EE_d\n"
-"float64[16] F_T_EE\n"
-"float64[16] EE_T_K\n"
-"float64 time\n"
-"uint8 ROBOT_MODE_OTHER=0\n"
-"uint8 ROBOT_MODE_IDLE=1\n"
-"uint8 ROBOT_MODE_MOVE=2\n"
-"uint8 ROBOT_MODE_GUIDING=3\n"
-"uint8 ROBOT_MODE_REFLEX=4\n"
-"uint8 ROBOT_MODE_USER_STOPPED=5\n"
-"uint8 ROBOT_MODE_AUTOMATIC_ERROR_RECOVERY=6\n"
-"uint8 robot_mode\n"
-"franka_msgs/Errors current_errors\n"
-"franka_msgs/Errors last_motion_errors\n"
-"\n"
-"================================================================================\n"
-"MSG: std_msgs/Header\n"
-"# Standard metadata for higher-level stamped data types.\n"
-"# This is generally used to communicate timestamped data \n"
-"# in a particular coordinate frame.\n"
-"# \n"
-"# sequence ID: consecutively increasing ID \n"
-"uint32 seq\n"
-"#Two-integer timestamp that is expressed as:\n"
-"# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')\n"
-"# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')\n"
-"# time-handling sugar is provided by the client library\n"
-"time stamp\n"
-"#Frame this data is associated with\n"
-"string frame_id\n"
-"\n"
-"================================================================================\n"
-"MSG: franka_msgs/Errors\n"
-"bool joint_position_limits_violation\n"
-"bool cartesian_position_limits_violation\n"
-"bool self_collision_avoidance_violation\n"
-"bool joint_velocity_violation\n"
-"bool cartesian_velocity_violation\n"
-"bool force_control_safety_violation\n"
-"bool joint_reflex\n"
-"bool cartesian_reflex\n"
-"bool max_goal_pose_deviation_violation\n"
-"bool max_path_pose_deviation_violation\n"
-"bool cartesian_velocity_profile_safety_violation\n"
-"bool joint_position_motion_generator_start_pose_invalid\n"
-"bool joint_motion_generator_position_limits_violation\n"
-"bool joint_motion_generator_velocity_limits_violation\n"
-"bool joint_motion_generator_velocity_discontinuity\n"
-"bool joint_motion_generator_acceleration_discontinuity\n"
-"bool cartesian_position_motion_generator_start_pose_invalid\n"
-"bool cartesian_motion_generator_elbow_limit_violation\n"
-"bool cartesian_motion_generator_velocity_limits_violation\n"
-"bool cartesian_motion_generator_velocity_discontinuity\n"
-"bool cartesian_motion_generator_acceleration_discontinuity\n"
-"bool cartesian_motion_generator_elbow_sign_inconsistent\n"
-"bool cartesian_motion_generator_start_elbow_invalid\n"
-"bool cartesian_motion_generator_joint_position_limits_violation\n"
-"bool cartesian_motion_generator_joint_velocity_limits_violation\n"
-"bool cartesian_motion_generator_joint_velocity_discontinuity\n"
-"bool cartesian_motion_generator_joint_acceleration_discontinuity\n"
-"bool cartesian_position_motion_generator_invalid_frame\n"
-"bool force_controller_desired_force_tolerance_violation\n"
-"bool controller_torque_discontinuity\n"
-"bool start_elbow_sign_inconsistent\n"
-"bool communication_constraints_violation\n"
-"bool power_limit_violation\n"
-"bool joint_p2p_insufficient_torque_for_planning\n"
-"bool tau_j_range_violation\n"
-"bool instability_detected\n"
-;
+    return "std_msgs/Header header\n\
+float64[6] cartesian_collision\n\
+float64[6] cartesian_contact\n\
+float64[7] q\n\
+float64[7] q_d\n\
+float64[7] dq\n\
+float64[7] dq_d\n\
+float64[7] theta\n\
+float64[7] dtheta\n\
+float64[7] tau_J\n\
+float64[7] dtau_J\n\
+float64[7] tau_J_d\n\
+float64[6] K_F_ext_hat_K\n\
+float64[2] elbow\n\
+float64[2] elbow_d\n\
+float64[7] joint_collision\n\
+float64[7] joint_contact\n\
+float64[6] O_F_ext_hat_K\n\
+float64[7] tau_ext_hat_filtered\n\
+float64 m_ee\n\
+float64[3] F_x_Cee\n\
+float64[9] I_ee\n\
+float64 m_load\n\
+float64[3] F_x_Cload\n\
+float64[9] I_load\n\
+float64 m_total\n\
+float64[3] F_x_Ctotal\n\
+float64[9] I_total\n\
+float64[16] O_T_EE\n\
+float64[16] O_T_EE_d\n\
+float64[16] F_T_EE\n\
+float64[16] EE_T_K\n\
+float64 time\n\
+uint8 ROBOT_MODE_OTHER=0\n\
+uint8 ROBOT_MODE_IDLE=1\n\
+uint8 ROBOT_MODE_MOVE=2\n\
+uint8 ROBOT_MODE_GUIDING=3\n\
+uint8 ROBOT_MODE_REFLEX=4\n\
+uint8 ROBOT_MODE_USER_STOPPED=5\n\
+uint8 ROBOT_MODE_AUTOMATIC_ERROR_RECOVERY=6\n\
+uint8 robot_mode\n\
+franka_msgs/Errors current_errors\n\
+franka_msgs/Errors last_motion_errors\n\
+\n\
+================================================================================\n\
+MSG: std_msgs/Header\n\
+# Standard metadata for higher-level stamped data types.\n\
+# This is generally used to communicate timestamped data \n\
+# in a particular coordinate frame.\n\
+# \n\
+# sequence ID: consecutively increasing ID \n\
+uint32 seq\n\
+#Two-integer timestamp that is expressed as:\n\
+# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')\n\
+# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')\n\
+# time-handling sugar is provided by the client library\n\
+time stamp\n\
+#Frame this data is associated with\n\
+# 0: no frame\n\
+# 1: global frame\n\
+string frame_id\n\
+\n\
+================================================================================\n\
+MSG: franka_msgs/Errors\n\
+bool joint_position_limits_violation\n\
+bool cartesian_position_limits_violation\n\
+bool self_collision_avoidance_violation\n\
+bool joint_velocity_violation\n\
+bool cartesian_velocity_violation\n\
+bool force_control_safety_violation\n\
+bool joint_reflex\n\
+bool cartesian_reflex\n\
+bool max_goal_pose_deviation_violation\n\
+bool max_path_pose_deviation_violation\n\
+bool cartesian_velocity_profile_safety_violation\n\
+bool joint_position_motion_generator_start_pose_invalid\n\
+bool joint_motion_generator_position_limits_violation\n\
+bool joint_motion_generator_velocity_limits_violation\n\
+bool joint_motion_generator_velocity_discontinuity\n\
+bool joint_motion_generator_acceleration_discontinuity\n\
+bool cartesian_position_motion_generator_start_pose_invalid\n\
+bool cartesian_motion_generator_elbow_limit_violation\n\
+bool cartesian_motion_generator_velocity_limits_violation\n\
+bool cartesian_motion_generator_velocity_discontinuity\n\
+bool cartesian_motion_generator_acceleration_discontinuity\n\
+bool cartesian_motion_generator_elbow_sign_inconsistent\n\
+bool cartesian_motion_generator_start_elbow_invalid\n\
+bool cartesian_motion_generator_joint_position_limits_violation\n\
+bool cartesian_motion_generator_joint_velocity_limits_violation\n\
+bool cartesian_motion_generator_joint_velocity_discontinuity\n\
+bool cartesian_motion_generator_joint_acceleration_discontinuity\n\
+bool cartesian_position_motion_generator_invalid_frame\n\
+bool force_controller_desired_force_tolerance_violation\n\
+bool controller_torque_discontinuity\n\
+bool start_elbow_sign_inconsistent\n\
+bool communication_constraints_violation\n\
+bool power_limit_violation\n\
+bool joint_p2p_insufficient_torque_for_planning\n\
+bool tau_j_range_violation\n\
+bool instability_detected\n\
+";
   }
 
   static const char* value(const ::franka_msgs::FrankaState_<ContainerAllocator>&) { return value(); }

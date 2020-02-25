@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/franka_example_controllers_generate_messages_nodejs"
-  "/home/medad/RoboticsProject/catkin_ws/devel/share/gennodejs/ros/franka_example_controllers/msg/JointTorqueComparison.js"
+  "/home/user/catkin_ws/devel/share/gennodejs/ros/franka_example_controllers/msg/JointTorqueComparison.js"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/medad/RoboticsProject/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/user/catkin_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/medad/RoboticsProject/catkin_ws/build
+CMAKE_BINARY_DIR = /home/user/catkin_ws/build
 
 # Include any dependencies generated for this target.
 include franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/depend.make
@@ -58,17 +58,17 @@ include franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher
 include franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/flags.make
 
 franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.o: franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/flags.make
-franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.o: /home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_visualization/src/gripper_joint_state_publisher.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/medad/RoboticsProject/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.o"
-	cd /home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_visualization && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.o -c /home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_visualization/src/gripper_joint_state_publisher.cpp
+franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.o: /home/user/catkin_ws/src/franka_ros/franka_visualization/src/gripper_joint_state_publisher.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/user/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.o"
+	cd /home/user/catkin_ws/build/franka_ros/franka_visualization && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.o -c /home/user/catkin_ws/src/franka_ros/franka_visualization/src/gripper_joint_state_publisher.cpp
 
 franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.i"
-	cd /home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_visualization && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_visualization/src/gripper_joint_state_publisher.cpp > CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.i
+	cd /home/user/catkin_ws/build/franka_ros/franka_visualization && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/user/catkin_ws/src/franka_ros/franka_visualization/src/gripper_joint_state_publisher.cpp > CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.i
 
 franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.s"
-	cd /home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_visualization && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_visualization/src/gripper_joint_state_publisher.cpp -o CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.s
+	cd /home/user/catkin_ws/build/franka_ros/franka_visualization && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/user/catkin_ws/src/franka_ros/franka_visualization/src/gripper_joint_state_publisher.cpp -o CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.s
 
 franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.o.requires:
 
@@ -88,34 +88,34 @@ gripper_joint_state_publisher_OBJECTS = \
 # External object files for target gripper_joint_state_publisher
 gripper_joint_state_publisher_EXTERNAL_OBJECTS =
 
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.o
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/build.make
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/libfranka.so.0.7.1
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/libroscpp.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_signals.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/librosconsole.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/librosconsole_log4cxx.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/librosconsole_backend_interface.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/liblog4cxx.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_regex.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/libroscpp_serialization.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/libxmlrpcpp.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/librostime.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/libcpp_common.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_system.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_thread.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_chrono.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libpthread.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4
-/home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/medad/RoboticsProject/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable /home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher"
-	cd /home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_visualization && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gripper_joint_state_publisher.dir/link.txt --verbose=$(VERBOSE)
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/src/gripper_joint_state_publisher.cpp.o
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/build.make
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /home/user/catkin_ws/src/libfranka/build/libfranka.so.0.5.0
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/libroscpp.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_signals.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/librosconsole.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/librosconsole_log4cxx.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/librosconsole_backend_interface.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/liblog4cxx.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_regex.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/libroscpp_serialization.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/libxmlrpcpp.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/librostime.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /opt/ros/melodic/lib/libcpp_common.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_system.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_thread.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_chrono.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libpthread.so
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4
+/home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher: franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/user/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable /home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher"
+	cd /home/user/catkin_ws/build/franka_ros/franka_visualization && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gripper_joint_state_publisher.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/build: /home/medad/RoboticsProject/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher
+franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/build: /home/user/catkin_ws/devel/lib/franka_visualization/gripper_joint_state_publisher
 
 .PHONY : franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/build
 
@@ -124,10 +124,10 @@ franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/req
 .PHONY : franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/requires
 
 franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/clean:
-	cd /home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_visualization && $(CMAKE_COMMAND) -P CMakeFiles/gripper_joint_state_publisher.dir/cmake_clean.cmake
+	cd /home/user/catkin_ws/build/franka_ros/franka_visualization && $(CMAKE_COMMAND) -P CMakeFiles/gripper_joint_state_publisher.dir/cmake_clean.cmake
 .PHONY : franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/clean
 
 franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/depend:
-	cd /home/medad/RoboticsProject/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/medad/RoboticsProject/catkin_ws/src /home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_visualization /home/medad/RoboticsProject/catkin_ws/build /home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_visualization /home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/user/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/user/catkin_ws/src /home/user/catkin_ws/src/franka_ros/franka_visualization /home/user/catkin_ws/build /home/user/catkin_ws/build/franka_ros/franka_visualization /home/user/catkin_ws/build/franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : franka_ros/franka_visualization/CMakeFiles/gripper_joint_state_publisher.dir/depend
 

@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/franka_msgs_generate_messages_lisp"
-  "/home/medad/RoboticsProject/catkin_ws/devel/share/common-lisp/ros/franka_msgs/msg/Errors.lisp"
-  "/home/medad/RoboticsProject/catkin_ws/devel/share/common-lisp/ros/franka_msgs/msg/FrankaState.lisp"
+  "/home/user/catkin_ws/devel/share/common-lisp/ros/franka_msgs/msg/FrankaState.lisp"
+  "/home/user/catkin_ws/devel/share/common-lisp/ros/franka_msgs/msg/Errors.lisp"
 )
 
 # Per-language clean rules from dependency scanning.

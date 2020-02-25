@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/medad/RoboticsProject/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/user/catkin_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/medad/RoboticsProject/catkin_ws/build
+CMAKE_BINARY_DIR = /home/user/catkin_ws/build
 
 # Include any dependencies generated for this target.
 include franka_ros/franka_control/CMakeFiles/franka_control_services.dir/depend.make
@@ -58,17 +58,17 @@ include franka_ros/franka_control/CMakeFiles/franka_control_services.dir/progres
 include franka_ros/franka_control/CMakeFiles/franka_control_services.dir/flags.make
 
 franka_ros/franka_control/CMakeFiles/franka_control_services.dir/src/services.cpp.o: franka_ros/franka_control/CMakeFiles/franka_control_services.dir/flags.make
-franka_ros/franka_control/CMakeFiles/franka_control_services.dir/src/services.cpp.o: /home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_control/src/services.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/medad/RoboticsProject/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object franka_ros/franka_control/CMakeFiles/franka_control_services.dir/src/services.cpp.o"
-	cd /home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_control && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/franka_control_services.dir/src/services.cpp.o -c /home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_control/src/services.cpp
+franka_ros/franka_control/CMakeFiles/franka_control_services.dir/src/services.cpp.o: /home/user/catkin_ws/src/franka_ros/franka_control/src/services.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/user/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object franka_ros/franka_control/CMakeFiles/franka_control_services.dir/src/services.cpp.o"
+	cd /home/user/catkin_ws/build/franka_ros/franka_control && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/franka_control_services.dir/src/services.cpp.o -c /home/user/catkin_ws/src/franka_ros/franka_control/src/services.cpp
 
 franka_ros/franka_control/CMakeFiles/franka_control_services.dir/src/services.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/franka_control_services.dir/src/services.cpp.i"
-	cd /home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_control && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_control/src/services.cpp > CMakeFiles/franka_control_services.dir/src/services.cpp.i
+	cd /home/user/catkin_ws/build/franka_ros/franka_control && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/user/catkin_ws/src/franka_ros/franka_control/src/services.cpp > CMakeFiles/franka_control_services.dir/src/services.cpp.i
 
 franka_ros/franka_control/CMakeFiles/franka_control_services.dir/src/services.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/franka_control_services.dir/src/services.cpp.s"
-	cd /home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_control && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_control/src/services.cpp -o CMakeFiles/franka_control_services.dir/src/services.cpp.s
+	cd /home/user/catkin_ws/build/franka_ros/franka_control && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/user/catkin_ws/src/franka_ros/franka_control/src/services.cpp -o CMakeFiles/franka_control_services.dir/src/services.cpp.s
 
 franka_ros/franka_control/CMakeFiles/franka_control_services.dir/src/services.cpp.o.requires:
 
@@ -88,58 +88,58 @@ franka_control_services_OBJECTS = \
 # External object files for target franka_control_services
 franka_control_services_EXTERNAL_OBJECTS =
 
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: franka_ros/franka_control/CMakeFiles/franka_control_services.dir/src/services.cpp.o
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: franka_ros/franka_control/CMakeFiles/franka_control_services.dir/build.make
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libcontroller_manager.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_hw.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libfranka.so.0.7.1
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/liburdf.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/liburdfdom_sensor.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/liburdfdom_model_state.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/liburdfdom_model.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/liburdfdom_world.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libtinyxml.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/librosconsole_bridge.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libclass_loader.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/libPocoFoundation.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libdl.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libroslib.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/librospack.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libpython2.7.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_program_options.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libtinyxml2.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/librealtime_tools.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libtf.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libtf2_ros.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libactionlib.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libmessage_filters.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libroscpp.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_signals.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libxmlrpcpp.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libtf2.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/librosconsole.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/librosconsole_log4cxx.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/librosconsole_backend_interface.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/liblog4cxx.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_regex.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libroscpp_serialization.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/librostime.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libcpp_common.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_system.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_thread.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_chrono.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libpthread.so
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libfranka.so.0.7.1
-/home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so: franka_ros/franka_control/CMakeFiles/franka_control_services.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/medad/RoboticsProject/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library /home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so"
-	cd /home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_control && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/franka_control_services.dir/link.txt --verbose=$(VERBOSE)
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: franka_ros/franka_control/CMakeFiles/franka_control_services.dir/src/services.cpp.o
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: franka_ros/franka_control/CMakeFiles/franka_control_services.dir/build.make
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libcontroller_manager.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /home/user/catkin_ws/devel/lib/libfranka_hw.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /home/user/catkin_ws/src/libfranka/build/libfranka.so.0.5.0
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/liburdf.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/liburdfdom_sensor.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/liburdfdom_model_state.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/liburdfdom_model.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/liburdfdom_world.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libtinyxml.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/librosconsole_bridge.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libclass_loader.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/libPocoFoundation.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libdl.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libroslib.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/librospack.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libpython2.7.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_program_options.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libtinyxml2.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/librealtime_tools.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libtf.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libtf2_ros.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libactionlib.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libmessage_filters.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libroscpp.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_signals.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libxmlrpcpp.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libtf2.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/librosconsole.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/librosconsole_log4cxx.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/librosconsole_backend_interface.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/liblog4cxx.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_regex.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libroscpp_serialization.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/librostime.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /opt/ros/melodic/lib/libcpp_common.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_system.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_thread.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_chrono.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libpthread.so
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: /home/user/catkin_ws/src/libfranka/build/libfranka.so.0.5.0
+/home/user/catkin_ws/devel/lib/libfranka_control_services.so: franka_ros/franka_control/CMakeFiles/franka_control_services.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/user/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library /home/user/catkin_ws/devel/lib/libfranka_control_services.so"
+	cd /home/user/catkin_ws/build/franka_ros/franka_control && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/franka_control_services.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-franka_ros/franka_control/CMakeFiles/franka_control_services.dir/build: /home/medad/RoboticsProject/catkin_ws/devel/lib/libfranka_control_services.so
+franka_ros/franka_control/CMakeFiles/franka_control_services.dir/build: /home/user/catkin_ws/devel/lib/libfranka_control_services.so
 
 .PHONY : franka_ros/franka_control/CMakeFiles/franka_control_services.dir/build
 
@@ -148,10 +148,10 @@ franka_ros/franka_control/CMakeFiles/franka_control_services.dir/requires: frank
 .PHONY : franka_ros/franka_control/CMakeFiles/franka_control_services.dir/requires
 
 franka_ros/franka_control/CMakeFiles/franka_control_services.dir/clean:
-	cd /home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_control && $(CMAKE_COMMAND) -P CMakeFiles/franka_control_services.dir/cmake_clean.cmake
+	cd /home/user/catkin_ws/build/franka_ros/franka_control && $(CMAKE_COMMAND) -P CMakeFiles/franka_control_services.dir/cmake_clean.cmake
 .PHONY : franka_ros/franka_control/CMakeFiles/franka_control_services.dir/clean
 
 franka_ros/franka_control/CMakeFiles/franka_control_services.dir/depend:
-	cd /home/medad/RoboticsProject/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/medad/RoboticsProject/catkin_ws/src /home/medad/RoboticsProject/catkin_ws/src/franka_ros/franka_control /home/medad/RoboticsProject/catkin_ws/build /home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_control /home/medad/RoboticsProject/catkin_ws/build/franka_ros/franka_control/CMakeFiles/franka_control_services.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/user/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/user/catkin_ws/src /home/user/catkin_ws/src/franka_ros/franka_control /home/user/catkin_ws/build /home/user/catkin_ws/build/franka_ros/franka_control /home/user/catkin_ws/build/franka_ros/franka_control/CMakeFiles/franka_control_services.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : franka_ros/franka_control/CMakeFiles/franka_control_services.dir/depend
 

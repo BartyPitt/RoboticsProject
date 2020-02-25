@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/franka_msgs_generate_messages_nodejs"
-  "/home/medad/RoboticsProject/catkin_ws/devel/share/gennodejs/ros/franka_msgs/msg/Errors.js"
-  "/home/medad/RoboticsProject/catkin_ws/devel/share/gennodejs/ros/franka_msgs/msg/FrankaState.js"
+  "/home/user/catkin_ws/devel/share/gennodejs/ros/franka_msgs/msg/FrankaState.js"
+  "/home/user/catkin_ws/devel/share/gennodejs/ros/franka_msgs/msg/Errors.js"
 )
 
 # Per-language clean rules from dependency scanning.
