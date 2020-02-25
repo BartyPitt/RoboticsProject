@@ -44,7 +44,6 @@ import open_cv as vision
 from c4_class import Connect4Robot
 
 # Import libraries
-
 import sys
 import copy
 import rospy
@@ -57,25 +56,20 @@ from math import pi
 from std_msgs.msg import String, Float64MultiArray, MultiArrayDimension, Float64
 from moveit_commander.conversions import pose_to_list
 
-
 # Set up Franka Robot
 moveit_commander.roscpp_initialize(sys.argv)
 rospy.init_node('panda_demo', anonymous=True)
 robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface()
 
-
 display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',moveit_msgs.msg.DisplayTrajectory,queue_size=20)
 
 rospy.sleep(2)
 
-
 PandaRobot = Connect4Robot()
 # Calibration positions
 PandaRobot.closegrip()
-PandaRobot.Calibration([0.4
-    , 0.2, 0.3, pi,0,pi/4])
-
+PandaRobot.Calibration([0.4, 0.2, 0.3, pi,0,pi/4])
 
 PandaRobot.AddPosition("DiskCollection" ,[PandaRobot.x1,PandaRobot.y1 + 0.2 ,PandaRobot.z1 + 0.1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 PandaRobot.AddPosition("AboveBoard" , [PandaRobot.x1,PandaRobot.y1,PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
@@ -127,7 +121,7 @@ while not game_over:
             # get new grid state from most recent capture
             vision.GetPositions('updated_gridstate.jpg')
             # analyse new grid state and get co-ordinate of most recent move
-            new_move = vision.get_row_and_col()
+            new_move = vision.get_row_and_col(coordinates)
             # take the column index from the co-ordinate list, and assign to col
             col = new_move[1]
 
@@ -162,15 +156,16 @@ while not game_over:
             PandaRobot.opengrip()
     
             if botfunc.winning_move(board, BOT_PIECE):
+                print("Ro-Bot Wins!")
                 game_over = True
-                #print("Ro-Bot Wins!")
-
+                
             # Advance turn & alternate between Player 1 and 2
             turn += 1
             turn = turn % 2
 
     # print_board(board)
 
-    # When game finishes, wait for 30 seconds
+    # When game finishes, return Ro-Bot arm to Disk Collection position
     if game_over:
+        PandaRobot.MoveToPosition("DiskCollection")
         print('Game finished!')
