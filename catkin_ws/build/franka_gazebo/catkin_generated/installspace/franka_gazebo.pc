@@ -1,8 +1,0 @@
-prefix=/home/user/catkin_ws/install
-
-Name: franka_gazebo
-Description: Description of franka_gazebo
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/user/catkin_ws/install/lib 
-Requires: 
