@@ -1,18 +1,18 @@
 [submodule "catkin_ws/src/arm_master"]
 	path = catkin_ws/src/arm_master
 	url = https://github.com/de3-robo/arm_master.git
-[submodule "/home/user/RoboticsProject/catkin_ws/src/moveit_tutorials"]
-	path = /home/user/RoboticsProject/catkin_ws/src/moveit_tutorials
+[submodule "catkin_ws/src/moveit_tutorials"]
+	path = catkin_ws/src/moveit_tutorials
 	url = https://github.com/ros-planning/moveit_tutorials.git
-[submodule "/home/user/RoboticsProject/catkin_ws/src/panda_moveit_config"]
-	path = /home/user/RoboticsProject/catkin_ws/src/panda_moveit_config
+[submodule "catkin_ws/src/panda_moveit_config"]
+	path = catkin_ws/src/panda_moveit_config
 	url = https://github.com/ros-planning/panda_moveit_config.git
-[submodule "/home/user/RoboticsProject/catkin_ws/src/franka_gazebo"]
-	path = /home/user/RoboticsProject/catkin_ws/src/franka_gazebo
+[submodule "catkin_ws/src/franka_gazebo"]
+	path = catkin_ws/src/franka_gazebo
 	url = https://github.com/mkrizmancic/franka_gazebo.git
-[submodule "/home/user/RoboticsProject/catkin_ws/src/libfranka"]
-	path = /home/user/RoboticsProject/catkin_ws/src/libfranka
+[submodule "catkin_ws/src/libfranka"]
+	path = catkin_ws/src/libfranka
 	url = https://github.com/frankaemika/libfranka
-[submodule "/home/user/RoboticsProject/catkin_ws/src/franka_ros"]
-	path = /home/user/RoboticsProject/catkin_ws/src/franka_ros
+[submodule "catkin_ws/src/franka_ros"]
+	path = catkin_ws/src/franka_ros
 	url = https://github.com/frankaemika/franka_ros
