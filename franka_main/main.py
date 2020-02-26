@@ -65,7 +65,6 @@ rospy.init_node('panda_demo', anonymous=True)
 robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface()
 
-
 display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',moveit_msgs.msg.DisplayTrajectory,queue_size=20)
 
 # This command makes ros to change the 'allowed_start_tolerance' to 0.05. Prevents controller failure
@@ -80,18 +79,15 @@ rospy.sleep(2)
 
 rospy.sleep(2)
 
-
 PandaRobot = Connect4Robot()
 # Calibration positions
 PandaRobot.closegrip()
 PandaRobot.Calibration([0.3, 0.35, 0.3, pi,0,pi/4])
 
-
 PandaRobot.AddPosition("DiskCollection" ,[PandaRobot.x1,PandaRobot.y1 + 0.2 ,PandaRobot.z1 + 0.1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 PandaRobot.AddPosition("AboveBoard" , [PandaRobot.x1,PandaRobot.y1,PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 for i in range(1,7):
     PandaRobot.AddPosition(str(i) ,[PandaRobot.x1,PandaRobot.y1 - PandaRobot.interpolation(i),PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
-
 
 position_names = ["DiskCollection","AboveBoard","1","2","3","4","5","6"]
 
