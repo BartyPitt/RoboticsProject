@@ -74,7 +74,7 @@ subprocess.call(ros_setup_message, shell=True)
 
 rospy.sleep(2)
 
-rospy.sleep(2)
+#rospy.sleep(2)
 
 PandaRobot = Connect4Robot()
 # Calibration positions
