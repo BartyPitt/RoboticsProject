@@ -59,6 +59,7 @@ from moveit_commander.conversions import pose_to_list
 
 import itertools as it
 import subprocess
+import random
 
 
 # Set up Franka Robot
@@ -83,8 +84,10 @@ rospy.sleep(2)
 PandaRobot = Connect4Robot()
 # Calibration positions
 PandaRobot.closegrip()
-PandaRobot.Calibration([0.3, 0.35, 0.3, pi,0,pi/4])
+PandaRobot.define_coordinates([0.3, 0.35, 0.3, pi,0,pi/4])
 
+# Carry out calibration
+#PandaRobot.Calibration()
 
 
 
@@ -99,30 +102,37 @@ position_names = ["DiskCollection","AboveBoard","1","2","3","4","5","6"]
 
 
 
-# Get object frames
-p = geometry_msgs.msg.PoseStamped()
-p.header.frame_id = robot.get_planning_frame()
-p.pose.position.x = 0.153745
-p.pose.position.y = -0.301298
-p.pose.position.z = 0.
-p.pose.orientation.x =  0.6335811
-p.pose.orientation.y = 0
-p.pose.orientation.z = 0.6335811
-p.pose.orientation.w = 0.4440158
-scene.add_mesh("Connect4", p,"connect4.STL")
+# # Get object frames
+# p = geometry_msgs.msg.PoseStamped()
+# p.header.frame_id = robot.get_planning_frame()
+# p.pose.position.x = 0.153745
+# p.pose.position.y = -0.301298
+# p.pose.position.z = 0.
+# p.pose.orientation.x =  0.6335811
+# p.pose.orientation.y = 0
+# p.pose.orientation.z = 0.6335811
+# p.pose.orientation.w = 0.4440158
+# scene.add_mesh("Connect4", p,"connect4.STL")
 
 
 if __name__ == "__main__":
 
     # Execute motion sequence
     print("executing motion sequence")
-    for a,b in it.combinations(position_names, 2):
+    combis = list(it.permutations(position_names, 2))
+
+    random.shuffle(combis)
+
+
+
+    for i in combis:
+        a,b = i
         print("Going from position '{0}' to position '{1}'".format(a,b))
         PandaRobot.MoveToPosition(a)
-        PandaRobot.opengrip()
-        PandaRobot.closegrip()
+        #PandaRobot.opengrip()
+        #PandaRobot.closegrip()
         PandaRobot.MoveToPosition(b)
-        PandaRobot.opengrip()
-        PandaRobot.closegrip()
+        #PandaRobot.opengrip()
+        #PandaRobot.closegrip()
 
 

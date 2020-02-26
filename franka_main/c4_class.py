@@ -30,7 +30,15 @@ class Connect4Robot():
 		return self.y1 + ydistance
 
 
-	def Calibration(self , LeftCorner,dx = 0 , dy = -0.468 , dz = 0):
+	def Calibration(self):
+		print("Moved to first calibration point")
+		self.moveto([self.x1,self.y1,self.z1,self.roll1,self.pitch1,self.yaw1])
+		raw_input("Press Enter to continue to second calibration point...")
+		self.moveto([self.x2,self.y2,self.z2,self.roll2,self.pitch2,self.yaw2])
+		print("Moved to second calibration point")
+		raw_input("Press Enter to continue to game...")	
+
+	def define_coordinates(self , LeftCorner,dx = 0 , dy = -0.468 , dz = 0):
 		'''Defines top left corner or board (relative to robot) and moves to calibration points'''
 		[x,y,z,roll,pitch,yaw] = LeftCorner 
 		RightCorner = [x+dx,y+dy,z+dz,roll,pitch,yaw]
@@ -39,12 +47,6 @@ class Connect4Robot():
 		[self.x1 ,self.y1 ,self.z1 ,self.roll1 ,self.pitch1 ,self.yaw1]    = LeftCorner
 		[self.x2 , self.y2 , self.z2 , self.roll2 , self.pitch2, self.yaw2] = RightCorner
         
-		print("Moved to first calibration point")
-		self.moveto([self.x1,self.y1,self.z1,self.roll1,self.pitch1,self.yaw1])
-		raw_input("Press Enter to continue to second calibration point...")
-		self.moveto([self.x2,self.y2,self.z2,self.roll2,self.pitch2,self.yaw2])
-		print("Moved to second calibration point")
-		raw_input("Press Enter to continue to game...")	
 	
 	def MoveToPosition(self ,Position):
 		'''Takes the name of the position and moves the robot to that position.'''
