@@ -37,7 +37,9 @@ def get_next_open_row(board, col):
 
 # Change orientation of printed board so it looks like Connect-4 on print
 def print_board(board):
-    print(np.flip(board, 0))
+    print(board)
+
+    #print(np.flip(board, 0))
 
 # Get all locations that could contain a piece
 def get_valid_locations(board):

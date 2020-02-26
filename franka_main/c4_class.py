@@ -121,7 +121,7 @@ class Connect4Robot():
 	    return True
 
 
-	def closegrip(self, simulation=True, GripOveride=None):
+	def closegrip(self, simulation = False, GripOveride=None):
 	    if simulation:
 			if GripOveride == None:
 				GripOveride = self.GripperSizeRetracted
@@ -140,19 +140,27 @@ class Connect4Robot():
 	        # group2.go(joint_goal, wait=True)
 	        # group2.stop()
 
-			# New gripper code close
-			rospy.init_node('Franka_gripper_grasp_action')
-			client = actionlib.SimpleActionClient('/franka_gripper/grasp', GraspAction)
-			rospy.loginfo("CONNECTING")
-			client.wait_for_server()
-			action = GraspGoal(width=0.015,speed=0.08,force=1)
-			rospy.loginfo("SENDING ACTION")
-			client.send_goal(action)
-			client.wait_for_result(rospy.Duration.from_sec(5.0))
-			rospy.loginfo("DONE")
+			#New gripper code close
+			#rospy.init_node('Franka_gripper_grasp_action')
+			# client = actionlib.SimpleActionClient('/franka_gripper/grasp', GraspAction)
+			# rospy.loginfo("CONNECTING")
+			# client.wait_for_server()
+			# action = GraspGoal(width=0.0001,speed=0.08,force=20)
+			# rospy.loginfo("SENDING ACTION")
+			# client.send_goal(action)
+			# client.wait_for_result(rospy.Duration.from_sec(5.0))
+			# rospy.loginfo("DONE")
+
+			group2 = moveit_commander.MoveGroupCommander("hand")
+			joint_goal = group2.get_current_joint_values()
+			joint_goal[0] = 0.0
+			joint_goal[1] = 0.0
+
+			group2.go(joint_goal, wait=True)
+			group2.stop()
 
 
-	def opengrip(self, simulation=True, GripOveride=None):
+	def opengrip(self, simulation=False, GripOveride=None):
 	    if simulation:
 			if GripOveride == None:
 				GripOveride = self.GripperSizeExtended
@@ -172,12 +180,21 @@ class Connect4Robot():
 	        # group2.stop()
 
 			# New gripper code open
-			rospy.init_node('Franka_gripper_grasp_action')
-			client = actionlib.SimpleActionClient('/franka_gripper/grasp', GraspAction)
-			rospy.loginfo("CONNECTING")
-			client.wait_for_server()
-			action = GraspGoal(width=0.05,speed=0.08,force=1)
-			rospy.loginfo("SENDING ACTION")
-			client.send_goal(action)
-			client.wait_for_result(rospy.Duration.from_sec(5.0))
-			rospy.loginfo("DONE")
+			#rospy.init_node('Franka_gripper_grasp_action')
+			# client = actionlib.SimpleActionClient('/franka_gripper/grasp', GraspAction)
+			# rospy.loginfo("CONNECTING")
+			# client.wait_for_server()
+			# action = GraspGoal(width=0.05,speed=0.08,force=1)
+			# rospy.loginfo("SENDING ACTION")
+			# client.send_goal(action)
+			# client.wait_for_result(rospy.Duration.from_sec(5.0))
+			# rospy.loginfo("DONE")
+
+
+			group2 = moveit_commander.MoveGroupCommander("hand")
+			joint_goal = group2.get_current_joint_values()
+			joint_goal[0] = 0.03
+			joint_goal[1] = 0.03
+
+			group2.go(joint_goal, wait=True)
+			group2.stop()
