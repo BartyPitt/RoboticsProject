@@ -5,6 +5,9 @@ import rospy
 import tf
 import geometry_msgs.msg
 import moveit_commander
+import actionlib
+from franka_gripper.msg import GraspAction, GraspGoal
+
 
 class Connect4Robot():
 
@@ -142,7 +145,7 @@ class Connect4Robot():
 			client = actionlib.SimpleActionClient('/franka_gripper/grasp', GraspAction)
 			rospy.loginfo("CONNECTING")
 			client.wait_for_server()
-			action = GraspGoal(width=0.015,speed=0.08,force=1)  0.03
+			action = GraspGoal(width=0.015,speed=0.08,force=1)
 			rospy.loginfo("SENDING ACTION")
 			client.send_goal(action)
 			client.wait_for_result(rospy.Duration.from_sec(5.0))
@@ -173,7 +176,7 @@ class Connect4Robot():
 			client = actionlib.SimpleActionClient('/franka_gripper/grasp', GraspAction)
 			rospy.loginfo("CONNECTING")
 			client.wait_for_server()
-			action = GraspGoal(width=0.05,speed=0.08,force=1)  0.03
+			action = GraspGoal(width=0.05,speed=0.08,force=1)
 			rospy.loginfo("SENDING ACTION")
 			client.send_goal(action)
 			client.wait_for_result(rospy.Duration.from_sec(5.0))
