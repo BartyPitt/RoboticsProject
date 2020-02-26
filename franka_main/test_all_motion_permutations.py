@@ -47,7 +47,6 @@ from c4_class import Connect4Robot
 import sys
 import copy
 import rospy
-import subprocess
 import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
@@ -57,6 +56,9 @@ from math import pi
 from std_msgs.msg import String, Float64MultiArray, MultiArrayDimension, Float64
 from moveit_commander.conversions import pose_to_list
 
+
+import itertools as it
+import subprocess
 
 
 # Set up Franka Robot
@@ -68,15 +70,12 @@ scene = moveit_commander.PlanningSceneInterface()
 
 display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',moveit_msgs.msg.DisplayTrajectory,queue_size=20)
 
-# This command makes ros to change the 'allowed_start_tolerance' to 0.05. Prevents controller failure
 ros_setup_message = """
 rosservice call /move_group/trajectory_execution/set_parameters "config:
   doubles:
     - {name: 'allowed_start_tolerance', value: 0.05}"
 """
 subprocess.call(ros_setup_message, shell=True)
-
-rospy.sleep(2)
 
 rospy.sleep(2)
 
@@ -87,14 +86,19 @@ PandaRobot.closegrip()
 PandaRobot.Calibration([0.3, 0.35, 0.3, pi,0,pi/4])
 
 
-PandaRobot.AddPosition("DiskCollection" ,[PandaRobot.x1,PandaRobot.y1 + 0.4 ,PandaRobot.z1 + 0.1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
+
+
+
+PandaRobot.AddPosition("DiskCollection" ,[PandaRobot.x1,PandaRobot.y1 + 0.2 ,PandaRobot.z1 + 0.1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 PandaRobot.AddPosition("AboveBoard" , [PandaRobot.x1,PandaRobot.y1,PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 for i in range(1,7):
     PandaRobot.AddPosition(str(i) ,[PandaRobot.x1,PandaRobot.y1 - PandaRobot.interpolation(i),PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 
-'''
-Barty check and uncomment collision detection
-'''
+
+position_names = ["DiskCollection","AboveBoard","1","2","3","4","5","6"]
+
+
+
 # Get object frames
 p = geometry_msgs.msg.PoseStamped()
 p.header.frame_id = robot.get_planning_frame()
@@ -107,72 +111,18 @@ p.pose.orientation.z = 0.6335811
 p.pose.orientation.w = 0.4440158
 scene.add_mesh("Connect4", p,"connect4.STL")
 
-# rospy.sleep(3)
 
-# Set static variables
-PLAYER = 0
-BOT = 1
+if __name__ == "__main__":
 
-PLAYER_PIECE = 1
-BOT_PIECE = 2
-
-# Initialise game
-board = botfunc.create_board()
-game_over = False
-turn = 0 # Human goes first
-
-while not game_over:
-    if turn == PLAYER:
-
-        col = int(input("Human (Player 1) choose a column:"))
-        
-        '''
-        OpenCV code to go here: compare 'seen' grid with current board state, and update board state
-        
-        col = OpenCV output
-        '''
-
-        if botfunc.is_valid_location(board, col):
-            row = botfunc.get_next_open_row(board, col)
-            botfunc.drop_piece(board, row, col, PLAYER_PIECE)
-
-            if botfunc.winning_move(board, PLAYER_PIECE):
-                game_over = True
-                print("Human Wins!")
-
-            # Advance turn & alternate between Player 1 and 2
-            turn += 1
-            turn = turn % 2
-
-    if turn == BOT and not game_over:
-
-        # Ask Ro-Bot (Player 2) to pick the best move based on possible opponent future moves
-        col, minimax_score = botfunc.minimax(board, 4, -9999999, 9999999, True) # A higher value takes longer to run
+    # Execute motion sequence
+    print("executing motion sequence")
+    for a,b in it.combinations(position_names, 2):
+        print("Going from position '{0}' to position '{1}'".format(a,b))
+        PandaRobot.MoveToPosition(a)
+        PandaRobot.opengrip()
+        PandaRobot.closegrip()
+        PandaRobot.MoveToPosition(b)
+        PandaRobot.opengrip()
+        PandaRobot.closegrip()
 
 
-        if botfunc.is_valid_location(board, col):
-            row = botfunc.get_next_open_row(board, col)
-            botfunc.drop_piece(board, row, col, BOT_PIECE)
-
-            # Execute motion sequence
-            PandaRobot.opengrip()
-            PandaRobot.MoveToPosition("DiskCollection")
-            PandaRobot.closegrip()
-            PandaRobot.MoveToPosition("AboveBoard")
-            PandaRobot.MoveToPosition(str(col+1))
-            PandaRobot.opengrip()
-    
-
-            if botfunc.winning_move(board, BOT_PIECE):
-                game_over = True
-                #print("Ro-Bot Wins!")
-
-            # Advance turn & alternate between Player 1 and 2
-            turn += 1
-            turn = turn % 2
-
-    # print_board(board)
-
-    # When game finishes, wait for 30 seconds
-    if game_over:
-        print('Game finished!')

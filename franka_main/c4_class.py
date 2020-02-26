@@ -35,12 +35,13 @@ class Connect4Robot():
 		self.__positions__["RightCorner"] = RightCorner
 		[self.x1 ,self.y1 ,self.z1 ,self.roll1 ,self.pitch1 ,self.yaw1]    = LeftCorner
 		[self.x2 , self.y2 , self.z2 , self.roll2 , self.pitch2, self.yaw2] = RightCorner
-
+        
+		print("Moved to first calibration point")
 		self.moveto([self.x1,self.y1,self.z1,self.roll1,self.pitch1,self.yaw1])
-		rospy.sleep(5)
+		raw_input("Press Enter to continue to second calibration point...")
 		self.moveto([self.x2,self.y2,self.z2,self.roll2,self.pitch2,self.yaw2])
-		rospy.sleep(5)
-	
+		print("Moved to second calibration point")
+		raw_input("Press Enter to continue to game...")	
 	
 	def MoveToPosition(self ,Position):
 		'''Takes the name of the position and moves the robot to that position.'''
@@ -70,7 +71,7 @@ class Connect4Robot():
 
 		self.group.set_pose_target(pose_goal) # Set new pose objective
 		plan = self.group.go(wait=True) # Move to new pose
-		rospy.sleep(2)
+		#rospy.sleep(2)
 		# It is always good to clear your targets after planning with poses.
 		self.group.clear_pose_targets()
 
