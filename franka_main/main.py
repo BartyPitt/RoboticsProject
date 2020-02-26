@@ -121,7 +121,7 @@ visionworking = False
 while not game_over:
     if turn == PLAYER:
 
-        if visionworking = False:
+        if visionworking == False:
 
             print("")
             print("")
