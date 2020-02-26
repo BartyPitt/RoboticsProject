@@ -83,10 +83,10 @@ PandaRobot.Calibration([0.3, 0.35, 0.3, pi,0,pi/4])
 
 PandaRobot.AddPosition("DiskCollection" ,[PandaRobot.x1,PandaRobot.y1 + 0.2 ,PandaRobot.z1 + 0.1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 PandaRobot.AddPosition("AboveBoard" , [PandaRobot.x1,PandaRobot.y1,PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
-for i in range(1,7):
+for i in range(0,6):
     PandaRobot.AddPosition(str(i) ,[PandaRobot.x1,PandaRobot.y1 - PandaRobot.interpolation(i),PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 
-position_names = ["DiskCollection","AboveBoard","1","2","3","4","5","6"]
+position_names = ["DiskCollection","AboveBoard","0","1","2","3","4","5","6"]
 
 '''
 Barty check and uncomment collision detection
@@ -174,7 +174,7 @@ while not game_over:
             PandaRobot.MoveToPosition("DiskCollection")
             PandaRobot.closegrip()
             PandaRobot.MoveToPosition("AboveBoard")
-            PandaRobot.MoveToPosition(str(col+1))
+            PandaRobot.MoveToPosition(str(col))
             PandaRobot.opengrip()
 
             if botfunc.winning_move(board, BOT_PIECE):
