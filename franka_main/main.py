@@ -67,6 +67,7 @@ display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path
 rospy.sleep(2)
 
 PandaRobot = Connect4Robot()
+
 # Calibration positions
 PandaRobot.closegrip()
 PandaRobot.Calibration([0.4, 0.2, 0.3, pi,0,pi/4])
