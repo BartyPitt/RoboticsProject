@@ -79,7 +79,7 @@ rospy.sleep(2)
 PandaRobot = Connect4Robot()
 # Calibration positions
 PandaRobot.closegrip()
-PandaRobot.Calibration([0.3, 0.35, 0.3, pi,0,pi/4])
+PandaRobot.define_coordinates([0.3, 0.35, 0.3, pi,0,pi/4])
 
 # Carry out calibration
 PandaRobot.Calibration()
