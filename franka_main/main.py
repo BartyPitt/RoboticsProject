@@ -1,7 +1,6 @@
 '''
 Pseudocode
 '''
-
 # Set up & initialise game
 
 # LOOP 
@@ -56,8 +55,6 @@ from time import sleep
 from math import pi
 from std_msgs.msg import String, Float64MultiArray, MultiArrayDimension, Float64
 from moveit_commander.conversions import pose_to_list
-
-
 
 # Set up Franka Robot
 moveit_commander.roscpp_initialize(sys.argv)
@@ -119,20 +116,29 @@ BOT_PIECE = 2
 board = botfunc.create_board()
 game_over = False
 turn = 0 # Human goes first
+visionworking = False
 
 while not game_over:
     if turn == PLAYER:
 
-        print("")
-        print("")
+        if visionworking = False:
 
-        col = int(input("Human (Player 1) choose a column:"))
-        
-        '''
-        OpenCV code to go here: compare 'seen' grid with current board state, and update board state
-        
-        col = OpenCV output
-        '''
+            print("")
+            print("")
+            move = int(input("Human (Player 1) choose a column:"))
+
+            if move in range(0,6):
+                col = move
+            else:
+                move = int(input("Human (Player 1) choose a column:"))
+
+        else:
+            # get new grid state from most recent capture
+            vision.GetPositions('updated_gridstate.jpg')
+            # analyse new grid state and get co-ordinate of most recent move
+            new_move = vision.get_row_and_col(coordinates)
+            # take the column index from the co-ordinate list, and assign to col
+            col = new_move[1]
 
         if botfunc.is_valid_location(board, col):
             row = botfunc.get_next_open_row(board, col)
@@ -150,7 +156,7 @@ while not game_over:
 
         # Ask Ro-Bot (Player 2) to pick the best move based on possible opponent future moves
         col, minimax_score = botfunc.minimax(board, 4, -9999999, 9999999, True) # A higher value takes longer to run
-        print("Robot (Player 2) choose column:{0}".format(col))
+        print("Ro-Bot (Player 2) chose column: {0}".format(col))
 
 
         if botfunc.is_valid_location(board, col):
@@ -161,7 +167,7 @@ while not game_over:
             print("")
             botfunc.print_board(board)
             print("=============================================================")
-            print("Robot is currently dropping the piece. please wait")
+            print("Ro-Bot is currently dropping the piece. Please wait!")
 
             # Execute motion sequence
             PandaRobot.opengrip()
@@ -171,19 +177,17 @@ while not game_over:
             PandaRobot.MoveToPosition(str(col+1))
             PandaRobot.opengrip()
 
-
-
             if botfunc.winning_move(board, BOT_PIECE):
+                print("Ro-Bot Wins!")
                 game_over = True
-                #print("Ro-Bot Wins!")
 
             # Advance turn & alternate between Player 1 and 2
             turn += 1
             turn = turn % 2
 
-
     # When game finishes, wait for 30 seconds
     if game_over:
+        PandaRobot.MoveToPosition("DiskCollection")
         print('Game finished!')
 
 
