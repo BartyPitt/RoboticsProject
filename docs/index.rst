@@ -13,6 +13,7 @@ How to teach your robot to play connect four
 
    getting_start
    gazebo_problems
+   Open_Cv
 
 
 Indices and tables

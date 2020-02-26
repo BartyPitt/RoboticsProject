@@ -38,6 +38,8 @@ Pseudocode
 Code
 '''
 
+
+
 # Import required python files
 import c4_bot_functions as botfunc
 from c4_class import Connect4Robot , MultiVaribleInterpolation
@@ -47,7 +49,6 @@ from c4_class import Connect4Robot , MultiVaribleInterpolation
 import sys
 import copy
 import rospy
-import subprocess
 import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
@@ -58,23 +59,10 @@ from std_msgs.msg import String, Float64MultiArray, MultiArrayDimension, Float64
 from moveit_commander.conversions import pose_to_list
 
 
-
 # Set up Franka Robot
 
 
-
-display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',moveit_msgs.msg.DisplayTrajectory,queue_size=20)
-
-# This command makes ros to change the 'allowed_start_tolerance' to 0.05. Prevents controller failure
-ros_setup_message = """
-rosservice call /move_group/trajectory_execution/set_parameters "config:
-  doubles:
-    - {name: 'allowed_start_tolerance', value: 0.05}"
-"""
-subprocess.call(ros_setup_message, shell=True)
-
 rospy.sleep(2)
-
 
 
 PandaRobot = Connect4Robot()
@@ -85,24 +73,22 @@ PandaRobot.Calibration([0.3, 0.35, 0.3, pi,0,pi/4])
 
 PandaRobot.AddPosition("DiskCollection" ,PandaRobot.__positions__["LeftCorner"])
 PandaRobot.AddPosition("AboveBoard" , PandaRobot.__positions__["LeftCorner"])
-
 for i in range(1,7):
     PandaRobot.AddPosition(str(i) ,PandaRobot.MultiVaribleInterpolationPanda("LeftCorner","RightCorner",PandaRobot.interpolationPercentGen(i)))
 
-'''
-Barty check and uncomment collision detection
-'''
-# Get object frames
-p = geometry_msgs.msg.PoseStamped()
-p.header.frame_id = robot.get_planning_frame()
-p.pose.position.x = 0.153745
-p.pose.position.y = -0.301298
-p.pose.position.z = 0.
-p.pose.orientation.x =  0.6335811
-p.pose.orientation.y = 0
-p.pose.orientation.z = 0.6335811
-p.pose.orientation.w = 0.4440158
-scene.add_mesh("Connect4", p,"connect4.STL")
+
+
+# # Get object frames
+# p = geometry_msgs.msg.PoseStamped()
+# p.header.frame_id = robot.get_planning_frame()
+# p.pose.position.x = 0.153745
+# p.pose.position.y = -0.301298
+# p.pose.position.z = 0.
+# p.pose.orientation.x =  0.6335811
+# p.pose.orientation.y = 0
+# p.pose.orientation.z = 0.6335811
+# p.pose.orientation.w = 0.4440158
+# scene.add_mesh("Connect4", p,"connect4.STL")
 
 # rospy.sleep(3)
 
