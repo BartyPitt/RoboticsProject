@@ -23,7 +23,7 @@ class Connect4Robot():
 		self.__positions__[PositionName] = PositionCordinates
 
 	def interpolation(self, column):
-		ydistance = (self.y2-self.y1)/6 * (column-1)
+		ydistance = (self.y2-self.y1)/6 * (column)
 		return self.y1 + ydistance
 
 
