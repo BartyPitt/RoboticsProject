@@ -87,10 +87,13 @@ PandaRobot.closegrip()
 PandaRobot.Calibration([0.3, 0.35, 0.3, pi,0,pi/4])
 
 
-PandaRobot.AddPosition("DiskCollection" ,[PandaRobot.x1,PandaRobot.y1 + 0.4 ,PandaRobot.z1 + 0.1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
+PandaRobot.AddPosition("DiskCollection" ,[PandaRobot.x1,PandaRobot.y1 + 0.2 ,PandaRobot.z1 + 0.1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 PandaRobot.AddPosition("AboveBoard" , [PandaRobot.x1,PandaRobot.y1,PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 for i in range(1,7):
     PandaRobot.AddPosition(str(i) ,[PandaRobot.x1,PandaRobot.y1 - PandaRobot.interpolation(i),PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
+
+
+position_names = ["DiskCollection","AboveBoard","1","2","3","4","5","6"]
 
 '''
 Barty check and uncomment collision detection
@@ -124,6 +127,9 @@ turn = 0 # Human goes first
 while not game_over:
     if turn == PLAYER:
 
+        print("")
+        print("")
+
         col = int(input("Human (Player 1) choose a column:"))
         
         '''
@@ -148,11 +154,18 @@ while not game_over:
 
         # Ask Ro-Bot (Player 2) to pick the best move based on possible opponent future moves
         col, minimax_score = botfunc.minimax(board, 4, -9999999, 9999999, True) # A higher value takes longer to run
+        print("Robot (Player 2) choose column:{0}".format(col))
 
 
         if botfunc.is_valid_location(board, col):
             row = botfunc.get_next_open_row(board, col)
             botfunc.drop_piece(board, row, col, BOT_PIECE)
+            print("=============================================================")
+            print("   0   1   2   3   4   5   6 ")
+            print("")
+            botfunc.print_board(board)
+            print("=============================================================")
+            print("Robot is currently dropping the piece. please wait")
 
             # Execute motion sequence
             PandaRobot.opengrip()
@@ -161,7 +174,8 @@ while not game_over:
             PandaRobot.MoveToPosition("AboveBoard")
             PandaRobot.MoveToPosition(str(col+1))
             PandaRobot.opengrip()
-    
+
+
 
             if botfunc.winning_move(board, BOT_PIECE):
                 game_over = True
@@ -171,8 +185,11 @@ while not game_over:
             turn += 1
             turn = turn % 2
 
-    # print_board(board)
 
     # When game finishes, wait for 30 seconds
     if game_over:
         print('Game finished!')
+
+
+
+

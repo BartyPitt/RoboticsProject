@@ -65,7 +65,7 @@ class Connect4Robot():
 
 	def moveto(self,Position): #position in form [x,y,z,roll,pitch,yaw]
 		'''Moves to a given position'''
-		print("Moving to: ({},{},{}) with angle ({:.2f},{:.2f},{:.2f})".format(*Position))
+		#print("Moving to: ({},{},{}) with angle ({:.2f},{:.2f},{:.2f})".format(*Position))
 		#Converting the roll, pitch, yaw values to values which "moveit" understands
 		pose_goal = self.CordinatesToPose(Position)
 
