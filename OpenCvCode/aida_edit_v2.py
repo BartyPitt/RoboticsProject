@@ -301,8 +301,9 @@ def GetPossitions(img ,Location = True):
 def SnapShotAndPossition():
     cap = cv2.VideoCapture(0)
     ret, frame = cap.read()
-    GetPossitions(frame , Location = False)
+    Board = GetPossitions(frame , Location = False)
     cap.release()
+    return Board
 
 
 GetPossitions('/Users/aidam/Desktop/Robotics Coursework/Images/WithRedDot/Grid1.jpg')
