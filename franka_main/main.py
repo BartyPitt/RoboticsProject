@@ -73,10 +73,9 @@ rosservice call /move_group/trajectory_execution/set_parameters "config:
 """
 subprocess.call(ros_setup_message, shell=True)
 
-rospy.sleep(2)
+#rospy.sleep(2)
 
-# rospy.sleep(2)
-
+#
 PandaRobot = Connect4Robot()
 # Calibration positions
 PandaRobot.closegrip()
@@ -115,7 +114,8 @@ for i in range(0, 7):
 position_names = ["DiskCollection", "AboveBoard", "0", "1", "2", "3", "4", "5", "6"]
 
 '''
-Barty check and uncomment collision detection
+Barty check and uncomment collision detection. 
+@Medad: this is how its done: https://answers.ros.org/question/209030/moveit-planningsceneinterface-addbox-not-showing-in-rviz/
 '''
 # Get object frames
 # p = geometry_msgs.msg.PoseStamped()

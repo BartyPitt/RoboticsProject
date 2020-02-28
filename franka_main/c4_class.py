@@ -73,7 +73,7 @@ class Connect4Robot():
 
         self.group.set_pose_target(pose_goal)  # Set new pose objective
         plan = self.group.go(wait=True)  # Move to new pose
-        # rospy.sleep(2)
+        rospy.sleep(0.5)
         # It is always good to clear your targets after planning with poses.
         self.group.clear_pose_targets()
 
@@ -129,7 +129,7 @@ class Connect4Robot():
             gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
             gripper_msg.data = [GripOveride, GripOveride]
             gripper_publisher.publish(gripper_msg)
-            rospy.sleep(2)
+            rospy.sleep(0.5)
         else:
             # group2 = moveit_commander.MoveGroupCommander("hand")
             # joint_goal = group2.get_current_joint_values()
@@ -168,7 +168,7 @@ class Connect4Robot():
             gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
             gripper_msg.data = [GripOveride, GripOveride]
             gripper_publisher.publish(gripper_msg)
-            rospy.sleep(2)
+            rospy.sleep(0.5)
         else:
             # group2 = moveit_commander.MoveGroupCommander("hand")
             # joint_goal = group2.get_current_joint_values()

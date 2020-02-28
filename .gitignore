@@ -10,3 +10,8 @@ catkin_ws/src/CMakeLists.txt
 .idea/RoboticsProject.iml
 .idea/vcs.xml
 .idea/workspace.xml
+franka_main/.idea/franka_main.iml
+franka_main/.idea/misc.xml
+franka_main/.idea/modules.xml
+franka_main/.idea/vcs.xml
+franka_main/.idea/workspace.xml

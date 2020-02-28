@@ -78,7 +78,7 @@ rosservice call /move_group/trajectory_execution/set_parameters "config:
 """
 subprocess.call(ros_setup_message, shell=True)
 
-rospy.sleep(2)
+#rospy.sleep(2)
 
 
 PandaRobot = Connect4Robot()
