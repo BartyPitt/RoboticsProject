@@ -5,31 +5,31 @@ Pseudocode
 
 # LOOP 
 
-    # Human (Player) move
+# Human (Player) move
 
-    # Call OpenCV function 
-        # Get camera view
-        # Create virtual board
-        # Compare with previous board state
-        # Identify change (chosen column)
-        # Output column
+# Call OpenCV function
+# Get camera view
+# Create virtual board
+# Compare with previous board state
+# Identify change (chosen column)
+# Output column
 
-    # Input player move (column) into bot
-    # Advance turn
+# Input player move (column) into bot
+# Advance turn
 
-    # Bot (Ro-Bot) move
+# Bot (Ro-Bot) move
 
-    # Identify best move (column)
-    # Place bot move in virtual board
-    # Translate into co-ordinates (distance factor)
+# Identify best move (column)
+# Place bot move in virtual board
+# Translate into co-ordinates (distance factor)
 
-    # Call Motion Planning algorithm
-        # Take in move co-ordinate
-        # Motion plan calculated
-        # Execute robot motion
-        # WAIT for robot move to finish
+# Call Motion Planning algorithm
+# Take in move co-ordinate
+# Motion plan calculated
+# Execute robot motion
+# WAIT for robot move to finish
 
-    # Advance turn
+# Advance turn
 
 # Game finished
 
@@ -41,7 +41,7 @@ Code
 import c4_bot_functions as botfunc
 from c4_class import Connect4Robot
 
-# Import libraries
+# Import libraries|
 
 import sys
 import copy
@@ -62,7 +62,8 @@ rospy.init_node('panda_demo', anonymous=True)
 robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface()
 
-display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',moveit_msgs.msg.DisplayTrajectory,queue_size=20)
+display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path', moveit_msgs.msg.DisplayTrajectory,
+                                               queue_size=20)
 
 # This command makes ros to change the 'allowed_start_tolerance' to 0.05. Prevents controller failure
 ros_setup_message = """
@@ -74,23 +75,44 @@ subprocess.call(ros_setup_message, shell=True)
 
 rospy.sleep(2)
 
-#rospy.sleep(2)
+# rospy.sleep(2)
 
 PandaRobot = Connect4Robot()
 # Calibration positions
 PandaRobot.closegrip()
-PandaRobot.define_coordinates([0.3, 0.35, 0.3, pi,0,pi/4])
+PandaRobot.define_coordinates([0.3, 0.35, 0.3, pi, 0, pi / 4])
 
 # Carry out calibration
 PandaRobot.Calibration()
 
 
-PandaRobot.AddPosition("DiskCollection" ,[PandaRobot.x1,PandaRobot.y1 + 0.2 ,PandaRobot.z1 + 0.1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
-PandaRobot.AddPosition("AboveBoard" , [PandaRobot.x1,PandaRobot.y1,PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
-for i in range(0,7):
-    PandaRobot.AddPosition(str(i) ,[PandaRobot.x1,PandaRobot.y1 - PandaRobot.interpolation(i),PandaRobot.z1,PandaRobot.roll1,PandaRobot.pitch1,PandaRobot.yaw1])
 
-position_names = ["DiskCollection","AboveBoard","0","1","2","3","4","5","6"]
+# Initialise the positions the robot has to visit
+PandaRobot.AddPosition("DiskCollection",
+                       [PandaRobot.x1,
+                        PandaRobot.y1 + 0.2,
+                        PandaRobot.z1 + 0.1,
+                        PandaRobot.roll1,
+                        PandaRobot.pitch1,
+                        PandaRobot.yaw1])
+
+
+PandaRobot.AddPosition("AboveBoard", [PandaRobot.x1,
+                                      PandaRobot.y1,
+                                      PandaRobot.z1,
+                                      PandaRobot.roll1,
+                                      PandaRobot.pitch1,
+                                      PandaRobot.yaw1])
+for i in range(0, 7):
+    PandaRobot.AddPosition(str(i),
+                           [PandaRobot.x1,
+                            PandaRobot.y1 - PandaRobot.interpolation(i),
+                            PandaRobot.z1,
+                            PandaRobot.roll1,
+                            PandaRobot.pitch1,
+                            PandaRobot.yaw1])
+
+position_names = ["DiskCollection", "AboveBoard", "0", "1", "2", "3", "4", "5", "6"]
 
 '''
 Barty check and uncomment collision detection
@@ -119,7 +141,7 @@ BOT_PIECE = 2
 # Initialise game
 board = botfunc.create_board()
 game_over = False
-turn = 0 # Human goes first
+turn = 0  # Human goes first
 visionworking = False
 
 while not game_over:
@@ -131,7 +153,7 @@ while not game_over:
             print("")
             move = int(input("Human (Player 1) choose a column:"))
 
-            if move in range(0,7):
+            if move in range(0, 7):
                 col = move
             else:
                 move = int(input("Human (Player 1) choose a column:"))
@@ -159,9 +181,8 @@ while not game_over:
     if turn == BOT and not game_over:
 
         # Ask Ro-Bot (Player 2) to pick the best move based on possible opponent future moves
-        col, minimax_score = botfunc.minimax(board, 4, -9999999, 9999999, True) # A higher value takes longer to run
+        col, minimax_score = botfunc.minimax(board, 4, -9999999, 9999999, True)  # A higher value takes longer to run
         print("Ro-Bot (Player 2) chose column: {0}".format(col))
-
 
         if botfunc.is_valid_location(board, col):
             row = botfunc.get_next_open_row(board, col)
@@ -193,7 +214,3 @@ while not game_over:
     if game_over:
         PandaRobot.MoveToPosition("DiskCollection")
         print('Game finished!')
-
-
-
-
