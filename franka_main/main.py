@@ -51,11 +51,15 @@ import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
 import tf
+from IO import bcolors
 from time import sleep
 from math import pi
 from std_msgs.msg import String, Float64MultiArray, MultiArrayDimension, Float64
 from moveit_commander.conversions import pose_to_list
 
+
+
+#print( "\n")
 # Set up Franka Robot
 moveit_commander.roscpp_initialize(sys.argv)
 rospy.init_node('panda_demo', anonymous=True)
@@ -80,9 +84,6 @@ subprocess.call(ros_setup_message, shell=True)
 PandaRobot = Connect4Robot()
 # Calibration positions
 PandaRobot.define_coordinates([0.3, 0.35, 0.3, pi, 0, pi / 4])
-
-
-
 
 # Initialise the positions the robot has to visit
 PandaRobot.AddPosition("DiskCollection",
@@ -115,28 +116,43 @@ PandaRobot.robot_init()
 
 
 
-# Carry out calibration
-PandaRobot.Calibration()
 
 
-position_names = ["DiskCollection", "AboveBoard", "0", "1", "2", "3", "4", "5", "6"]
+position_names = ["DiskCollection", "AboveBoard", "0", "1", "2", "3", "4", "5", "6","LeftCorner","RightCorner"]
 
 '''
 Barty check and uncomment collision detection. 
 @Medad: this is how its done: https://answers.ros.org/question/209030/moveit-planningsceneinterface-addbox-not-showing-in-rviz/
 '''
+
 # Get object frames
 p = geometry_msgs.msg.PoseStamped()
 p.header.frame_id = robot.get_planning_frame()
-p.pose.position.x = 0.153745
+p.pose.position.x = 0.4
 p.pose.position.y = -0.301298
-p.pose.position.z = 0.
-p.pose.orientation.x =  0.6335811
+p.pose.position.z = -0.2
+p.pose.orientation.x =  0.0
 p.pose.orientation.y = 0
-p.pose.orientation.z = 0.6335811
+p.pose.orientation.z = 0.0
 p.pose.orientation.w = 0.4440158
 #scene.add_mesh("Connect4", p,"connect4.STL")
 scene.add_box("table", p, (0.5, 1.5, 0.6))
+rospy.sleep(2)
+
+
+
+# Carry out calibration
+raw_input("Press Enter to move to DiskCollection point...")
+PandaRobot.MoveToPosition("DiskCollection")
+raw_input("Press Enter to open gripper...")
+PandaRobot.opengrip()
+raw_input("Press Enter to close gripper...")
+PandaRobot.closegrip()
+raw_input("Press Enter to move to left corner...")
+PandaRobot.MoveToPosition("LeftCorner")
+raw_input("Press Enter to continue to right corner...")
+PandaRobot.MoveToPosition("RightCorner")
+raw_input("Press Enter to continue to game...")
 
 # rospy.sleep(3)
 
@@ -159,6 +175,7 @@ while not game_over:
         if visionworking == False:
 
             print("")
+            botfunc.pretty_print_board(board)
             print("")
             move = int(input("Human (Player 1) choose a column:"))
 
@@ -181,6 +198,7 @@ while not game_over:
 
             if botfunc.winning_move(board, PLAYER_PIECE):
                 game_over = True
+                botfunc.pretty_print_board(board)
                 print("Human Wins!")
 
             # Advance turn & alternate between Player 1 and 2
@@ -196,20 +214,25 @@ while not game_over:
         if botfunc.is_valid_location(board, col):
             row = botfunc.get_next_open_row(board, col)
             botfunc.drop_piece(board, row, col, BOT_PIECE)
-            print("=============================================================")
-            print("   0   1   2   3   4   5   6 ")
             print("")
-            botfunc.print_board(board)
-            print("=============================================================")
+            #botfunc.print_board(board)
+            botfunc.pretty_print_board(board)
+
+            print("Ro-Bot is currently heading to disk collection point")
+            # Execute motion sequence
+            PandaRobot.MoveToPosition("DiskCollection")
+            PandaRobot.opengrip()
+            raw_input("Press Enter to close gripper...")
+
+            PandaRobot.closegrip()
+
             print("Ro-Bot is currently dropping the piece. Please wait!")
 
-            # Execute motion sequence
-            PandaRobot.opengrip()
-            PandaRobot.MoveToPosition("DiskCollection")
-            PandaRobot.closegrip()
             PandaRobot.MoveToPosition("AboveBoard")
             PandaRobot.MoveToPosition(str(col))
             PandaRobot.opengrip()
+            PandaRobot.closegrip()
+
 
             if botfunc.winning_move(board, BOT_PIECE):
                 print("Ro-Bot Wins!")

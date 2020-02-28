@@ -42,6 +42,26 @@ def get_next_open_row(board, col):
             return r
 
 
+# Print out the board in a nice fancy way!
+def pretty_print_board(board):
+    flipped_board = flip(board, 0)
+    print("\033[0;37;41m 0 \033[0;37;41m 1 \033[0;37;41m 2 \033[0;37;41m 3 \033[0;37;41m 4 \033[0;37;41m 5 \033[0;37;41m 6 \033[0m")
+    for i in flipped_board:
+        row_str = ""
+
+        for j in i:
+            # print("\033[40;38;5;82m Hello \033[30;48;5;82m World \033[0m")
+
+            if j == 1:
+                #print(yellow)
+                row_str +="\033[0;37;43m 1 "
+            elif j ==2:
+                row_str +="\033[0;37;44m 2 "
+            else:
+                #print black
+                row_str +="\033[0;37;45m   "
+        print(row_str+"\033[0m")
+
 # Change orientation of printed board so it looks like Connect-4 on print
 def print_board(board):
     # print(board)

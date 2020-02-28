@@ -30,7 +30,7 @@ class Connect4Robot():
         return self.y1 + ydistance
 
     def Calibration(self):
-    	raw_input("Press Enter to move to pickup point...")
+    	raw_input("Press Enter to move to DiskCollection point...")
     	self.MoveToPosition("DiskCollection")
     	raw_input("Press Enter to open gripper...")
     	self.opengrip()
@@ -130,7 +130,7 @@ class Connect4Robot():
         self.group.clear_pose_targets()
         return True
 
-    def closegrip(self, simulation=False, GripOveride=None):
+    def closegrip(self, simulation=True, GripOveride=None):
         if simulation:
             if GripOveride == None:
                 GripOveride = self.GripperSizeRetracted
@@ -163,13 +163,16 @@ class Connect4Robot():
 
             group2 = moveit_commander.MoveGroupCommander("hand")
             joint_goal = group2.get_current_joint_values()
+            print("current_joint_values: ")
+            print(joint_goal)
             joint_goal[0] = 0.0
             joint_goal[1] = 0.0
+            rospy.sleep(1)
 
             group2.go(joint_goal, wait=True)
             group2.stop()
 
-    def opengrip(self, simulation=False, GripOveride=None):
+    def opengrip(self, simulation=True, GripOveride=None):
         if simulation:
             if GripOveride == None:
                 GripOveride = self.GripperSizeExtended
@@ -204,6 +207,6 @@ class Connect4Robot():
             joint_goal = group2.get_current_joint_values()
             joint_goal[0] = 0.03
             joint_goal[1] = 0.03
-
+            rospy.sleep(1)
             group2.go(joint_goal, wait=True)
             group2.stop()
