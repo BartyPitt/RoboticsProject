@@ -61,6 +61,8 @@ moveit_commander.roscpp_initialize(sys.argv)
 rospy.init_node('panda_demo', anonymous=True)
 robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface()
+rospy.sleep(2)
+
 
 display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path', moveit_msgs.msg.DisplayTrajectory,
                                                queue_size=20)
@@ -73,16 +75,12 @@ rosservice call /move_group/trajectory_execution/set_parameters "config:
 """
 subprocess.call(ros_setup_message, shell=True)
 
-#rospy.sleep(2)
 
 #
 PandaRobot = Connect4Robot()
 # Calibration positions
-PandaRobot.closegrip()
 PandaRobot.define_coordinates([0.3, 0.35, 0.3, pi, 0, pi / 4])
 
-# Carry out calibration
-PandaRobot.Calibration()
 
 
 
@@ -111,6 +109,16 @@ for i in range(0, 7):
                             PandaRobot.pitch1,
                             PandaRobot.yaw1])
 
+
+
+PandaRobot.robot_init()
+
+
+
+# Carry out calibration
+PandaRobot.Calibration()
+
+
 position_names = ["DiskCollection", "AboveBoard", "0", "1", "2", "3", "4", "5", "6"]
 
 '''
@@ -118,16 +126,17 @@ Barty check and uncomment collision detection.
 @Medad: this is how its done: https://answers.ros.org/question/209030/moveit-planningsceneinterface-addbox-not-showing-in-rviz/
 '''
 # Get object frames
-# p = geometry_msgs.msg.PoseStamped()
-# p.header.frame_id = robot.get_planning_frame()
-# p.pose.position.x = 0.153745
-# p.pose.position.y = -0.301298
-# p.pose.position.z = 0.
-# p.pose.orientation.x =  0.6335811
-# p.pose.orientation.y = 0
-# p.pose.orientation.z = 0.6335811
-# p.pose.orientation.w = 0.4440158
-# scene.add_mesh("Connect4", p,"connect4.STL")
+p = geometry_msgs.msg.PoseStamped()
+p.header.frame_id = robot.get_planning_frame()
+p.pose.position.x = 0.153745
+p.pose.position.y = -0.301298
+p.pose.position.z = 0.
+p.pose.orientation.x =  0.6335811
+p.pose.orientation.y = 0
+p.pose.orientation.z = 0.6335811
+p.pose.orientation.w = 0.4440158
+#scene.add_mesh("Connect4", p,"connect4.STL")
+scene.add_box("table", p, (0.5, 1.5, 0.6))
 
 # rospy.sleep(3)
 

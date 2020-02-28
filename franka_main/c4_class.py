@@ -30,11 +30,16 @@ class Connect4Robot():
         return self.y1 + ydistance
 
     def Calibration(self):
-        print("Moved to first calibration point")
+    	raw_input("Press Enter to move to pickup point...")
+    	self.MoveToPosition("DiskCollection")
+    	raw_input("Press Enter to open gripper...")
+    	self.opengrip()
+    	raw_input("Press Enter to close gripper...")
+    	self.closegrip()
+        raw_input("Press Enter to move to left corner...")
         self.moveto([self.x1, self.y1, self.z1, self.roll1, self.pitch1, self.yaw1])
-        raw_input("Press Enter to continue to second calibration point...")
+        raw_input("Press Enter to continue to right corner...")
         self.moveto([self.x2, self.y2, self.z2, self.roll2, self.pitch2, self.yaw2])
-        print("Moved to second calibration point")
         raw_input("Press Enter to continue to game...")
 
     def define_coordinates(self, LeftCorner, dx=0, dy=-0.468, dz=0):
@@ -43,6 +48,7 @@ class Connect4Robot():
         RightCorner = [x + dx, y + dy, z + dz, roll, pitch, yaw]
         self.__positions__["LeftCorner"] = LeftCorner
         self.__positions__["RightCorner"] = RightCorner
+
         [self.x1, self.y1, self.z1, self.roll1, self.pitch1, self.yaw1] = LeftCorner
         [self.x2, self.y2, self.z2, self.roll2, self.pitch2, self.yaw2] = RightCorner
 
@@ -64,6 +70,11 @@ class Connect4Robot():
         pose.position.y = y
         pose.position.z = z
         return pose
+
+    def robot_init(self): 
+        # It is always good to clear your targets after planning with poses.
+        self.group.clear_pose_targets()
+
 
     def moveto(self, Position):  # position in form [x,y,z,roll,pitch,yaw]
         '''Moves to a given position'''
