@@ -130,7 +130,7 @@ class Connect4Robot():
         self.group.clear_pose_targets()
         return True
 
-    def closegrip(self, simulation=True, GripOveride=None):
+    def closegrip(self, simulation=False, GripOveride=None):
         if simulation:
             if GripOveride == None:
                 GripOveride = self.GripperSizeRetracted
@@ -163,8 +163,8 @@ class Connect4Robot():
 
             group2 = moveit_commander.MoveGroupCommander("hand")
             joint_goal = group2.get_current_joint_values()
-            print("current_joint_values: ")
-            print(joint_goal)
+            # print("current_joint_values: ")
+            # print(joint_goal)
             joint_goal[0] = 0.0
             joint_goal[1] = 0.0
             rospy.sleep(1)
@@ -172,7 +172,7 @@ class Connect4Robot():
             group2.go(joint_goal, wait=True)
             group2.stop()
 
-    def opengrip(self, simulation=True, GripOveride=None):
+    def opengrip(self, simulation=False, GripOveride=None):
         if simulation:
             if GripOveride == None:
                 GripOveride = self.GripperSizeExtended

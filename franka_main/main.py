@@ -59,13 +59,35 @@ from moveit_commander.conversions import pose_to_list
 
 
 
-#print( "\n")
+
+
+
+
+
 # Set up Franka Robot
 moveit_commander.roscpp_initialize(sys.argv)
 rospy.init_node('panda_demo', anonymous=True)
+
+
 robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface()
 rospy.sleep(2)
+
+# Get object frames
+p = geometry_msgs.msg.PoseStamped()
+#p = PoseStamped()
+p.header.frame_id = robot.get_planning_frame()
+p.pose.position.x = 0.4
+p.pose.position.y = -0.301298
+p.pose.position.z = -0.2
+p.pose.orientation.x =  0.0
+p.pose.orientation.y = 0
+p.pose.orientation.z = 0.0
+p.pose.orientation.w = 0.4440158
+#scene.add_mesh("Connect4", p,"connect4.STL")
+scene.add_box("table", p, (0.5, 1.5, 0.6))
+rospy.sleep(2)
+
 
 
 display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path', moveit_msgs.msg.DisplayTrajectory,
@@ -125,19 +147,6 @@ Barty check and uncomment collision detection.
 @Medad: this is how its done: https://answers.ros.org/question/209030/moveit-planningsceneinterface-addbox-not-showing-in-rviz/
 '''
 
-# Get object frames
-p = geometry_msgs.msg.PoseStamped()
-p.header.frame_id = robot.get_planning_frame()
-p.pose.position.x = 0.4
-p.pose.position.y = -0.301298
-p.pose.position.z = -0.2
-p.pose.orientation.x =  0.0
-p.pose.orientation.y = 0
-p.pose.orientation.z = 0.0
-p.pose.orientation.w = 0.4440158
-#scene.add_mesh("Connect4", p,"connect4.STL")
-scene.add_box("table", p, (0.5, 1.5, 0.6))
-rospy.sleep(2)
 
 
 
@@ -145,9 +154,9 @@ rospy.sleep(2)
 raw_input("Press Enter to move to DiskCollection point...")
 PandaRobot.MoveToPosition("DiskCollection")
 raw_input("Press Enter to open gripper...")
-PandaRobot.opengrip()
+PandaRobot.opengrip(simulation =simulation_status)
 raw_input("Press Enter to close gripper...")
-PandaRobot.closegrip()
+PandaRobot.closegrip(simulation =simulation_status)
 raw_input("Press Enter to move to left corner...")
 PandaRobot.MoveToPosition("LeftCorner")
 raw_input("Press Enter to continue to right corner...")
@@ -168,6 +177,20 @@ board = botfunc.create_board()
 game_over = False
 turn = 0  # Human goes first
 visionworking = False
+
+
+
+################################################################
+# SWITCHES to change
+
+# Set to true if we are going to use the code for simulation.
+# Ideally we dont want code different between simulation
+# and reality
+simulation_status = False
+
+################################################################
+
+
 
 while not game_over:
     if turn == PLAYER:
@@ -221,17 +244,17 @@ while not game_over:
             print("Ro-Bot is currently heading to disk collection point")
             # Execute motion sequence
             PandaRobot.MoveToPosition("DiskCollection")
-            PandaRobot.opengrip()
+            PandaRobot.opengrip(simulation =simulation_status)
             raw_input("Press Enter to close gripper...")
 
-            PandaRobot.closegrip()
+            PandaRobot.closegrip(simulation =simulation_status)
 
             print("Ro-Bot is currently dropping the piece. Please wait!")
 
             PandaRobot.MoveToPosition("AboveBoard")
             PandaRobot.MoveToPosition(str(col))
-            PandaRobot.opengrip()
-            PandaRobot.closegrip()
+            PandaRobot.opengrip(simulation =simulation_status)
+            PandaRobot.closegrip(simulation =simulation_status)
 
 
             if botfunc.winning_move(board, BOT_PIECE):
