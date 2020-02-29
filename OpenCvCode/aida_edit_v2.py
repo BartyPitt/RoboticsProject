@@ -12,7 +12,9 @@ def get_x_and_y_coord_from_contours(coordinates):
     counter = -1
     coords = []
     for i in coordinates:
+        #print('TEST', coordinates[counter][0])
         counter += 1
+        print('TEST', coordinates[counter][0])
         y_coord = coordinates[counter][0][1]
         x_coord = coordinates[counter][0][0]
         coords.append([x_coord, y_coord])       
@@ -179,6 +181,7 @@ def ConvectionFunction(Image ,LowerBound , UpperBound):
 def plot_centre_line(column, img): 
     '''THIS FUNCTION IS NOT CURRENTLY WORKING BECAUSE THE IMAGE THAT IT NEEDS TO TAKE IN TO DRAW THE LINE
     IS NOT BEING OUTPUTTED/SAVED ANYWHERE YET. CURRENTLY WORKING ON FIXING THAT'''
+    print('THIS IS COLUMN', column)
     point_1 = tuple(column[0])
     print(point_1)
     point_2 = tuple(column[1])
