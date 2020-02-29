@@ -47,6 +47,11 @@ def callback(data):
 
     '''
     pos = data.position
+    print("positoin", pos, len(pos))
+
+    if len(pos) == 1:
+        return
+
     publishers = [rospy.Publisher('/franka/joint{}_position_controller/command'.format(i), Float64, queue_size=1) for i in range(1, 8)]
 
     for i in range(7):

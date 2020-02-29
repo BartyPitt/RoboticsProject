@@ -58,6 +58,16 @@ from std_msgs.msg import String, Float64MultiArray, MultiArrayDimension, Float64
 from moveit_commander.conversions import pose_to_list
 
 
+################################################################
+# SWITCHES to change
+
+# Set to true if we are going to use the code for simulation.
+# Ideally we dont want code different between simulation
+# and reality
+simulation_status = True
+
+################################################################
+
 
 
 
@@ -180,15 +190,6 @@ visionworking = False
 
 
 
-################################################################
-# SWITCHES to change
-
-# Set to true if we are going to use the code for simulation.
-# Ideally we dont want code different between simulation
-# and reality
-simulation_status = False
-
-################################################################
 
 
 

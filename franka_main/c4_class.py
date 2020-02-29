@@ -12,7 +12,7 @@ from franka_gripper.msg import GraspAction, GraspGoal
 class Connect4Robot():
 
     def __init__(self, GripperSizeExtended=0.03, GripperSizeRetracted=0, group=moveit_commander.MoveGroupCommander(
-        "panda_arm")):  # defult positions added to maintain compability with legacy code
+        "panda_arm"), group2 = moveit_commander.MoveGroupCommander("hand")):  # defult positions added to maintain compability with legacy code
         '''Sets up the Inital setup conditions for the robot.
         TODO add in more setup conditions when more are needed.
         '''
@@ -20,6 +20,8 @@ class Connect4Robot():
         self.GripperSizeExtended = GripperSizeExtended
         self.group = group
         self.__positions__ = dict()  # the __ does nothing , it just signifies that I dont want the user to be writting to the memory location directly.
+        self.group2 = group2
+
 
     def AddPosition(self, PositionName, PositionCordinates):
         '''A setter funciton that sets up the positions for the robot to travel to'''
@@ -131,82 +133,45 @@ class Connect4Robot():
         return True
 
     def closegrip(self, simulation=False, GripOveride=None):
-        if simulation:
-            if GripOveride == None:
-                GripOveride = self.GripperSizeRetracted
-            gripper_publisher = rospy.Publisher('/franka/gripper_position_controller/command', Float64MultiArray,
-                                                queue_size=1)
-            gripper_msg = Float64MultiArray()
-            gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
-            gripper_msg.data = [GripOveride, GripOveride]
-            gripper_publisher.publish(gripper_msg)
-            rospy.sleep(0.5)
-        else:
-            # group2 = moveit_commander.MoveGroupCommander("hand")
-            # joint_goal = group2.get_current_joint_values()
-            # joint_goal[0] = self.GripperSizeRetracted
-            # joint_goal[1] = self.GripperSizeRetracted
-
-            # group2.go(joint_goal, wait=True)
-            # group2.stop()
-
-            # New gripper code close
-            # rospy.init_node('Franka_gripper_grasp_action')
-            # client = actionlib.SimpleActionClient('/franka_gripper/grasp', GraspAction)
-            # rospy.loginfo("CONNECTING")
-            # client.wait_for_server()
-            # action = GraspGoal(width=0.0001,speed=0.08,force=20)
-            # rospy.loginfo("SENDING ACTION")
-            # client.send_goal(action)
-            # client.wait_for_result(rospy.Duration.from_sec(5.0))
-            # rospy.loginfo("DONE")
-
-            group2 = moveit_commander.MoveGroupCommander("hand")
-            joint_goal = group2.get_current_joint_values()
-            # print("current_joint_values: ")
-            # print(joint_goal)
+        	# For the real robot
+            joint_goal = self.group2.get_current_joint_values()
             joint_goal[0] = 0.0
             joint_goal[1] = 0.0
-            rospy.sleep(1)
 
-            group2.go(joint_goal, wait=True)
-            group2.stop()
+            self.group2.go(joint_goal, wait=True)
+            self.group2.stop()            
+            if simulation == True:
+                # For Gazebo simulation
+                if GripOveride == None:
+                    GripOveride = self.GripperSizeRetracted
+                gripper_publisher = rospy.Publisher('/franka/gripper_position_controller/command', Float64MultiArray,
+                                                    queue_size=1)
+                gripper_msg = Float64MultiArray()
+                gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
+                gripper_msg.data = [GripOveride, GripOveride]
+                gripper_publisher.publish(gripper_msg)
+                rospy.sleep(0.5)
+
+
+
 
     def opengrip(self, simulation=False, GripOveride=None):
-        if simulation:
-            if GripOveride == None:
-                GripOveride = self.GripperSizeExtended
-            gripper_publisher = rospy.Publisher('/franka/gripper_position_controller/command', Float64MultiArray,
-                                                queue_size=1)
-            gripper_msg = Float64MultiArray()
-            gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
-            gripper_msg.data = [GripOveride, GripOveride]
-            gripper_publisher.publish(gripper_msg)
-            rospy.sleep(0.5)
-        else:
-            # group2 = moveit_commander.MoveGroupCommander("hand")
-            # joint_goal = group2.get_current_joint_values()
-            # joint_goal[0] = self.GripperSizeExtended
-            # joint_goal[1] = self.GripperSizeExtended
 
-            # group2.go(joint_goal, wait=True)
-            # group2.stop()
-
-            # New gripper code open
-            # rospy.init_node('Franka_gripper_grasp_action')
-            # client = actionlib.SimpleActionClient('/franka_gripper/grasp', GraspAction)
-            # rospy.loginfo("CONNECTING")
-            # client.wait_for_server()
-            # action = GraspGoal(width=0.05,speed=0.08,force=1)
-            # rospy.loginfo("SENDING ACTION")
-            # client.send_goal(action)
-            # client.wait_for_result(rospy.Duration.from_sec(5.0))
-            # rospy.loginfo("DONE")
-
-            group2 = moveit_commander.MoveGroupCommander("hand")
-            joint_goal = group2.get_current_joint_values()
+            joint_goal = self.group2.get_current_joint_values()
             joint_goal[0] = 0.03
             joint_goal[1] = 0.03
-            rospy.sleep(1)
-            group2.go(joint_goal, wait=True)
-            group2.stop()
+            self.group2.go(joint_goal, wait=True)
+            self.group2.stop()
+            if simulation == True:
+                # For Gazebo simulation
+                if GripOveride == None:
+                    GripOveride = self.GripperSizeExtended
+                gripper_publisher = rospy.Publisher('/franka/gripper_position_controller/command', Float64MultiArray,
+                                                    queue_size=1)
+                gripper_msg = Float64MultiArray()
+                gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
+                gripper_msg.data = [GripOveride, GripOveride]
+                gripper_publisher.publish(gripper_msg)
+                rospy.sleep(0.5)
+
+
