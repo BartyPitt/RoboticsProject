@@ -136,7 +136,7 @@ PandaRobot.AddPosition("AboveBoard", [PandaRobot.x1,
 for i in range(0, 7):
     PandaRobot.AddPosition(str(i),
                            [PandaRobot.x1,
-                            PandaRobot.y1 - PandaRobot.interpolation(i),
+                            PandaRobot.y1 + PandaRobot.interpolation(i),
                             PandaRobot.z1,
                             PandaRobot.roll1,
                             PandaRobot.pitch1,
@@ -160,18 +160,18 @@ Barty check and uncomment collision detection.
 
 
 
-# Carry out calibration
-raw_input("Press Enter to move to DiskCollection point...")
-PandaRobot.MoveToPosition("DiskCollection")
-raw_input("Press Enter to open gripper...")
-PandaRobot.opengrip(simulation =simulation_status)
-raw_input("Press Enter to close gripper...")
-PandaRobot.closegrip(simulation =simulation_status)
-raw_input("Press Enter to move to left corner...")
-PandaRobot.MoveToPosition("LeftCorner")
-raw_input("Press Enter to continue to right corner...")
-PandaRobot.MoveToPosition("RightCorner")
-raw_input("Press Enter to continue to game...")
+# # Carry out calibration
+# raw_input("Press Enter to move to DiskCollection point...")
+# PandaRobot.MoveToPosition("DiskCollection")
+# raw_input("Press Enter to open gripper...")
+# PandaRobot.opengrip(simulation =simulation_status)
+# raw_input("Press Enter to close gripper...")
+# PandaRobot.closegrip(simulation =simulation_status)
+# raw_input("Press Enter to move to left corner...")
+# PandaRobot.MoveToPosition("LeftCorner")
+# raw_input("Press Enter to continue to right corner...")
+# PandaRobot.MoveToPosition("RightCorner")
+# raw_input("Press Enter to continue to game...")
 
 # rospy.sleep(3)
 

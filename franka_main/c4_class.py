@@ -28,8 +28,8 @@ class Connect4Robot():
         self.__positions__[PositionName] = PositionCordinates
 
     def interpolation(self, column):
-        ydistance = (self.y2 - self.y1) / 6 * (column)
-        return self.y1 + ydistance
+        ydistance = ((self.y2 - self.y1)/6) * (column)
+        return ydistance
 
     def Calibration(self):
     	raw_input("Press Enter to move to DiskCollection point...")
