@@ -160,18 +160,19 @@ Barty check and uncomment collision detection.
 
 
 
-# # Carry out calibration
-# raw_input("Press Enter to move to DiskCollection point...")
+# Carry out calibration
+raw_input("Press Enter to move to DiskCollection point...")
 # PandaRobot.MoveToPosition("DiskCollection")
-# raw_input("Press Enter to open gripper...")
-# PandaRobot.opengrip(simulation =simulation_status)
-# raw_input("Press Enter to close gripper...")
-# PandaRobot.closegrip(simulation =simulation_status)
-# raw_input("Press Enter to move to left corner...")
-# PandaRobot.MoveToPosition("LeftCorner")
-# raw_input("Press Enter to continue to right corner...")
-# PandaRobot.MoveToPosition("RightCorner")
-# raw_input("Press Enter to continue to game...")
+PandaRobot.neutral()
+raw_input("Press Enter to open gripper...")
+PandaRobot.opengrip(simulation =simulation_status)
+raw_input("Press Enter to close gripper...")
+PandaRobot.closegrip(simulation =simulation_status)
+raw_input("Press Enter to move to left corner...")
+PandaRobot.MoveToPosition("LeftCorner")
+raw_input("Press Enter to continue to right corner...")
+PandaRobot.MoveToPosition("RightCorner")
+raw_input("Press Enter to continue to game...")
 
 # rospy.sleep(3)
 
@@ -244,7 +245,8 @@ while not game_over:
 
             print("Ro-Bot is currently heading to disk collection point")
             # Execute motion sequence
-            PandaRobot.MoveToPosition("DiskCollection")
+            # PandaRobot.MoveToPosition("DiskCollection")
+            PandaRobot.neutral()
             PandaRobot.opengrip(simulation =simulation_status)
             raw_input("Press Enter to close gripper...")
 
@@ -268,5 +270,6 @@ while not game_over:
 
     # When game finishes, wait for 30 seconds
     if game_over:
-        PandaRobot.MoveToPosition("DiskCollection")
+        #PandaRobot.MoveToPosition("DiskCollection")
+        PandaRobot.neutral()
         print('Game finished!')

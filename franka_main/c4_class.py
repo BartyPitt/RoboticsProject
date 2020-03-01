@@ -92,10 +92,13 @@ class Connect4Robot():
 
     def movejoints(self, jointAngles):
         '''Takes in joint angles and moves to that pose'''
-        joint_goal = group.get_current_joint_values()
+        joint_goal = self.group.get_current_joint_values()
         joint_goal = jointAngles
-        group.go(joint_goal, wait=True)
-        group.stop()
+        self.group.go(joint_goal, wait=True)
+        self.group.stop()
+
+    def neutral(self):
+    	self.movejoints([0.963,0.264,0.117,-1.806,-0.035,2.063,0.308])
 
     def CartesianPath(self, Endposition, StartPosition=None):
 
