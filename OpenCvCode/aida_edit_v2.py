@@ -7,6 +7,8 @@ Created on Mon Feb  3 22:19:24 2020
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
+import time
+
 def get_x_and_y_coord_from_contours(coordinates):
     '''Takes in a 3 by x matricie and removes the first column'''
     counter = -1
@@ -155,19 +157,27 @@ def where_is_the_new_disk(board1, board2):
             i, j = np.where(result != 0)
     return i, j #i is row, j is col
 
-def ConvectionFunction(Image ,LowerBound , UpperBound):
+def ConvectionFunction(Image ,LowerBounds , UpperBounds):
     '''
     Takes in an Image , the lower bounds and the upper bounds and returns the contours for the image and the thresholds
     TODO add in Adaptive thresholding if needed
     '''
+
     hsv = cv2.cvtColor(Image, cv2.COLOR_BGR2HSV) # Convert to hsv
-    
-    LowerBound = np.array(LowerBound) # Remove if ALL of the code inputs a numpy array into the function
-    UpperBound = np.array(UpperBound)
-    
-    mask = cv2.inRange(hsv , LowerBound , UpperBound) # Creates the mask
-    contours , _ = cv2.findContours(mask , cv2.RETR_TREE , cv2.CHAIN_APPROX_SIMPLE) # Creates contours from the mask
-    
+    for LowerMask,UpperMask in zip(LowerBounds,UpperBounds):
+        LowerBound = np.array(LowerMask) # Remove if ALL of the code inputs a numpy array into the function
+        UpperBound = np.array(UpperMask)
+        mask = cv2.inRange(hsv , LowerBound,UpperBound) # Creates the mask
+        try: 
+            outputMask = outputMask | mask
+        except NameError:
+            outputMask = mask
+    kernel = np.ones((5,5),np.uint8)
+    outputMask = cv2.dilate(outputMask,kernel,iterations = 2)
+    ImageInlineShow(outputMask)
+
+    contours , _ = cv2.findContours(outputMask , cv2.RETR_TREE , cv2.CHAIN_APPROX_SIMPLE) # Creates contours from the mask
+    print("Length of contours is " ,len(contours))
     img2 = Image.copy()
     index = -1
     thickness = 10
@@ -219,16 +229,21 @@ def list_connector(list1, list2):
 def TransformTheImage(img,Extension):  
     '''Takes the image and transforms it , extension if you want to see above the grid.  ''' 
     #Red Contours
-    lower_red = np.array([0,110,139])
-    upper_red = np.array([10,255,255])
+    lower_red1 = np.array([0,110,39])
+    upper_red1 = np.array([10,255,255])
+
+    lower_red2 = np.array([159,39,139])
+    upper_red2 = np.array([179,255,255])
+
     
-    RedContours, __ = ConvectionFunction(img,lower_red , upper_red)
+    RedContours, __ = ConvectionFunction(img,[lower_red1,lower_red2], [upper_red1,upper_red2])
     Red_cordinates = ContourInfo(RedContours , 500)
     
-    Squared = [x[0][0] * x[0][1] for x in Red_cordinates]
+    if len(Red_cordinates) != 4:
+        print("cant locate red dots")
     
-    Red_cordinates = [x[0] for _, x in sorted(zip(Squared,Red_cordinates), key=lambda pair: pair[0])] # like a cheaky zip for when the going gets rough.
-    
+
+
     pts_dst = np.array([[0,Extension] , [0,600 + Extension] , [700,Extension] ,[700 , 600 + Extension]],np.float32)
     Red_cordinates = np.array(Red_cordinates,np.float32)
 
@@ -251,13 +266,11 @@ def ArrayfromCordinates(Cordinates1 , Cordinates2):
 
 
 def GetPossitions(img ,Location = True):
-    if Location:
-         img = cv2.imread(img)
          
     '''Takes In an Image Location and returns what the current layout of the parts is'''
-   
+     if Location:
+         img = cv2.imread(img)
 
-   
     SquareImage = TransformTheImage(img,200)
     #If the Extra space at the top starts causing problems. 
 
@@ -265,34 +278,18 @@ def GetPossitions(img ,Location = True):
     lower_blue = np.array([90,130,80])
     upper_blue = np.array([115,255,255])
     
-    blueContours, blue_img = ConvectionFunction(SquareImage,lower_blue , upper_blue)
+    blueContours, __ = ConvectionFunction(SquareImage,[lower_blue] , [upper_blue])
     blue_coordinates = ContourInfo(blueContours , 500)
 
     #The Yellow Mask
-    lower_yellow = np.array([20,204,150])
-    upper_yellow = np.array([54,255,255])
+    lower_yellow = np.array([20,55,70])
+    upper_yellow = np.array([45,191,200])
     
-    yellowContours, yellow_img = ConvectionFunction(SquareImage,lower_yellow, upper_yellow)
+    yellowContours, __ = ConvectionFunction(SquareImage,[lower_yellow], [upper_yellow])
     yellow_coordinates = ContourInfo(yellowContours , 500)
     
 
-#--------------------------------------------------------------------------------------------------------#
-    """
-    #Joining the contour info output of the yellow and the blue disks
-    #coordinates = list_connector(blue_coordinates, yellow_coordinates) 
-    #removing the area and keeping only the x and y centre coordinates
-    #points = get_x_and_y_coord_from_contours(coordinates)
-    print('points', points)
-    #converting pixles to rows list (x_), columns list(y_), and merging to list of coordinates in terms of
-    #row and columns. Eg: [55, 750] is now [6, 1]
-    x_, y_ , merged = get_row_and_col(points)
-    print('merged', merged)
-    #function to find top and bottom position of disks in each column.
-    #column1, column2, column3, column4, column5, column6 = find_top_and_bottom_coord_of_each_col(x_, y_ , merged, points)
-    #plot_centre_line(column1, yellow_img)
-    ImageInlineShow(yellow_img)
-    """
-    
+#--------------------------------------------------------------------------------------------------------#    
     __ , __ , mergedy = get_row_and_col(get_x_and_y_coord_from_contours(yellowContours))
     __ , __ , mergedb = get_row_and_col(get_x_and_y_coord_from_contours(blue_coordinates))
     Board = ArrayfromCordinates(mergedb , mergedy)
@@ -302,14 +299,19 @@ def GetPossitions(img ,Location = True):
     
 
 def SnapShotAndPossition():
-    cap = cv2.VideoCapture(0)
-    ret, frame = cap.read()
-    Board = GetPossitions(frame , Location = False)
+    '''Takes an image with the webcam and then puts it through the possiton finding algorythm.'''
+    camera = cv2.VideoCapture(0)
+    for i in range(10):
+        temp = camera.read()
+    __, frame = camera.read()
+    frame = cv2.fastNlMeansDenoisingColored(frame,None,10,10,7,21)
+    ImageInlineShow(frame)
+    GetPossitions(frame , Location = False)
     cap.release()
     return Board
 
-
-GetPossitions('/Users/aidam/Desktop/Robotics Coursework/Images/WithRedDot/Grid1.jpg')
+SnapShotAndPossition()
+#GetPossitions('/Users/aidam/Desktop/Robotics Coursework/Images/WithRedDot/Grid1.jpg')
 
 
 # =============================================================================
