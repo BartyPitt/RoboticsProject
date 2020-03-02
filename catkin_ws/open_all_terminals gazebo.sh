@@ -6,3 +6,9 @@ gnome-terminal --tab --title="$title1" --command="bash -c 'roscore; $SHELL'" \
 
 
 
+
+#               --tab --title="$title2" --command="bash -c 'sleep 10s; cd ; cd RoboticsProject/Models;python loadmodel.py; $SHELL'" \
+
+
+
+
