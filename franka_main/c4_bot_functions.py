@@ -2,8 +2,6 @@ import numpy as np
 import random
 import time
 import math
-import operator
-from numpy.core.multiarray import normalize_axis_index
 
 # Set static variables
 ROW_COUNT = 6
@@ -44,7 +42,8 @@ def get_next_open_row(board, col):
 
 # Print out the board in a nice fancy way!
 def pretty_print_board(board):
-    flipped_board = flip(board, 0)
+    flipped_board = np.flipud(board)
+
     print("\033[0;37;41m 0 \033[0;37;41m 1 \033[0;37;41m 2 \033[0;37;41m 3 \033[0;37;41m 4 \033[0;37;41m 5 \033[0;37;41m 6 \033[0m")
     for i in flipped_board:
         row_str = ""
@@ -64,10 +63,7 @@ def pretty_print_board(board):
 
 # Change orientation of printed board so it looks like Connect-4 on print
 def print_board(board):
-    # print(board)
-
-    print(flip(board, 0))
-
+    print(np.flipud(board))
 
 # Get all locations that could contain a piece
 def get_valid_locations(board):
@@ -240,134 +236,3 @@ def minimax(board, depth, alpha, beta, maximisingPlayer):
             if alpha >= beta:
                 break
         return column, value
-
-
-def flip(m, axis=None):
-    """
-    Reverse the order of elements in an array along the given axis.
-    The shape of the array is preserved, but the elements are reordered.
-    .. versionadded:: 1.12.0
-    Parameters
-    ----------
-    m : array_like
-        Input array.
-    axis : None or int or tuple of ints, optional
-         Axis or axes along which to flip over. The default,
-         axis=None, will flip over all of the axes of the input array.
-         If axis is negative it counts from the last to the first axis.
-         If axis is a tuple of ints, flipping is performed on all of the axes
-         specified in the tuple.
-         .. versionchanged:: 1.15.0
-            None and tuples of axes are supported
-    Returns
-    -------
-    out : array_like
-        A view of `m` with the entries of axis reversed.  Since a view is
-        returned, this operation is done in constant time.
-    See Also
-    --------
-    flipud : Flip an array vertically (axis=0).
-    fliplr : Flip an array horizontally (axis=1).
-    Notes
-    -----
-    flip(m, 0) is equivalent to flipud(m).
-    flip(m, 1) is equivalent to fliplr(m).
-    flip(m, n) corresponds to ``m[...,::-1,...]`` with ``::-1`` at position n.
-    flip(m) corresponds to ``m[::-1,::-1,...,::-1]`` with ``::-1`` at all
-    positions.
-    flip(m, (0, 1)) corresponds to ``m[::-1,::-1,...]`` with ``::-1`` at
-    position 0 and position 1.
-    Examples
-    --------
-    >>> A = np.arange(8).reshape((2,2,2))
-    >>> A
-    array([[[0, 1],
-            [2, 3]],
-           [[4, 5],
-            [6, 7]]])
-    >>> np.flip(A, 0)
-    array([[[4, 5],
-            [6, 7]],
-           [[0, 1],
-            [2, 3]]])
-    >>> np.flip(A, 1)
-    array([[[2, 3],
-            [0, 1]],
-           [[6, 7],
-            [4, 5]]])
-    >>> np.flip(A)
-    array([[[7, 6],
-            [5, 4]],
-           [[3, 2],
-            [1, 0]]])
-    >>> np.flip(A, (0, 2))
-    array([[[5, 4],
-            [7, 6]],
-           [[1, 0],
-            [3, 2]]])
-    >>> A = np.random.randn(3,4,5)
-    >>> np.all(np.flip(A,2) == A[:,:,::-1,...])
-    True
-    """
-    if not hasattr(m, 'ndim'):
-        m = np.asarray(m)
-    if axis is None:
-        indexer = (np.s_[::-1],) * m.ndim
-    else:
-        axis = normalize_axis_tuple(axis, m.ndim)
-        indexer = [np.s_[:]] * m.ndim
-        for ax in axis:
-            indexer[ax] = np.s_[::-1]
-        indexer = tuple(indexer)
-    return m[indexer]
-
-
-def normalize_axis_tuple(axis, ndim, argname=None, allow_duplicate=False):
-    """
-    Normalizes an axis argument into a tuple of non-negative integer axes.
-    This handles shorthands such as ``1`` and converts them to ``(1,)``,
-    as well as performing the handling of negative indices covered by
-    `normalize_axis_index`.
-    By default, this forbids axes from being specified multiple times.
-    Used internally by multi-axis-checking logic.
-    .. versionadded:: 1.13.0
-    Parameters
-    ----------
-    axis : int, iterable of int
-        The un-normalized index or indices of the axis.
-    ndim : int
-        The number of dimensions of the array that `axis` should be normalized
-        against.
-    argname : str, optional
-        A prefix to put before the error message, typically the name of the
-        argument.
-    allow_duplicate : bool, optional
-        If False, the default, disallow an axis from being specified twice.
-    Returns
-    -------
-    normalized_axes : tuple of int
-        The normalized axis index, such that `0 <= normalized_axis < ndim`
-    Raises
-    ------
-    AxisError
-        If any axis provided is out of range
-    ValueError
-        If an axis is repeated
-    See also
-    --------
-    normalize_axis_index : normalizing a single scalar axis
-    """
-    # Optimization to speed-up the most common cases.
-    if type(axis) not in (tuple, list):
-        try:
-            axis = [operator.index(axis)]
-        except TypeError:
-            pass
-    # Going via an iterator directly is slower than via list comprehension.
-    axis = tuple([normalize_axis_index(ax, ndim, argname) for ax in axis])
-    if not allow_duplicate and len(set(axis)) != len(axis):
-        if argname:
-            raise ValueError('repeated axis in `{}` argument'.format(argname))
-        else:
-            raise ValueError('repeated axis')
-    return axis

@@ -2,6 +2,8 @@ import numpy as np
 import random
 import time
 import math
+import operator
+#from numpy.core.multiarray import normalize_axis_index
 
 # Set static variables
 ROW_COUNT = 6
@@ -37,7 +39,7 @@ def get_next_open_row(board, col):
 
 # Change orientation of printed board so it looks like Connect-4 on print
 def print_board(board):
-    print(np.flip(board, 0))
+    print(np.flipud(board))
 
 # Get all locations that could contain a piece
 def get_valid_locations(board):
