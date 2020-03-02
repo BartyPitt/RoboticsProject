@@ -202,12 +202,22 @@ while not game_over:
             print("")
             botfunc.pretty_print_board(board)
             print("")
-            move = int(input("Human (Player 1) choose a column:"))
 
-            if move in range(0, 7):
-                col = move
-            else:
-                move = int(input("Human (Player 1) choose a column:"))
+            # Sanitise the input
+            while True:
+                try:
+                    move = int(input("Human (Player 1) choose a column:"))
+                except:
+                    print("Sorry, I didn't understand that.")
+                    continue
+
+                if move not in range(0, 7):
+                    print("Sorry you have keyed in a out of bounds column value")
+                    continue
+                else:
+                    col = move
+                    break
+
 
         else:
             # get new grid state from most recent capture
@@ -253,8 +263,9 @@ while not game_over:
             PandaRobot.closegrip(simulation =simulation_status)
 
             print("Ro-Bot is currently dropping the piece. Please wait!")
+            rospy.sleep(0.3)
 
-            PandaRobot.MoveToPosition("AboveBoard")
+            #PandaRobot.MoveToPosition("AboveBoard")
             PandaRobot.MoveToPosition(str(col))
             PandaRobot.opengrip(simulation =simulation_status)
             PandaRobot.closegrip(simulation =simulation_status)
@@ -273,3 +284,5 @@ while not game_over:
         #PandaRobot.MoveToPosition("DiskCollection")
         PandaRobot.neutral()
         print('Game finished!')
+
+
