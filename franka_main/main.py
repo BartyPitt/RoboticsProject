@@ -65,20 +65,13 @@ from moveit_commander.conversions import pose_to_list
 # Ideally we dont want code different between simulation
 # and reality
 simulation_status = True
+visionworking = False
 
 ################################################################
-
-
-
-
-
-
 
 # Set up Franka Robot
 moveit_commander.roscpp_initialize(sys.argv)
 rospy.init_node('panda_demo', anonymous=True)
-
-
 robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface()
 rospy.sleep(2)
@@ -98,8 +91,6 @@ p.pose.orientation.w = 0.4440158
 scene.add_box("table", p, (0.5, 1.5, 0.6))
 rospy.sleep(2)
 
-
-
 display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path', moveit_msgs.msg.DisplayTrajectory,
                                                queue_size=20)
 
@@ -112,8 +103,8 @@ rosservice call /move_group/trajectory_execution/set_parameters "config:
 subprocess.call(ros_setup_message, shell=True)
 
 
-#
 PandaRobot = Connect4Robot()
+
 # Calibration positions
 PandaRobot.define_coordinates([0.3, 0.35, 0.3, pi, 0, pi / 4])
 
@@ -143,12 +134,7 @@ for i in range(0, 7):
                             PandaRobot.yaw1])
 
 
-
 PandaRobot.robot_init()
-
-
-
-
 
 position_names = ["DiskCollection", "AboveBoard", "0", "1", "2", "3", "4", "5", "6","LeftCorner","RightCorner"]
 
@@ -156,8 +142,6 @@ position_names = ["DiskCollection", "AboveBoard", "0", "1", "2", "3", "4", "5", 
 Barty check and uncomment collision detection. 
 @Medad: this is how its done: https://answers.ros.org/question/209030/moveit-planningsceneinterface-addbox-not-showing-in-rviz/
 '''
-
-
 
 
 # Carry out calibration
@@ -187,11 +171,6 @@ BOT_PIECE = 2
 board = botfunc.create_board()
 game_over = False
 turn = 0  # Human goes first
-visionworking = False
-
-
-
-
 
 
 while not game_over:
@@ -270,7 +249,6 @@ while not game_over:
             PandaRobot.opengrip(simulation =simulation_status)
             PandaRobot.closegrip(simulation =simulation_status)
 
-
             if botfunc.winning_move(board, BOT_PIECE):
                 print("Ro-Bot Wins!")
                 game_over = True
@@ -284,5 +262,3 @@ while not game_over:
         #PandaRobot.MoveToPosition("DiskCollection")
         PandaRobot.neutral()
         print('Game finished!')
-
-
