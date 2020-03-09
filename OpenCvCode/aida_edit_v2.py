@@ -9,14 +9,23 @@ import cv2
 import matplotlib.pyplot as plt
 import time
 
+def ImageInlineShow(Image):
+    Run = True
+    '''
+    A function to show the images in line instead of as sperate images designed for Jupyter Notepad.
+    Sabotage me if you dont want anything being printed out.
+    '''
+    if Run:
+        plt.imshow(cv2.cvtColor(Image, cv2.COLOR_BGR2RGB))
+        plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+        plt.show()
+
 def get_x_and_y_coord_from_contours(coordinates):
     '''Takes in a 3 by x matricie and removes the first column'''
     counter = -1
     coords = []
     for i in coordinates:
-        #print('TEST', coordinates[counter][0])
         counter += 1
-        print('TEST', coordinates[counter][0])
         y_coord = coordinates[counter][0][1]
         x_coord = coordinates[counter][0][0]
         coords.append([x_coord, y_coord])       
@@ -24,48 +33,30 @@ def get_x_and_y_coord_from_contours(coordinates):
 
 def get_row_and_col(coordinates):
     '''Takes Pixel Cordinates and returns row and collumn'''
-    counter = -1
-    x = []
-    y = []
-    col_no = []
-    row_no = []
+    Tolerance = 20
+    xList = []
+    yList = []
+    KeyX = [55 , 155 , 250 , 345 , 450 , 545 , 640]
+    KeyY = [200 , 330 , 430 , 530 , 650 , 760]
     for i in coordinates:        
-        counter += 1
-        y_coord = coordinates[counter][1]
-        y.append(y_coord)
-        x_coord = coordinates[counter][0]
-        x.append(x_coord)
-    for x_coord in x:        
-        if 50 < x_coord < 60:
-            col = 0
-        elif 150 < x_coord < 160:
-            col = 1   
-        elif 245 < x_coord < 260:
-            col = 2   
-        elif 330 < x_coord < 360:
-            col = 3
-        elif 440 < x_coord < 460:
-            col = 4
-        elif 540 < x_coord < 550:
-            col = 5
-        elif 630 < x_coord < 650:
-            col = 6
-        col_no.append(col)
-    
-    for y_coord in y:
-        if 250 < y_coord < 260:
-            row = 0
-        elif 340 < y_coord < 360:
-            row = 1
-        elif 440 < y_coord < 460:
-            row = 2
-        elif 540 < y_coord < 560:
-            row = 3
-        elif 640 < y_coord < 660:
-            row = 4
-        elif 740 < y_coord < 760:
-            row = 5
-        row_no.append(row)
+        y_coord = i[1]
+        x_coord = i[0]
+        for n,x in enumerate(KeyX):
+            if abs(x_coord - x) < Tolerance:
+                xList.append(n)
+                break
+        else:
+            print("x out" , x_coord)
+            pass
+        for n,y in enumerate(KeyY):
+            if abs(y_coord - y) < Tolerance:
+                yList.append(n)
+                break
+        else:
+            xList.pop(-1)
+            print("Y out" , y_coord)
+    return [cord for cord in zip(xList , yList)]
+
 
     new_lst = [list(x) for x in zip(row_no, col_no)]
     #print(new_lst)
@@ -125,15 +116,6 @@ def find_top_and_bottom_coord_of_each_col(col_no, row_no, new_lst, points):
     return col_1, col_2, col_3, col_4, col_5, col_6
     
 
-def ImageInlineShow(Image):
-    '''
-    A function to show the images in line instead of as sperate images designed for Jupyter Notepad.
-    Sabotage me if you dont want anything being printed out.
-    '''
-    plt.imshow(cv2.cvtColor(Image, cv2.COLOR_BGR2RGB))
-    plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
-    plt.show()
-
 def disks_to_array(board):
     '''this function takes in the positions of all the disks on the board and returns a numpy
     array with -1 for the bot disks and 1 for the player disks'''
@@ -173,7 +155,7 @@ def ConvectionFunction(Image ,LowerBounds , UpperBounds):
         except NameError:
             outputMask = mask
     kernel = np.ones((5,5),np.uint8)
-    outputMask = cv2.dilate(outputMask,kernel,iterations = 2)
+    outputMask = cv2.morphologyEx(outputMask,cv2.MORPH_OPEN,kernel)
     ImageInlineShow(outputMask)
 
     contours , _ = cv2.findContours(outputMask , cv2.RETR_TREE , cv2.CHAIN_APPROX_SIMPLE) # Creates contours from the mask
@@ -191,7 +173,6 @@ def ConvectionFunction(Image ,LowerBounds , UpperBounds):
 def plot_centre_line(column, img): 
     '''THIS FUNCTION IS NOT CURRENTLY WORKING BECAUSE THE IMAGE THAT IT NEEDS TO TAKE IN TO DRAW THE LINE
     IS NOT BEING OUTPUTTED/SAVED ANYWHERE YET. CURRENTLY WORKING ON FIXING THAT'''
-    print('THIS IS COLUMN', column)
     point_1 = tuple(column[0])
     print(point_1)
     point_2 = tuple(column[1])
@@ -225,7 +206,23 @@ def list_connector(list1, list2):
     '''Function to merge lists of coordinates. Used to join yellow and blue disk coords'''
     output = list1+list2
     return output
-            
+
+def CordinatesSorter(Cordinates):
+    '''Takes in the cordinates and orders by the first two varibles'''
+    CordinatesWithIndex = sorted(zip([i for i in range(4)] , Cordinates, [0 for i in range(4)]) , key=lambda Cordinate: Cordinate[1][0])
+    CordinatesWithIndex = list(CordinatesWithIndex)
+    for i in range(2):
+        CordinatesWithIndex[i] = list(CordinatesWithIndex[i])
+        CordinatesWithIndex[i][2] += 1
+    CordinatesWithIndex.sort(key=lambda Cordinate: Cordinate[1][1])
+    for i in range(2):
+        CordinatesWithIndex[i] = list(CordinatesWithIndex[i])
+        CordinatesWithIndex[i][2] += 2
+    CordinatesWithIndex.sort(key=lambda Cordinate: Cordinate[2])
+    output = [x[1] for x in CordinatesWithIndex]
+    return output
+
+       
 def TransformTheImage(img,Extension):  
     '''Takes the image and transforms it , extension if you want to see above the grid.  ''' 
     #Red Contours
@@ -237,27 +234,31 @@ def TransformTheImage(img,Extension):
 
     
     RedContours, __ = ConvectionFunction(img,[lower_red1,lower_red2], [upper_red1,upper_red2])
-    Red_cordinates = ContourInfo(RedContours , 500)
-    
+    Red_cordinates = ContourInfo(RedContours , 100)
+    #print("Pre removed" , Red_cordinates)
+    Red_cordinates = [x[0] for x in Red_cordinates]
     if len(Red_cordinates) != 4:
         print("cant locate red dots")
-    
+    else:
+        Red_cordinates = CordinatesSorter(Red_cordinates)
 
 
-    pts_dst = np.array([[0,Extension] , [0,600 + Extension] , [700,Extension] ,[700 , 600 + Extension]],np.float32)
+    pts_dst = np.array([[700 , 600 + Extension], [0,600 + Extension],[700,Extension] ,[0,Extension] ] ,np.float32)
+    #print(Red_cordinates)
     Red_cordinates = np.array(Red_cordinates,np.float32)
-
     h, _ = cv2.findHomography(Red_cordinates,pts_dst)
     SquareImage = cv2.warpPerspective(img, h,(700,600 + Extension))
     ImageInlineShow(SquareImage)
 
     return SquareImage
 
-def ArrayfromCordinates(Cordinates1 , Cordinates2):
-    output = np.zeros(6,7)
+def ArrayfromCordinates(Cordinates1 , Cordinates2 = None):
+    output = np.zeros((7,6))
     for co in Cordinates1:
         y,x = co
         output[y][x] = 1
+    if Cordinates2 == None:
+        return output    
     for co in Cordinates2:
         y,x = co
         output[y][x] = 2
@@ -268,7 +269,7 @@ def ArrayfromCordinates(Cordinates1 , Cordinates2):
 def GetPossitions(img ,Location = True):
          
     '''Takes In an Image Location and returns what the current layout of the parts is'''
-     if Location:
+    if Location:
          img = cv2.imread(img)
 
     SquareImage = TransformTheImage(img,200)
@@ -279,22 +280,22 @@ def GetPossitions(img ,Location = True):
     upper_blue = np.array([115,255,255])
     
     blueContours, __ = ConvectionFunction(SquareImage,[lower_blue] , [upper_blue])
-    blue_coordinates = ContourInfo(blueContours , 500)
+    blue_coordinates = ContourInfo(blueContours , 800)
 
     #The Yellow Mask
     lower_yellow = np.array([20,55,70])
     upper_yellow = np.array([45,191,200])
     
     yellowContours, __ = ConvectionFunction(SquareImage,[lower_yellow], [upper_yellow])
-    yellow_coordinates = ContourInfo(yellowContours , 500)
+    yellow_coordinates = ContourInfo(yellowContours , 800)
     
-
 #--------------------------------------------------------------------------------------------------------#    
-    __ , __ , mergedy = get_row_and_col(get_x_and_y_coord_from_contours(yellowContours))
-    __ , __ , mergedb = get_row_and_col(get_x_and_y_coord_from_contours(blue_coordinates))
-    Board = ArrayfromCordinates(mergedb , mergedy)
+    mergedy = get_row_and_col(get_x_and_y_coord_from_contours(yellow_coordinates))
+    mergedb = get_row_and_col(get_x_and_y_coord_from_contours(blue_coordinates))
+    Board = ArrayfromCordinates(mergedb,mergedy)
     return disks_to_array(Board)
     
+    camera.release()
     
     
 
@@ -306,12 +307,28 @@ def SnapShotAndPossition():
     __, frame = camera.read()
     frame = cv2.fastNlMeansDenoisingColored(frame,None,10,10,7,21)
     ImageInlineShow(frame)
-    GetPossitions(frame , Location = False)
-    cap.release()
+    Board = GetPossitions(frame , Location = False)
+    camera.release()
     return Board
 
-SnapShotAndPossition()
-#GetPossitions('/Users/aidam/Desktop/Robotics Coursework/Images/WithRedDot/Grid1.jpg')
+
+if __name__ == "__main__":
+    '''Functional Test Code'''
+    board2 = np.zeros((7,6))
+    while True:
+        board1 = (SnapShotAndPossition())
+        print(board1)
+        i , j = where_is_the_new_disk(board1,board2)
+        print("the col is", j)
+        k = input()
+        if k == "q":
+            break
+        board2 = board1
+
+
+
+
+    #GetPossitions('/Users/aidam/Desktop/Robotics Coursework /Images/WithRedDot/Grid1.jpg')
 
 
 # =============================================================================
