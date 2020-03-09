@@ -87,6 +87,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Robot Movement Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#functional-overview">Functional Overview</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#addposition">AddPosition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cartesian-path">Cartesian Path</a></li>
 </ul>
 </li>
 </ul>
@@ -171,6 +172,43 @@
 <p>The function is designed to store a coordinate in cartesian form in a private dictionary. This function originally stored the variables in the form
 of a Moveit Pose class , this was later changed , as it is very difficult to both view the values as well as made it very difficult to modify the values.
 The function remained partially to interact with legacy code, and partially as it was thought that it maybe useful to add in a sanitization layer.</p>
+</div>
+<div class="section" id="cartesian-path">
+<h3>Cartesian Path<a class="headerlink" href="#cartesian-path" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">CartesianPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Endposition</span> <span class="p">,</span> <span class="n">StartPosition</span> <span class="o">=</span> <span class="kc">None</span> <span class="p">,</span> <span class="n">max_tries</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Takes an Endpositions and generates and then acts on a motion plan to the Endposition using compute cartesian path. &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">StartPosition</span><span class="p">:</span>
+                <span class="n">StartPosition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CordinatesToPose</span><span class="p">(</span><span class="n">StartPosition</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+                <span class="n">StartPosition</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_current_pose</span><span class="p">()</span><span class="o">.</span><span class="n">pose</span>
+
+    <span class="n">Endposition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CordinatesToPose</span><span class="p">(</span><span class="n">Endposition</span><span class="p">)</span>
+
+    <span class="n">waypoints</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># start with the current pose</span>
+    <span class="n">waypoints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">StartPosition</span><span class="p">)</span>
+
+        <span class="c1">#TODO add in a level of path interpolation.</span>
+
+    <span class="n">waypoints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Endposition</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_tries</span><span class="p">):</span>
+                <span class="p">(</span><span class="n">plan</span><span class="p">,</span> <span class="n">fraction</span><span class="p">)</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">compute_cartesian_path</span> <span class="p">(</span>
+                                                                <span class="n">waypoints</span><span class="p">,</span>   <span class="c1"># waypoint poses</span>
+                                                                <span class="mf">0.01</span><span class="p">,</span>        <span class="c1"># eef_step</span>
+                                                                <span class="mf">0.0</span><span class="p">,</span>         <span class="c1"># jump_threshold</span>
+                                                                <span class="kc">True</span><span class="p">)</span>        <span class="c1"># avoid_collisions</span>
+                <span class="k">if</span> <span class="n">fraction</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Motioned Planned Successfully&quot;</span><span class="p">)</span>
+                        <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;failed to run&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">plan</span> <span class="p">,</span> <span class="n">wait</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">clear_pose_targets</span><span class="p">()</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
 <p>Current Order of Called Functions.:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span><span class="n">PLease</span> <span class="n">PlAcE</span> <span class="n">aN</span> <span class="n">ImagE</span> <span class="n">HerE</span><span class="o">*</span>
 </pre></div>

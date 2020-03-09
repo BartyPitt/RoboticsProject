@@ -28,6 +28,7 @@ The function remained partially to interact with legacy code, and partially as i
 Cartesian Path
 ^^^^^^^^^^^^^^
 ::
+
 	def CartesianPath(self, Endposition , StartPosition = None , max_tries = 10):
 		'''Takes an Endpositions and generates and then acts on a motion plan to the Endposition using compute cartesian path. '''
 		if StartPosition:
