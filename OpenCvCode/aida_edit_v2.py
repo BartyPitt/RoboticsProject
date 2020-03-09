@@ -3,6 +3,7 @@
 Created on Mon Feb  3 22:19:24 2020
 
 @author: aidam
+@author: Barty Pitt
 """
 import numpy as np
 import cv2
@@ -13,7 +14,8 @@ def ImageInlineShow(Image):
     Run = True
     '''
     A function to show the images in line instead of as sperate images designed for Jupyter Notepad.
-    Sabotage me if you dont want anything being printed out.
+    Sabotage me if you dont want anything being printed out
+    In simple terms it stops the kernal from stopping when it wants to print an image.
     '''
     if Run:
         plt.imshow(cv2.cvtColor(Image, cv2.COLOR_BGR2RGB))
@@ -56,11 +58,6 @@ def get_row_and_col(coordinates):
             xList.pop(-1)
             print("Y out" , y_coord)
     return [cord for cord in zip(xList , yList)]
-
-
-    new_lst = [list(x) for x in zip(row_no, col_no)]
-    #print(new_lst)
-    return  col_no, row_no, new_lst
 
 def find_top_and_bottom_coord_of_each_col(col_no, row_no, new_lst, points):
     '''Function that finds the top and bottom disk coordinates of each column. 
@@ -141,8 +138,9 @@ def where_is_the_new_disk(board1, board2):
 
 def ConvectionFunction(Image ,LowerBounds , UpperBounds):
     '''
-    Takes in an Image , the lower bounds and the upper bounds and returns the contours for the image and the thresholds
-    TODO add in Adaptive thresholding if needed
+    Takes in an Image , 
+    the lower bounds and the upper bounds 
+    and returns the contours for the image and the thresholds
     '''
 
     hsv = cv2.cvtColor(Image, cv2.COLOR_BGR2HSV) # Convert to hsv
@@ -186,8 +184,7 @@ def ContourInfo(contours ,minArea):
     
     '''
     Takes in a set of contours returns the cordinate for the centre of the the ones above a certain size
-    TODO ADD TEST FOR IF IT IS A CIRCLE RATHER THAN JUST doing it by overal area
-     '''
+    '''
     output = []
     for c in contours:
         area = cv2.contourArea(c)
@@ -199,7 +196,7 @@ def ContourInfo(contours ,minArea):
                 cY = int(M["m01"] / M["m00"])
                 output.append([[cX ,cY],[area]])
             except ZeroDivisionError:
-                pass
+                pass 
     return output
 
 def list_connector(list1, list2):
@@ -253,6 +250,9 @@ def TransformTheImage(img,Extension):
     return SquareImage
 
 def ArrayfromCordinates(Cordinates1 , Cordinates2 = None):
+    '''
+    Takes in one or two sets of cordninates , and returns a combined array.
+    '''
     output = np.zeros((7,6))
     for co in Cordinates1:
         y,x = co
@@ -289,7 +289,6 @@ def GetPossitions(img ,Location = True):
     yellowContours, __ = ConvectionFunction(SquareImage,[lower_yellow], [upper_yellow])
     yellow_coordinates = ContourInfo(yellowContours , 800)
     
-#--------------------------------------------------------------------------------------------------------#    
     mergedy = get_row_and_col(get_x_and_y_coord_from_contours(yellow_coordinates))
     mergedb = get_row_and_col(get_x_and_y_coord_from_contours(blue_coordinates))
     Board = ArrayfromCordinates(mergedb,mergedy)
@@ -303,7 +302,6 @@ def SnapShotAndPossition():
     '''Takes an image with the webcam and then puts it through the possiton finding algorythm.'''
     camera = cv2.VideoCapture(0)
     for i in range(10):
-        temp = camera.read()
     __, frame = camera.read()
     frame = cv2.fastNlMeansDenoisingColored(frame,None,10,10,7,21)
     ImageInlineShow(frame)
