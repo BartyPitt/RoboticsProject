@@ -1,0 +1,23 @@
+Robotics Documentation Roles:
+=============================
+
+Tuesday
+
+	Merge to Master branch and resolve conflicts
+	Everyone to upload the cleaned up & commented version of their code
+
+
+Wednesday
+
+	Everyone to write documentation for their section:
+
+	Felix - Connect4 Bot
+	Mia & Josh - Motion Planning
+	Barty - Collision Detection and Troubleshooting
+	Medad - Installation & Setup
+	All - Main file (sections)
+
+
+Thursday 
+
+	Final checks and submission
