@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Robot Movement Overview" href="Robot_Movement.html" />
     <link rel="prev" title="Running on Gazebo" href="gazebo_problems.html" /> 
 </head>
 
@@ -85,9 +86,10 @@
 <li class="toctree-l1"><a class="reference internal" href="gazebo_problems.html">Running on Gazebo</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Open CV Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#system-overview-for-counter-position-detection">System Overview for Counter position detection.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#mask-and-countour-function">Mask and Countour Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mask-and-contour-function">Mask and Contour Function</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Robot_Movement.html">Robot Movement Overview</a></li>
 </ul>
 
             
@@ -156,17 +158,17 @@
 <h1>Open CV Overview<a class="headerlink" href="#open-cv-overview" title="Permalink to this headline">¶</a></h1>
 <p><em>“You sure you need a Camera”</em></p>
 <p><em>- Petar</em></p>
-<p>In order for the robot to be able to play connect 4 basic sets of machine vision <em>algorythems</em> were implimented.</p>
+<p>In order for the robot to be able to play connect 4 basic sets of machine vision <em>algorithms</em> were implemented.</p>
 <div class="section" id="system-overview-for-counter-position-detection">
 <h2>System Overview for Counter position detection.<a class="headerlink" href="#system-overview-for-counter-position-detection" title="Permalink to this headline">¶</a></h2>
-<p>This code is called by the decsion making algorythem when it needs to know the current posstion of the placed counters</p>
+<p>This code is called by the decision making algorithm when it needs to know the current position of the placed counters</p>
 <p>In the game of connect 4 counters are placed into columns inside of the grid. One of the major tasks for machine vision is figuring out the current position of the counters in play.</p>
-<p>Currently the <em>alogrythm</em> for counter detection can be split into five seperate stages.</p>
+<p>Currently the algorithm for counter detection can be split into five separate stages.</p>
 <ol class="arabic simple">
 <li><p>The webcam currently attached to the system takes a picture of the board in its current state</p></li>
 <li><p>The machine vision detects the four corners of the connect 4 grid.</p></li>
 <li><p>The system warps the image so that just the connect 4 grid is shown in a planer projection.</p></li>
-<li><p>The image detects the positon of all the counters in play and calculates in which column each of the counters falls into.</p></li>
+<li><p>The image detects the position of all the counters in play and calculates in which column each of the counters falls into.</p></li>
 <li><p>The location of all the counters is returned in the form of a numpy array</p></li>
 </ol>
 <p>Current Order of Called Functions.:</p>
@@ -174,8 +176,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="mask-and-countour-function">
-<h2>Mask and Countour Function<a class="headerlink" href="#mask-and-countour-function" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mask-and-contour-function">
+<h2>Mask and Contour Function<a class="headerlink" href="#mask-and-contour-function" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -186,6 +188,8 @@
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Robot_Movement.html" class="btn btn-neutral float-right" title="Robot Movement Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="gazebo_problems.html" class="btn btn-neutral float-left" title="Running on Gazebo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

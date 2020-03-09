@@ -36,9 +36,9 @@ class Connect4Robot():
 		[self.x1 ,self.y1 ,self.z1 ,self.roll1 ,self.pitch1 ,self.yaw1]    = LeftCorner
 		[self.x2 , self.y2 , self.z2 , self.roll2 , self.pitch2, self.yaw2] = RightCorner
 
-		self.moveto([self.x1,self.y1,self.z1,self.roll1,self.pitch1,self.yaw1])
+		self.moveto(LeftCorner)
 		rospy.sleep(5)
-		self.moveto([self.x2,self.y2,self.z2,self.roll2,self.pitch2,self.yaw2])
+		self.moveto(RightCorner)
 		rospy.sleep(5)
 	
 	
@@ -81,11 +81,11 @@ class Connect4Robot():
 		group.go(joint_goal, wait=True)
 		group.stop()
 
-	def CartesianPath(self, Endposition , StartPosition = None):
-		
-	    if StartPosition:
+	def CartesianPath(self, Endposition , StartPosition = None , max_tries = 10):
+		'''Takes an Endpositions and generates and then acts on a motion plan to the Endposition using compute cartesian path. '''
+		if StartPosition:
 			StartPosition = self.CordinatesToPose(StartPosition)
-	    else:
+		else:
 			StartPosition = group.get_current_pose().pose
 		
 	    Endposition = self.CordinatesToPose(Endposition)
@@ -97,8 +97,6 @@ class Connect4Robot():
 		#TODO add in a level of path interpolation.
 		
 	    waypoints.append(Endposition)
-		
-	    max_tries = 10
 	    for i in range(max_tries):
 			(plan, fraction) = group.compute_cartesian_path (
 									waypoints,   # waypoint poses
