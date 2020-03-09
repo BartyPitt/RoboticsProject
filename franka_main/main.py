@@ -68,9 +68,7 @@ rospy.sleep(2)
 PandaRobot = Connect4Robot()
 # Calibration positions
 PandaRobot.closegrip()
-PandaRobot.Calibration([0.3, 0.35, 0.3, pi,0,pi/4])
-
-
+PandaRobot.Calibration(LeftCorner = [0.3, 0.35, 0.3, pi,0,pi/4])
 PandaRobot.AddPosition("DiskCollection" ,PandaRobot.__positions__["LeftCorner"])
 PandaRobot.AddPosition("AboveBoard" , PandaRobot.__positions__["LeftCorner"])
 for i in range(1,7):

@@ -12,19 +12,7 @@ from copy import deepcopy
 from std_msgs.msg import String, Float64MultiArray, MultiArrayDimension, Float64
 from moveit_commander.conversions import pose_to_list
 
-class TheBigGrid:
-	def __init__(self):
-		p = geometry_msgs.msg.PoseStamped()
-		p.header.frame_id = robot.get_planning_frame()
-		p.pose.position.x = 0.153745
-		p.pose.position.y = -0.301298
-		p.pose.position.z = 0.
-		p.pose.orientation.x =  0.6335811
-		p.pose.orientation.y = 0
-		p.pose.orientation.z = 0.6335811
-		p.pose.orientation.w = 0.4440158
-		scene.add_mesh("Connect4", p,"connect4.STL")
-		
+
 
 class Connect4Robot():
 
@@ -117,7 +105,7 @@ class Connect4Robot():
 		
 		max_tries = 10
 		for i in range(max_tries):
-			(plan, fraction) = group.compute_cartesian_path (
+			(plan, fraction) = self.group.compute_cartesian_path (
 									waypoints,   # waypoint poses
 									0.01,        # eef_step
 									0.0,         # jump_threshold
@@ -175,22 +163,9 @@ if __name__=="__main__":
 
 	# Setting-up processes
 
-	moveit_commander.roscpp_initialize(sys.argv)
-	rospy.init_node('panda_demo', anonymous=True)
-	robot = moveit_commander.RobotCommander()
-	scene = moveit_commander.PlanningSceneInterface()
-	group = moveit_commander.MoveGroupCommander("panda_arm")
-	gripper_publisher = rospy.Publisher('/franka/gripper_position_controller/command', Float64MultiArray, queue_size=1)
-	gripper_msg = Float64MultiArray()
-	gripper_msg.layout.dim = [MultiArrayDimension('', 2, 1)]
-
-
-	display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',moveit_msgs.msg.DisplayTrajectory,queue_size=20)
-
-
-	rospy.sleep(3)
 
 	PandaRobot = Connect4Robot()
+	rospy.sleep(3)
 	# Calibration positions
 	PandaRobot.closegrip()
 	PandaRobot.Calibration([0.3, 0.35, 0.3, pi,0,pi/4])
@@ -207,8 +182,8 @@ if __name__=="__main__":
 	# # Main code
 	PandaRobot.opengrip()
 	for i in range(14):
-	 	PandaRobot.MoveToPosition("DiskCollection")
-	 	PandaRobot.closegrip()
+		PandaRobot.MoveToPosition("DiskCollection")
+		PandaRobot.closegrip()
 		PandaRobot.MoveToPosition("AboveBoard")
 		PandaRobot.MoveToPosition("1")
 		PandaRobot.opengrip()

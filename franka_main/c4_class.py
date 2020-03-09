@@ -13,6 +13,7 @@ from moveit_commander.conversions import pose_to_list
 
 
 def MultiVaribleInterpolation(Point1 , Point2 , Percent):
+	'''Multi variable linear interpolation between two points using a percent.'''
 	Output = []
 	for Chord1 , Chord2 in zip(Point1,Point2):
 		Output.append(Chord1 + (Chord1 - Chord2) * Percent)
@@ -20,9 +21,6 @@ def MultiVaribleInterpolation(Point1 , Point2 , Percent):
 
 
 class Connect4Robot():
-
-	def MultiVaribleInterpolationPanda(self, Name1 , Name2 , Percent):
-		return MultiVaribleInterpolation(self.__positions__[Name1] , self.__positions__[Name2] , Percent)
 
 	def __init__(self,GripperSizeExtended = 0.03 , GripperSizeRetracted = 0, group = None): #defult positions added to maintain compability with legacy code
 		'''Sets up the Inital setup conditions for the robot.
@@ -42,12 +40,15 @@ class Connect4Robot():
 		display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',moveit_msgs.msg.DisplayTrajectory,queue_size=20)
 	
 	def AddPosition(self , PositionName , PositionCordinates):
-		'''A setter funciton that sets up the positions for the robot to travel to'''
+		'''A setter function that sets up the positions for the robot to travel to'''
 		self.__positions__[PositionName] = PositionCordinates
 
 	def interpolationPercentGen(self, column):
-		ydistance = (100)/6 * (column-1)
-		return ydistance
+		Ydistance = (100)/6 * (column-1)
+		return Ydistance
+	
+	def MultiVaribleInterpolationPanda(self, Name1 , Name2 , Percent):
+		return MultiVaribleInterpolation(self.__positions__[Name1] , self.__positions__[Name2] , Percent)
 
 
 	def Calibration(self , LeftCorner,dx = 0 , dy = -0.468 , dz = 0):
@@ -67,6 +68,8 @@ class Connect4Robot():
 		'''Takes the name of the position and moves the robot to that position.'''
 		Cordinates = self.__positions__[Position]
 		self.CartesianPath(Cordinates)
+
+
 	def PoseToCordinates(self , Position):
 		Po = Position.orientation
 		roll,pitch,yaw = tf.transformations.euler_from_quaternion([Po.x,Po.y,Po.z,Po.w])
@@ -104,10 +107,10 @@ class Connect4Robot():
 
 	def movejoints(self, jointAngles):
 		'''Takes in joint angles and moves to that pose'''
-		joint_goal = group.get_current_joint_values()
+		joint_goal = self.group.get_current_joint_values()
 		joint_goal = jointAngles
-		group.go(joint_goal, wait=True)
-		group.stop()
+		self.group.go(joint_goal, wait=True)
+		self.group.stop()
 
 	def CartesianPath(self, Endposition , StartPosition = None,SubPoints = 50):
 
@@ -124,9 +127,10 @@ class Connect4Robot():
 		# start with the current pose
 		for i in range(SubPoints + 1):
 			Percent = i/SubPoints
-			waypoints.append(self.CordinatesToPose(MultiVaribleInterpolation(StartPosition,Endposition,Percent)))
+			waypoints.append(self.CordinatesToPose(MultiVaribleInterpolation(StartPosition,
+																			Endposition,
+																			Percent)))
 
-		
 		max_tries = 10
 		for i in range(max_tries):
 			(plan, fraction) = self.group.compute_cartesian_path (
