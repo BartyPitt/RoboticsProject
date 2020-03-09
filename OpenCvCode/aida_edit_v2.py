@@ -302,7 +302,7 @@ def SnapShotAndPossition():
     '''Takes an image with the webcam and then puts it through the possiton finding algorythm.'''
     camera = cv2.VideoCapture(0)
     for i in range(10):
-    __, frame = camera.read()
+        __, frame = camera.read()
     frame = cv2.fastNlMeansDenoisingColored(frame,None,10,10,7,21)
     ImageInlineShow(frame)
     Board = GetPossitions(frame , Location = False)
