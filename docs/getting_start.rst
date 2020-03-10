@@ -51,7 +51,8 @@ Now you have to make sure the submodules are updated
 .. code-block:: bash
 
     cd RoboticsProject
-    git submodule update --recursive
+    git submodule sync
+    git submodule update --init --force --recursive
 
 
 Compiling all necessary files

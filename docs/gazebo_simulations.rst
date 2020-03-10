@@ -63,3 +63,13 @@ Finally, spawn the robot arm in Gazebo.
     roslaunch franka_gazebo panda_arm_hand.launch
 
 
+
+
+Now for your reference, here is video showing the whole setup operation that will allow you to run a full simulation.
+
+.. raw:: html
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+        <iframe src="https://drive.google.com/file/d/1zKt-nPKSKOXqZ7UHFkeTi5kBK8eA0pko/preview" width="640" height="480"></iframe>
+    </div>
+
