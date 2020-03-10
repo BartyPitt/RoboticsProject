@@ -6,7 +6,7 @@ Before testing on the real robot, it is vital to test your code on a simulator. 
 Word of advice: simulate, simulate, simulate. Until everything works perfectly in the simulation.
 
 
-Note that the actual Franka Emika robot costs several thousand Euros, and you will have a very limited time with the actual robot. You can save a lot of time by simulating everything on your computer.
+Note that the actual Franka Emika robot costs several thousand Euros, and you will have a very limited time with the actual robot. You can save a lot of time by simulating everything on your computer. By simulating, you can potentially avoid getting the robot to do unexpected things. E.g spin around and smash into the wall behind. It would be a very expensive error.
 
 Running on Gazebo
 ----------------------
@@ -20,7 +20,7 @@ Run Roscore, the master messaging core
 
 
 
-Now you open up Gazebo, the simulation software
+Open up Gazebo, the simulation software
 
 .. code-block:: bash
 

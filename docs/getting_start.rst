@@ -58,13 +58,13 @@ Now you have to make sure the submodules are updated
 Compiling all necessary files
 --------------------------------
 
-You have pulled all the dependencies for gazebo, Rviz but now you need to compile them. Go to your catkin workspace
+You have pulled all the dependencies for gazebo, Rviz but now you need to compile them. Go to your catkin workspace.
 
 .. code-block:: bash
 
     cd catkin_ws
 
-Now you need to compile all the driver code. To do that, in your catkin_ws folder
+Now you need to compile all the driver code. To do that, in your ``catkin_ws`` folder
 
 .. code-block:: bash
 
