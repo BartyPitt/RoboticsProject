@@ -6,7 +6,7 @@
 	url = https://github.com/ros-planning/moveit_tutorials.git
 [submodule "catkin_ws/src/panda_moveit_config"]
 	path = catkin_ws/src/panda_moveit_config
-	url = https://github.com/ros-planning/panda_moveit_config.git
+	url = https://github.com/MedadRufus/panda_moveit_config.git
 [submodule "catkin_ws/src/franka_gazebo"]
 	path = catkin_ws/src/franka_gazebo
 	url = https://github.com/MedadRufus/franka_gazebo.git
