@@ -1,3 +1,17 @@
 # Ignore all these files
 
 *.pyc
+catkin_ws/.catkin_workspace
+catkin_ws/build/*
+catkin_ws/devel/*
+catkin_ws/src/CMakeLists.txt
+.idea/misc.xml
+.idea/modules.xml
+.idea/RoboticsProject.iml
+.idea/vcs.xml
+.idea/workspace.xml
+franka_main/.idea/franka_main.iml
+franka_main/.idea/misc.xml
+franka_main/.idea/modules.xml
+franka_main/.idea/vcs.xml
+franka_main/.idea/workspace.xml

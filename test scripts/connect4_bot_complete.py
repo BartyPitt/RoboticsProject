@@ -2,8 +2,6 @@ import numpy as np
 import random
 import time
 import math
-import operator
-#from numpy.core.multiarray import normalize_axis_index
 
 # Set static variables
 ROW_COUNT = 6
@@ -23,26 +21,6 @@ def create_board():
     board = np.zeros((ROW_COUNT, COLUMN_COUNT))
     return board
 
-def pretty_print_board(board):
-    flipped_board = np.flipud(board)
-
-    print("\033[0;37;41m 0 \033[0;37;41m 1 \033[0;37;41m 2 \033[0;37;41m 3 \033[0;37;41m 4 \033[0;37;41m 5 \033[0;37;41m 6 \033[0m")
-    for i in flipped_board:
-        row_str = ""
-
-        for j in i:
-            # print("\033[40;38;5;82m Hello \033[30;48;5;82m World \033[0m")
-
-            if j == 1:
-                #print(yellow)
-                row_str +="\033[0;37;43m 1 "
-            elif j ==2:
-                row_str +="\033[0;37;44m 2 "
-            else:
-                #print black
-                row_str +="\033[0;37;45m   "
-        print(row_str+"\033[0m")
-
 # Place a piece on the board
 def drop_piece(board, row, col, piece):
     board[row][col] = piece
@@ -56,6 +34,10 @@ def get_next_open_row(board, col):
     for r in range(ROW_COUNT):
         if board[r][col] == 0:
             return r
+
+# Change orientation of printed board so it looks like Connect-4 on print
+def print_board(board):
+    print(np.flip(board, 0))
 
 # Get all locations that could contain a piece
 def get_valid_locations(board):
@@ -253,20 +235,8 @@ turn = 0 # Human goes first
 while not game_over:
     if turn == PLAYER:
 
-        # Sanitise the input
-        while True:
-            try:
-                move = int(input("Human (Player 1) choose a column: "))
-            except:
-                print("Sorry, I didn't understand that.")
-                continue
-
-            if move not in range(0, 7):
-                print("Sorry you have keyed in an out of bounds column value.")
-                continue
-            else:
-                col = move
-                break
+        # Ask Human (Player 1) to choose a column
+        col = int(input("Human player choose a column: "))
 
         if is_valid_location(board, col):
             row = get_next_open_row(board, col)
@@ -276,11 +246,14 @@ while not game_over:
                 game_over = True
                 print("Human Wins!")
 
-        # Advance turn & alternate between Player 1 and 2
-        turn += 1
-        turn = turn % 2
+            # Advance turn & alternate between Player 1 and 2
+            turn += 1
+            turn = turn % 2
 
     if turn == BOT and not game_over:
+
+        # Ask Ro-Bot (Player 2) to pick the best move based on weighted scoring
+        # col = pick_best_move(board, BOT_PIECE)
 
         # Ask Ro-Bot (Player 2) to pick the best move based on possible opponent future moves
         col, minimax_score = minimax(board, 4, -math.inf, math.inf, True) # A higher value takes longer to run
@@ -293,13 +266,11 @@ while not game_over:
                 game_over = True
                 print("Ro-Bot Wins!")
 
-        # Advance turn & alternate between Player 1 and 2
-        turn += 1
-        turn = turn % 2
+            # Advance turn & alternate between Player 1 and 2
+            turn += 1
+            turn = turn % 2
 
-    print("")
-    pretty_print_board(board)
-    print("")
+    print_board(board)
 
     # When game finishes, wait for 30 seconds
     if game_over:
