@@ -1,4 +1,4 @@
-Running on Gazebo
+Simulating the robot
 ===============================
 
 Before testing on the real robot, it is vital to test your code on a simulator. We use Gazebo to visulise the movement of the Panda Emika robot to see if it behaves properly. Form experience, IF and ONLY if it works in the simulation is there a REMOTE chance that your code will work on the actual robot. 
@@ -9,7 +9,7 @@ Word of advice: simulate, simulate, simulate. Until everything works perfectly i
 Note that the actual Franka Emika robot costs several thousand Euros, and you will have a very limited time with the actual robot. You can save a lot of time by simulating everything on your computer.
 
 Running on Gazebo
-===============================
+----------------------
 Open five termials and run the following commands in each:
 
 Run Roscore, the master messaging core

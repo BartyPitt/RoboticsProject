@@ -9,7 +9,7 @@ In order for the robot to be able to play connect 4 basic sets of machine vision
 
 
 System Overview for Counter position detection.
-----------------------------------------
+--------------------------------------------------
 
 This code is called by the decision making algorithm when it needs to know the current position of the placed counters
 

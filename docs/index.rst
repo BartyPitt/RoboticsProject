@@ -16,6 +16,7 @@ How to teach your robot to play connect four
    motion_planning
    Open_Cv
    Robot_Movement
+   ConnectFourAlgorithm
 
 
 Indices and tables
