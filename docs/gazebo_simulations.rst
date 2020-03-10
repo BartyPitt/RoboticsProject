@@ -63,7 +63,8 @@ Finally, spawn the robot arm in Gazebo.
     roslaunch franka_gazebo panda_arm_hand.launch
 
 
-
+..
+  TODO: add in how to run our robot main.py code.
 
 Now for your reference, here is video showing the whole setup operation that will allow you to run a full simulation.
 
