@@ -1,14 +1,16 @@
-Robot Movement Overview
+Robot Movement Control
 ===============================
 
 We have control over the 7 joints of the panda robot as well as the two grippers. 
 
 
-Gripper
-^^^^^^^^^^^^^
+Gripper Control
+---------------------
 We had two options for controlling the gripper, one by using movit commander's ``go(joint_goal, wait=True)`` function to move the gripper to the target location and using the ``GraspGoal(width=0.015,speed=0.08,force=1)`` function. Each had its drawbacks.
 
 
+Using GraspGoal() function
+------------------------------
 
 When picking up the ConnnectFour token, ideally, we would want to control both the position of gripper as well as the force exerted on it. We do not want to exceed the maximum force that the gripper can produce while preventing the token from falling off due to too little force exerted. We therefore tried using the ``GraspGoal(width=0.015,speed=0.08,force=1)`` function to set the gripper in place and exert a force on the token such that it did not fall off. However, we discovered that it would grip it, and then release its grip as soon as the ``closegrip()`` function came to an end. We could not figure out why it kept relaxing its grip.
 
@@ -30,6 +32,8 @@ When picking up the ConnnectFour token, ideally, we would want to control both t
 		    rospy.loginfo("DONE")
 
 
+Using go() function
+------------------------------
 
 What worked in the end was DIRECTLY setting the gripper position to the fully closed postion by setting both gripper's position to ``0.0``. However, there was a good chance of failure when using this method. We set the gripper's position to ``0`` while there is an obstacle, the connectFour token in the way of the gripper fully closing. The robot could have thrown an error. However, we discovered that due to the small size of the token and the flexiblity of the gripper pads, the grippers could close fully without detecting the ConnectFour token obstacle. 
 

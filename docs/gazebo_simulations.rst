@@ -8,7 +8,7 @@ Word of advice: simulate, simulate, simulate. Until everything works perfectly i
 
 Note that the actual Franka Emika robot costs several thousand Euros, and you will have a very limited time with the actual robot. You can save a lot of time by simulating everything on your computer. By simulating, you can potentially avoid getting the robot to do unexpected things. E.g spin around and smash into the wall behind. It would be a very expensive error.
 
-Running on Gazebo
+Running Gazebo
 ----------------------
 Open five termials and run the following commands in each:
 
@@ -63,8 +63,27 @@ Finally, spawn the robot arm in Gazebo.
     roslaunch franka_gazebo panda_arm_hand.launch
 
 
+Running Connect Four game code
+--------------------------------
+
+Now that we have the simulation setup, we can run the code to move the robot and play the Connect Four game. We need to return to the home directory, ``\RoboticsProject``, and open a new terminal. We then navigate to ``franka_main``, where our python script to move the robot and play the game is stored. In your terminal opened in ``\RoboticsProject``:
+
+.. code-block:: bash
+
+    cd Franka_ws
+    python main.py
+  
+
+
+Now you should be able to see the game startup on your terminal. It will give your instructions to help you position the Connect Four board right under the robot's gripper. More instructions on playing the game will be in the next section
+
 ..
-  TODO: add in how to run our robot main.py code.
+  TODO: add in a link to the next section
+  TODO: Show how to add in the STL file of the connect four board into Gazebo so that we can see it. I involves setting the path manually in gazebo gui and then running a python script.
+
+
+Simulation setup screencast
+-------------------------------- 
 
 Now for your reference, here is video showing the whole setup operation that will allow you to run a full simulation.
 
