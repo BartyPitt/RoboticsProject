@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "/home/bartypitt/Documents/Arduino/arduino-1.8.12-linux64/arduino-1.8.12/tools/**",
+                "/home/bartypitt/Documents/Arduino/arduino-1.8.12-linux64/arduino-1.8.12/hardware/arduino/avr/**"
+            ],
+            "forcedInclude": [
+                "Documents/Arduino/arduino-1.8.12-linux64/arduino-1.8.12/hardware/arduino/avr/cores/arduino/Arduino.h"
+            ],
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

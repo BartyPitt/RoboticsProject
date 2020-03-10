@@ -13,7 +13,8 @@ How to teach your robot to play connect four
 
    getting_start
    gazebo_problems
-   motion_planning
+   Open_Cv
+   Robot_Movement
 
 
 Indices and tables

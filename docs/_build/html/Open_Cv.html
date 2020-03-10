@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>How to teach your robot to play connect four &mdash; Connect-four played by Panda Robot  documentation</title>
+  <title>Open CV Overview &mdash; Connect-four played by Panda Robot  documentation</title>
   
 
   
@@ -35,7 +35,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Getting Started" href="getting_start.html" /> 
+    <link rel="next" title="Robot Movement Overview" href="Robot_Movement.html" />
+    <link rel="prev" title="Running on Gazebo" href="gazebo_problems.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -49,7 +50,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> Connect-four played by Panda Robot
+            <a href="index.html" class="icon icon-home"> Connect-four played by Panda Robot
           
 
           
@@ -80,10 +81,14 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_start.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gazebo_problems.html">Running on Gazebo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Open_Cv.html">Open CV Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Open CV Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#system-overview-for-counter-position-detection">System Overview for Counter position detection.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mask-and-contour-function">Mask and Contour Function</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Robot_Movement.html">Robot Movement Overview</a></li>
 </ul>
 
@@ -99,7 +104,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Connect-four played by Panda Robot</a>
+          <a href="index.html">Connect-four played by Panda Robot</a>
         
       </nav>
 
@@ -128,15 +133,15 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>How to teach your robot to play connect four</li>
+      <li>Open CV Overview</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/Open_Cv.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -149,45 +154,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="how-to-teach-your-robot-to-play-connect-four">
-<h1>How to teach your robot to play connect four<a class="headerlink" href="#how-to-teach-your-robot-to-play-connect-four" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="getting_start.html">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="getting_start.html#set-up">Set Up</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_start.html#installing-project-packages">Installing Project Packages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_start.html#installing-3rd-party-packages">Installing 3rd Party Packages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_start.html#installing-additional-files">Installing Additional Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_start.html#running-the-code-in-gazebo-simulation">Running the Code in Gazebo simulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_start.html#additional-resources">Additional Resources</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="gazebo_problems.html">Running on Gazebo</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="gazebo_problems.html#arm-experiencing-vibration-jittering">Arm experiencing vibration / ‘jittering’</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gazebo_problems.html#brick-model-friction-issues">Brick model friction issues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gazebo_problems.html#gripper-friction-friction-issues">Gripper Friction friction issues</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Open_Cv.html">Open CV Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Open_Cv.html#system-overview-for-counter-position-detection">System Overview for Counter position detection.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Open_Cv.html#mask-and-contour-function">Mask and Contour Function</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Robot_Movement.html">Robot Movement Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Robot_Movement.html#functional-overview">Functional Overview</a></li>
-</ul>
-</li>
-</ul>
+  <div class="section" id="open-cv-overview">
+<h1>Open CV Overview<a class="headerlink" href="#open-cv-overview" title="Permalink to this headline">¶</a></h1>
+<p><em>“You sure you need a Camera”</em></p>
+<p><em>- Petar</em></p>
+<p>In order for the robot to be able to play connect 4 basic sets of machine vision <em>algorithms</em> were implemented.</p>
+<div class="section" id="system-overview-for-counter-position-detection">
+<h2>System Overview for Counter position detection.<a class="headerlink" href="#system-overview-for-counter-position-detection" title="Permalink to this headline">¶</a></h2>
+<p>This code is called by the decision making algorithm when it needs to know the current position of the placed counters</p>
+<p>In the game of connect 4 counters are placed into columns inside of the grid. One of the major tasks for machine vision is figuring out the current position of the counters in play.</p>
+<p>Currently the algorithm for counter detection can be split into five separate stages.</p>
+<ol class="arabic simple">
+<li><p>The webcam currently attached to the system takes a picture of the board in its current state</p></li>
+<li><p>The machine vision detects the four corners of the connect 4 grid.</p></li>
+<li><p>The system warps the image so that just the connect 4 grid is shown in a planer projection.</p></li>
+<li><p>The image detects the position of all the counters in play and calculates in which column each of the counters falls into.</p></li>
+<li><p>The location of all the counters is returned in the form of a numpy array</p></li>
+</ol>
+<p>Current Order of Called Functions.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span><span class="n">PLease</span> <span class="n">PlAcE</span> <span class="n">aN</span> <span class="n">ImagE</span> <span class="n">HerE</span><span class="o">*</span>
+</pre></div>
 </div>
 </div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
+<div class="section" id="mask-and-contour-function">
+<h2>Mask and Contour Function<a class="headerlink" href="#mask-and-contour-function" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
 
@@ -198,8 +189,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="getting_start.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Robot_Movement.html" class="btn btn-neutral float-right" title="Robot Movement Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
+      
+        <a href="gazebo_problems.html" class="btn btn-neutral float-left" title="Running on Gazebo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

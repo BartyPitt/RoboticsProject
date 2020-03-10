@@ -10,7 +10,6 @@ from franka_gripper.msg import GraspAction, GraspGoal
 
 
 class Connect4Robot():
-
     def __init__(self, GripperSizeExtended=0.03, GripperSizeRetracted=0, group=moveit_commander.MoveGroupCommander(
         "panda_arm"), group2 = moveit_commander.MoveGroupCommander("hand")):
         ''' Sets up the Inital setup conditions for the robot.

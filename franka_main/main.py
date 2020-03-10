@@ -39,9 +39,10 @@ Code
 
 # Import required python files
 import c4_bot_functions as botfunc
+import open_cv as vision
 from c4_class import Connect4Robot
 
-# Import libraries|
+# Import libraries
 
 import sys
 import copy
@@ -76,6 +77,7 @@ robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface()
 rospy.sleep(2)
 
+
 # Get object frames
 p = geometry_msgs.msg.PoseStamped()
 #p = PoseStamped()
@@ -102,8 +104,8 @@ rosservice call /move_group/trajectory_execution/set_parameters "config:
 """
 subprocess.call(ros_setup_message, shell=True)
 
-
 PandaRobot = Connect4Robot()
+
 
 # Calibration positions
 PandaRobot.define_coordinates([0.3, 0.35, 0.3, pi, 0, pi / 4])
@@ -170,11 +172,13 @@ BOT_PIECE = 2
 # Initialise game
 board = botfunc.create_board()
 game_over = False
-turn = 0  # Human goes first
+turn = 0 # Human goes first
+visionworking = False
 
 
 while not game_over:
     if turn == PLAYER:
+
 
         if visionworking == False:
 
@@ -222,6 +226,7 @@ while not game_over:
     if turn == BOT and not game_over:
 
         # Ask Ro-Bot (Player 2) to pick the best move based on possible opponent future moves
+
         col, minimax_score = botfunc.minimax(board, 4, -9999999, 9999999, True)  # A higher value takes longer to run
         print("Ro-Bot (Player 2) chose column: {0}".format(col))
 
@@ -234,6 +239,7 @@ while not game_over:
 
             print("Ro-Bot is currently heading to disk collection point")
             # Execute motion sequence
+
             # PandaRobot.MoveToPosition("DiskCollection")
             PandaRobot.neutral()
             PandaRobot.opengrip(simulation =simulation_status)
@@ -256,6 +262,7 @@ while not game_over:
             # Advance turn & alternate between Player 1 and 2
             turn += 1
             turn = turn % 2
+
 
     # When game finishes, wait for 30 seconds
     if game_over:
