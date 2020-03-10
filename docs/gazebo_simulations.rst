@@ -8,13 +8,60 @@ Word of advice: simulate, simulate, simulate. Until everything works perfectly i
 
 Note that the actual Franka Emika robot costs several thousand Euros, and you will have a very limited time with the actual robot. You can save a lot of time by simulating everything on your computer.
 
+Running on Gazebo
+===============================
+Open five termials and run the following commands in each:
+
+Run Roscore, the master messaging core
+
+.. code-block:: bash
+
+    roscore
 
 
-in the menu on the left hand side.
 
-.. figure:: _static/gazebo_pid_interface.png
+Now you open up Gazebo, the simulation software
+
+.. code-block:: bash
+
+    source devel/setup.bash
+    rosrun gazebo_ros gazebo
+
+
+Now open up Rviz, and open up the Movit motion planner plugin used for motion planning.
+
+.. code-block:: bash
+
+    source devel/setup.bash
+    roslaunch panda_moveit_config demo.launch rviz_tutorial:=true
+
+Now you need to activate motion planning using the Movit plugin.
+You will have to run a motion planning move from the RVIZ gui, by opening the open planning tab. Then set the //TODO put in user group.
+
+
+
+
+
+.. figure:: _static/planning_scene.png
     :align: center
     :figclass: align-center
+
+
+Run the ''panda_publisher.py'' utility that broadcasts movement of the joints and gripper such that gazebo knows that it has moved.
+
+.. code-block:: bash
+
+    cd src/panda_publisher
+    python panda_publisher.py
+
+
+Finally, spawn the robot arm in Gazebo.
+
+.. code-block:: bash
+
+    source devel/setup.bash
+    roslaunch franka_gazebo panda_arm_hand.launch
+
 
 In order to fix this issue we took a number of approaches. In the first case we simply let the robot run and visually tuned the PID values
 using the ``rqt_reconfigure`` window. It soon became clear that this would be impractical for tuning all 7 joints.

@@ -37,7 +37,7 @@ Now should have installed ROS Melodic on your computer as gazebo(for visualising
 
 
 Installing Project folders
--------------------------
+-----------------------------
 
 You would first clone the project repository into your home folder.
 
@@ -55,7 +55,7 @@ Now you have to make sure the submodules are updated
 
 
 Compiling all necessary files
--------------------------
+--------------------------------
 
 You have pulled all the dependencies for gazebo, Rviz but now you need to compile them. Go to your catkin workspace
 
