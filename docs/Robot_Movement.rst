@@ -42,7 +42,6 @@ Cartesian Path
 		# start with the current pose
 	    waypoints.append(StartPosition)
 		
-		#TODO add in a level of path interpolation.
 		
 	    waypoints.append(Endposition)
 	    for i in range(max_tries):
