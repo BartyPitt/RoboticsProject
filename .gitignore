@@ -15,3 +15,5 @@ franka_main/.idea/misc.xml
 franka_main/.idea/modules.xml
 franka_main/.idea/vcs.xml
 franka_main/.idea/workspace.xml
+docs/_build/*
+docs/_build/*

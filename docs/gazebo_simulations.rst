@@ -1,28 +1,15 @@
 Running on Gazebo
 ===============================
 
-*"Failing to plan is planning to fail"*
+Before testing on the real robot, it is vital to test your code on a simulator. We use Gazebo to visulise the movement of the Panda Emika robot to see if it behaves properly. Form experience, IF and ONLY if it works in the simulation is there a REMOTE chance that your code will work on the actual robot. 
 
-*- Alan Lakein*
+Word of advice: simulate, simulate, simulate. Until everything works perfectly in the simulation.
 
-Before testing our code on the real Panda robot, we ran it on on a digital simulation, to validate that it would function
-as expected. This was incredibly helpful as using a physically moving robot with unknown risks / movements would be a major risk.
 
-In theory simulation works well, but in practice there were many problems that were encountered by the team when attempting to perform simulations in Gazebo.
+Note that the actual Franka Emika robot costs several thousand Euros, and you will have a very limited time with the actual robot. You can save a lot of time by simulating everything on your computer.
 
-Arm experiencing vibration / 'jittering'
-----------------------------------------
-This was mostly likely due to the fact that the PID settings for the robot's joints were not well tuned. Therefore,
-this was investigated alongside the Gazebo simulations.
 
-The 'default' PID values for the robot arm can be configured in ``franka_gazebo/config/default.yaml`` within the
-``franka_gazebo`` ROS package.
 
-During the simulation, a convenient graphical interface with sliders can be utilised to finetune PID values, by
-running the following in another terminal:
-``rosrun rqt_reconfigure rqt_reconfigure``
-
-Once the ``rqt_reconfigure`` window is open, the slider interfaces can be found within ``gazebo_ros_control/pid_gains``
 in the menu on the left hand side.
 
 .. figure:: _static/gazebo_pid_interface.png
