@@ -30,47 +30,47 @@ How the code works:
 
 .. code-block:: python
 
-def SnapShotAndPossition():
-    camera = cv2.VideoCapture(0)
-    for i in range(10):
-        __, frame = camera.read()
-    frame = cv2.fastNlMeansDenoisingColored(frame,None,10,10,7,21)
-    ImageInlineShow(frame)
-    Board = GetPossitions(frame , Location = False)
-    camera.release()
-    return Board
+  def SnapShotAndPossition():
+      camera = cv2.VideoCapture(0)
+      for i in range(10):
+          __, frame = camera.read()
+      frame = cv2.fastNlMeansDenoisingColored(frame,None,10,10,7,21)
+      ImageInlineShow(frame)
+      Board = GetPossitions(frame , Location = False)
+      camera.release()
+      return Board
 
 Where the position finding algorithm is the following:
 
 .. code-block:: python
 
-def GetPossitions(img ,Location = True):
-    if Location:
-         img = cv2.imread(img)
+  def GetPossitions(img ,Location = True):
+      if Location:
+           img = cv2.imread(img)
 
-    SquareImage = TransformTheImage(img,200)
-    #If the Extra space at the top starts causing problems.
+      SquareImage = TransformTheImage(img,200)
+      #If the Extra space at the top starts causing problems.
 
-    #The Blue mask
-    lower_blue = np.array([90,130,80])
-    upper_blue = np.array([115,255,255])
+      #The Blue mask
+      lower_blue = np.array([90,130,80])
+      upper_blue = np.array([115,255,255])
 
-    blueContours, __ = ConvectionFunction(SquareImage,[lower_blue] , [upper_blue])
-    blue_coordinates = ContourInfo(blueContours , 800)
+      blueContours, __ = ConvectionFunction(SquareImage,[lower_blue] , [upper_blue])
+      blue_coordinates = ContourInfo(blueContours , 800)
 
-    #The Yellow Mask
-    lower_yellow = np.array([20,55,70])
-    upper_yellow = np.array([45,191,200])
+      #The Yellow Mask
+      lower_yellow = np.array([20,55,70])
+      upper_yellow = np.array([45,191,200])
 
-    yellowContours, __ = ConvectionFunction(SquareImage,[lower_yellow], [upper_yellow])
-    yellow_coordinates = ContourInfo(yellowContours , 800)
+      yellowContours, __ = ConvectionFunction(SquareImage,[lower_yellow], [upper_yellow])
+      yellow_coordinates = ContourInfo(yellowContours , 800)
 
-    mergedy = get_row_and_col(get_x_and_y_coord_from_contours(yellow_coordinates))
-    mergedb = get_row_and_col(get_x_and_y_coord_from_contours(blue_coordinates))
-    Board = ArrayfromCordinates(mergedb,mergedy)
-    return disks_to_array(Board)
+      mergedy = get_row_and_col(get_x_and_y_coord_from_contours(yellow_coordinates))
+      mergedb = get_row_and_col(get_x_and_y_coord_from_contours(blue_coordinates))
+      Board = ArrayfromCordinates(mergedb,mergedy)
+      return disks_to_array(Board)
 
-    cam.release()
+      cam.release()
 
 It reads an image from the given Image Location, flattens it, finds the yellow and the blue disks,
 and returns the rows and columns of each of the disks.
@@ -80,30 +80,30 @@ This fucntion takes the pixel coordinates in the form of [cX ,cY], and returns t
 
 .. code-block:: python
 
-def get_row_and_col(coordinates):
-Tolerance = 20 #a tolerance is added to check the coordinate in the row/column are within a range.
-xList = []
-yList = []
-KeyX = [55 , 155 , 250 , 345 , 450 , 545 , 640] #these are the estimated pixels in which the coordinates for each column lie in
-KeyY = [200 , 330 , 430 , 530 , 650 , 760] #these are the estimated pixels in which the coordinates for each row lie in
-for i in coordinates:
-    y_coord = i[1]
-    x_coord = i[0]
-    for n,x in enumerate(KeyX):
-        if abs(x_coord - x) < Tolerance: #a tolerance is added to check the coordinate in the row/column are within a range.
-            xList.append(n)
-            break
-    else:
-        print("x out" , x_coord)
-        pass
-    for n,y in enumerate(KeyY):
-        if abs(y_coord - y) < Tolerance:
-            yList.append(n)
-            break
-    else:
-        xList.pop(-1)
-        print("Y out" , y_coord)
-return [cord for cord in zip(xList , yList)]
+  def get_row_and_col(coordinates):
+  Tolerance = 20 #a tolerance is added to check the coordinate in the row/column are within a range.
+  xList = []
+  yList = []
+  KeyX = [55 , 155 , 250 , 345 , 450 , 545 , 640] #these are the estimated pixels in which the coordinates for each column lie in
+  KeyY = [200 , 330 , 430 , 530 , 650 , 760] #these are the estimated pixels in which the coordinates for each row lie in
+  for i in coordinates:
+      y_coord = i[1]
+      x_coord = i[0]
+      for n,x in enumerate(KeyX):
+          if abs(x_coord - x) < Tolerance: #a tolerance is added to check the coordinate in the row/column are within a range.
+              xList.append(n)
+              break
+      else:
+          print("x out" , x_coord)
+          pass
+      for n,y in enumerate(KeyY):
+          if abs(y_coord - y) < Tolerance:
+              yList.append(n)
+              break
+      else:
+          xList.pop(-1)
+          print("Y out" , y_coord)
+  return [cord for cord in zip(xList , yList)]
 
 4. Converting the board into a numpy array:
 This function takes in the positions of all the disks on the board and returns a numpy
@@ -111,13 +111,13 @@ array with -1 for the bot disks and 1 for the player disks
 
 .. code-block:: python
 
-def disks_to_array(board):
-    for x in np.nditer(board, op_flags=['readwrite']):
-        if x[...] == 1:
-            x[...] = -1
-        if x[...] == 2:
-            x[...] = 1
-    return board
+  def disks_to_array(board):
+      for x in np.nditer(board, op_flags=['readwrite']):
+          if x[...] == 1:
+              x[...] = -1
+          if x[...] == 2:
+              x[...] = 1
+      return board
 
 5. Finding the newly placed disk by the human:
 This function takes in the board state before the human plays (board1) and after they play
@@ -126,14 +126,14 @@ and row of that position, which is where the new disk has been played
 
 .. code-block:: python
 
-def where_is_the_new_disk(board1, board2):
-    board_before = disks_to_array(board1)
-    board_after = disks_to_array(board2)
-    result = np.subtract(board_before, board_after)
-    for x in np.nditer(result):
-        if x[...] != 0:
-            i, j = np.where(result != 0)
-    return i, j #i is row, j is col
+  def where_is_the_new_disk(board1, board2):
+      board_before = disks_to_array(board1)
+      board_after = disks_to_array(board2)
+      result = np.subtract(board_before, board_after)
+      for x in np.nditer(result):
+          if x[...] != 0:
+              i, j = np.where(result != 0)
+      return i, j #i is row, j is col
 
 6. The column of the newly placed disk by the human is returned to the connect 4 playing algorithm.
 
