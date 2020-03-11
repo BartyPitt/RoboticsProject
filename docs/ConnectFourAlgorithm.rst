@@ -1,4 +1,4 @@
-Connect Four Algorithm
+Connect 4 Algorithm
 ============================
 
 In order for the robot to play competitively against a human, a minimax game algorithm is used to choose the best move in response to the human player. The algorithm's 'game loop' is implemented inside the main file, but for general tidiness we store all of the functions in a separate file.
