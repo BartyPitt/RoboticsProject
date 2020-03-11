@@ -40,9 +40,9 @@ Currently the algorithm for counter detection can be split into five separate st
     :figclass: align-center
 
 
-    .. figure:: _static/blue_masks.png
-        :align: center
-        :figclass: align-center
+.. figure:: _static/blue_masks.png
+    :align: center
+    :figclass: align-center
 
 
 5. The location of all the counters is returned in the form of a numpy array. This is saved as board1
