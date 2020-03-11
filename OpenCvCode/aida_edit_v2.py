@@ -26,7 +26,7 @@ def get_x_and_y_coord_from_contours(coordinates):
         counter += 1
         y_coord = coordinates[counter][0][1]
         x_coord = coordinates[counter][0][0]
-        coords.append([x_coord, y_coord])
+        coords.append([x_coord, y_coord])       
     return coords
 
 def get_row_and_col(coordinates):
@@ -36,11 +36,11 @@ def get_row_and_col(coordinates):
     yList = []
     KeyX = [55 , 155 , 250 , 345 , 450 , 545 , 640] #these are the estimated pixels in which the coordinates for each column lie in
     KeyY = [200 , 330 , 430 , 530 , 650 , 760] #these are the estimated pixels in which the coordinates for each row lie in
-    for i in coordinates:
+    for i in coordinates:        
         y_coord = i[1]
         x_coord = i[0]
         for n,x in enumerate(KeyX):
-            if abs(x_coord - x) < Tolerance:
+            if abs(x_coord - x) < Tolerance: 
                 xList.append(n)
                 break
         else:
@@ -56,7 +56,7 @@ def get_row_and_col(coordinates):
     return [cord for cord in zip(xList , yList)]
 
 def find_top_and_bottom_coord_of_each_col(col_no, row_no, new_lst, points):
-    '''Function that finds the top and bottom disk coordinates of each column.
+    '''Function that finds the top and bottom disk coordinates of each column. 
       Returns an array for each column with the coordinate of the  top and bottom disk'''
     col_1 = []
     col_2 = []
@@ -64,21 +64,21 @@ def find_top_and_bottom_coord_of_each_col(col_no, row_no, new_lst, points):
     col_4 = []
     col_5 = []
     col_6 = []
-
+    
     for i in range(len(row_no)):
         #print(i)
-
+        
         if new_lst[i][1] == 0 and new_lst[i][0] == 0:
             col_1.append(points[i])
             print('found top disk of column 1', new_lst[i], points[i])
-
+            
         if new_lst[i][1] == 0 and new_lst[i][0] == 5:
             col_1.append(points[i])
             #print('found bottom disk of column 1', new_lst[i], points[i])
-
+    
         if new_lst[i][1] == 1 and new_lst[i][0] == 0:
             col_2.append(points[i])
-
+ 
         if new_lst[i][1] == 1 and new_lst[i][0] == 5:
             col_2.append(points[i])
 
@@ -86,11 +86,11 @@ def find_top_and_bottom_coord_of_each_col(col_no, row_no, new_lst, points):
             col_3.append(points[i])
 
         if new_lst[i][1] == 2 and new_lst[i][0] == 5:
-            col_3.append(points[i])
-
+            col_3.append(points[i])   
+        
         if new_lst[i][1] == 3 and new_lst[i][0] == 0:
             col_4.append(points[i])
-
+        
         if new_lst[i][1] == 3 and new_lst[i][0] == 5:
             col_4.append(points[i])
 
@@ -99,19 +99,19 @@ def find_top_and_bottom_coord_of_each_col(col_no, row_no, new_lst, points):
 
         if new_lst[i][1] == 4 and new_lst[i][0] == 5:
             col_5.append(points[i])
-
+ 
         if new_lst[i][1] == 5 and new_lst[i][0] == 0:
             col_6.append(points[i])
 
         if new_lst[i][1] == 5 and new_lst[i][0] == 5:
             col_6.append(points[i])
-    return col_1, col_2, col_3, col_4, col_5, col_6
-
+    return col_1, col_2, col_3, col_4, col_5, col_6 
+    
 
 def disks_to_array(board):
     '''Function takes in the positions of all the disks on the board and returns a numpy
     array with -1 for the bot disks and 1 for the player disks'''
-
+        
     for x in np.nditer(board, op_flags=['readwrite']):
         if x[...] == 1:
             x[...] = -1
@@ -121,7 +121,7 @@ def disks_to_array(board):
 
 def where_is_the_new_disk(board1, board2):
     '''this function takes in the board state before the human plays (board1) and after they play
-    (board2), and subtracts them from each other. Where the result is not 0 it returns the column
+    (board2), and subtracts them from each other. Where the result is not 0 it returns the column 
     and row of that position, which is where the new disk has been played'''
     board_before = disks_to_array(board1)
     board_after = disks_to_array(board2)
@@ -133,8 +133,8 @@ def where_is_the_new_disk(board1, board2):
 
 def ConvectionFunction(Image ,LowerBounds , UpperBounds):
     '''
-    Takes in an Image,
-    the lower bounds and the upper bounds
+    Takes in an Image, 
+    the lower bounds and the upper bounds 
     and returns the contours for the image and the thresholds, as well as the processed image.
     '''
 
@@ -143,7 +143,7 @@ def ConvectionFunction(Image ,LowerBounds , UpperBounds):
         LowerBound = np.array(LowerMask) # Remove if ALL of the code inputs a numpy array into the function
         UpperBound = np.array(UpperMask)
         mask = cv2.inRange(hsv , LowerBound,UpperBound) # Creates the mask
-        try:
+        try: 
             outputMask = outputMask | mask
         except NameError:
             outputMask = mask
@@ -157,13 +157,13 @@ def ConvectionFunction(Image ,LowerBounds , UpperBounds):
     index = -1
     thickness = 10
     colour = (255 , 0 , 255)
-
+    
     cv2.drawContours(img2,contours , index , colour , thickness)
 
     ImageInlineShow(img2)
     return contours, img2
 
-def plot_centre_line(column_list, img):
+def plot_centre_line(column_list, img): 
     '''Function that takes a list of the top and bottom coordinates of each column, and an image,
     and plots a centreline down the given column'''
     point_1 = tuple(column_list[0]) #convert to tuple as opencv function only takes in tuple
@@ -173,7 +173,7 @@ def plot_centre_line(column_list, img):
     cv2.imshow('image',img)
     cv2.waitKey(0)
 
-def ContourInfo(contours ,minArea):
+def ContourInfo(contours ,minArea):   
     '''Takes in a set of contours returns the cordinate for the centre of the the ones above a certain size'''
     output = []
     for c in contours:
@@ -185,7 +185,7 @@ def ContourInfo(contours ,minArea):
                 cY = int(M["m01"] / M["m00"])
                 output.append([[cX ,cY],[area]])
             except ZeroDivisionError:
-                pass
+                pass 
     return output
 
 def list_connector(list1, list2):
@@ -208,9 +208,9 @@ def CordinatesSorter(Cordinates):
     output = [x[1] for x in CordinatesWithIndex]
     return output
 
-
-def TransformTheImage(img,Extension):
-    '''Takes the image and transforms it, the extension is added to see above the grid.  '''
+       
+def TransformTheImage(img,Extension):  
+    '''Takes the image and transforms it, the extension is added to see above the grid.  ''' 
     #Red Contours
     lower_red1 = np.array([0,110,39])
     upper_red1 = np.array([10,255,255])
@@ -218,7 +218,7 @@ def TransformTheImage(img,Extension):
     lower_red2 = np.array([159,39,139])
     upper_red2 = np.array([179,255,255])
 
-
+    
     RedContours, __ = ConvectionFunction(img,[lower_red1,lower_red2], [upper_red1,upper_red2])
     Red_cordinates = ContourInfo(RedContours , 100)
     Red_cordinates = [x[0] for x in Red_cordinates]
@@ -243,43 +243,43 @@ def ArrayfromCordinates(Cordinates1 , Cordinates2 = None):
         y,x = co
         output[y][x] = 1
     if Cordinates2 == None:
-        return output
+        return output    
     for co in Cordinates2:
         y,x = co
         output[y][x] = 2
     return output
-
+        
 
 
 def GetPossitions(img ,Location = True):
-
+         
     '''It reads an image from the given Image Location, flattens it, finds the yellow and the blue disks,
         and returns the rows and columns of each of the disks.'''
     if Location:
          img = cv2.imread(img)
 
     SquareImage = TransformTheImage(img,200)
-    #If the Extra space at the top starts causing problems.
+    #If the Extra space at the top starts causing problems. 
 
     #The Blue mask
     lower_blue = np.array([90,130,80])
     upper_blue = np.array([115,255,255])
-
+    
     blueContours, __ = ConvectionFunction(SquareImage,[lower_blue] , [upper_blue])
     blue_coordinates = ContourInfo(blueContours , 800)
 
     #The Yellow Mask
     lower_yellow = np.array([20,55,70])
     upper_yellow = np.array([45,191,200])
-
+    
     yellowContours, __ = ConvectionFunction(SquareImage,[lower_yellow], [upper_yellow])
     yellow_coordinates = ContourInfo(yellowContours , 800)
-
+    
     mergedy = get_row_and_col(get_x_and_y_coord_from_contours(yellow_coordinates))
     mergedb = get_row_and_col(get_x_and_y_coord_from_contours(blue_coordinates))
     Board = ArrayfromCordinates(mergedb,mergedy)
     return disks_to_array(Board)
-
+    
 def SnapShotAndPossition():
     '''Takes an image with the webcam and then puts it through the position finding algorithm.'''
     camera = cv2.VideoCapture(0)
