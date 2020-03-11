@@ -32,6 +32,13 @@ Currently the algorithm for counter detection can be split into five separate st
 
 3. The system warps the image so that just the connect 4 grid is shown in a planer projection.
 
+
+.. figure:: _static/flattened.png
+    :align: center
+    :figclass: align-center
+
+
+
 4. The image detects the position of all the counters in play and calculates in which column each of the counters falls into.
 
 Yellow disks:
@@ -46,6 +53,13 @@ Blue disks:
 
 
 .. figure:: _static/blue_masks.png
+    :align: center
+    :figclass: align-center
+
+New disk:
+
+
+.. figure:: _static/masked.png
     :align: center
     :figclass: align-center
 
