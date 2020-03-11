@@ -29,30 +29,34 @@ When an instance of the Connect4Robot is created, the method init() is automatic
 
 AddPosition
 ^^^^^^^^^^^
+
+The function is designed to store a coordinate in cartesian form in a private dictionary. This function originally stored the variables in the form 
+of a Moveit Pose class , this was later changed , as it is very difficult to both view the values as well as made it very difficult to modify the values.
+The function remained partially to interact with legacy code, and partially as it was thought that it maybe useful to add in a sanitization layer.
+
 ::
 
 	def AddPosition(self , PositionName , PositionCordinates):
 			'''A setter function that sets up the positions for the robot to travel to'''
 			self.__positions__[PositionName] = PositionCordinates
 
-The function is designed to store a coordinate in cartesian form in a private dictionary. This function originally stored the variables in the form 
-of a Moveit Pose class , this was later changed , as it is very difficult to both view the values as well as made it very difficult to modify the values.
-The function remained partially to interact with legacy code, and partially as it was thought that it maybe useful to add in a sanitization layer.
-
 
 Interpolation
 ^^^^^^^^^^^
+
+This function was used to generate the coordinates of the columns. Interpolation was used as a method to avoid hard coding the column coordinates individually.
+
 ::
 
         def interpolation(self, column):
         ydistance = (self.y2-self.y1)/6 * (column-1)
         return self.y1 + ydistance
 
-This function was used to generate the coordinates of the columns. Interpolation was used as a method to avoid hard coding the column coordinates individually.
-
 
 Calibration
 ^^^^^^^^^^^
+
+The calibration method has 2 purposes. The first is to check that the robot is operating correctly, which is done by making it move to a position and then open and close its gripper. The second is to enable the connect 4 board to be positioned correctly in the real world. This is done by making the Panda robot move its end effector to above where the 1st column on the board should be. Once the user has aligned the board beneath it, they should press Enter, and the end effector will move above the last column on the board. Since the exact height above the board is not important, this is enough to enable the board to be correctly positioned.
 
 ::
 
@@ -70,11 +74,12 @@ Calibration
         self.moveto([self.x2, self.y2, self.z2, self.roll2, self.pitch2, self.yaw2])
         raw_input("Press Enter to continue to game...")
 
-The calibration method has 2 purposes. The first is to check that the robot is operating correctly, which is done by making it move to a position and then open and close its gripper. The second is to enable the connect 4 board to be positioned correctly in the real world. This is done by making the Panda robot move its end effector to above where the 1st column on the board should be. Once the user has aligned the board beneath it, they should press Enter, and the end effector will move above the last column on the board. Since the exact height above the board is not important, this is enough to enable the board to be correctly positioned.
-
 
 Define coordinates
 ^^^^^^^^^^^^^^^^^^
+
+This method enables us to reposition the board if we need to, as long as it remains perpendicular to the robot. We define where the left corner is going to be (as seen by the robot), and the right corner is automatically calculated. The coordinates of the left and right corners are then created as attributes so that all other positions in cartesian space can be defined relative to the board, and will auto-update if we change the location of the board. Being able to reposition the board is important so that we can test different places in the robot's task space which lead to more reliable motion planning.
+
 ::
 
     def define_coordinates(self, LeftCorner, dx=0, dy=-0.468, dz=0):
@@ -88,11 +93,11 @@ Define coordinates
         [self.x2, self.y2, self.z2, self.roll2, self.pitch2, self.yaw2] = RightCorner
 
 
-This method enables us to reposition the board if we need to, as long as it remains perpendicular to the robot. We define where the left corner is going to be (as seen by the robot), and the right corner is automatically calculated. The coordinates of the left and right corners are then created as attributes so that all other positions in cartesian space can be defined relative to the board, and will auto-update if we change the location of the board. Being able to reposition the board is important so that we can test different places in the robot's task space which lead to more reliable motion planning.
-
-
 Move To Position
 ^^^^^^^^^^^
+
+The function takes the name of a position and moves the robot to that position. It enabled us to feed in the position name as defined in main.py.
+
 ::
 
         def MoveToPosition(self ,Position):
@@ -100,12 +105,11 @@ Move To Position
         Cordinates = self.__positions__[Position]
         self.moveto(Cordinates)
 
-The function takes the name of a position and moves the robot to that position. It enabled us to feed in the position name as defined in main.py.
-
-
 
 Coordinates to pose
 ^^^^^^^^^^^^^^^^^^^
+
+The human-legible cartesian position coordinates (x,y,z) as well as the Euler angles (roll, pitch, yaw) must be converted into a different coordinate space which can be understood by the robot motion planner. This starts by converting the Euler angles into quaternions and then converting these orientations as well as the Cartesian positions into a format understood by the moveit_controller library.
 
 ::
 
@@ -123,8 +127,6 @@ Coordinates to pose
         pose.position.z = z
         return pose
 
-The human-legible cartesian position coordinates (x,y,z) as well as the Euler angles (roll, pitch, yaw) must be converted into a different coordinate space which can be understood by the robot motion planner. This starts by converting the Euler angles into quaternions and then converting these orientations as well as the Cartesian positions into a format understood by the moveit_controller library.
-
 
 Robot Initialisation ** was this removed?
 ^^^^^^^^^^^
@@ -137,6 +139,8 @@ Robot Initialisation ** was this removed?
 Neutral
 ^^^^^^^
 
+A challenge faced with the robot was that throughout the game it would slowly work itself into a singularity position after various successive moves, which meant it would become unable to move. In order to avoid this, a reset stage was required that would reconfigure the robot joints to a specific position after each move. Neutral() is a method which achieves this. It instructs the robot to move into a particular set of joint positions which orient it off to the side of the board. This method can be called after each time the robot plays a move, and can be used as the position from which it collects a disk.
+
 ::
 
     def neutral(self):
@@ -144,9 +148,6 @@ Neutral
             Joint angles used so that the robot doesn't work itself into singularity. '''
 
     	self.movejoints([0.963,0.264,0.117,-1.806,-0.035,2.063,0.308])
-
-
-A challenge faced with the robot was that throughout the game it would slowly work itself into a singularity position after various successive moves, which meant it would become unable to move. In order to avoid this, a reset stage was required that would reconfigure the robot joints to a specific position after each move. Neutral() is a method which achieves this. It instructs the robot to move into a particular set of joint positions which orient it off to the side of the board. This method can be called after each time the robot plays a move, and can be used as the position from which it collects a disk.
 
 
 Cartesian Path
