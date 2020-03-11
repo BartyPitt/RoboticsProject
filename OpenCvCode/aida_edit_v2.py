@@ -8,7 +8,6 @@ Created on Mon Feb  3 22:19:24 2020
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
-import time
 
 def ImageInlineShow(Image):
     Run = True
@@ -255,7 +254,8 @@ def ArrayfromCordinates(Cordinates1 , Cordinates2 = None):
 
 def GetPossitions(img ,Location = True):
          
-    '''Takes In an Image Location and returns what the current layout of the parts is'''
+    '''It reads an image from the given Image Location, flattens it, finds the yellow and the blue disks,
+        and returns the rows and columns of each of the disks.'''
     if Location:
          img = cv2.imread(img)
 
@@ -281,10 +281,8 @@ def GetPossitions(img ,Location = True):
     Board = ArrayfromCordinates(mergedb,mergedy)
     return disks_to_array(Board)
     
-    cam.release()
-    
 def SnapShotAndPossition():
-    '''Takes an image with the webcam and then puts it through the positon finding algorithm.'''
+    '''Takes an image with the webcam and then puts it through the position finding algorithm.'''
     camera = cv2.VideoCapture(0)
     for i in range(10):
         __, frame = camera.read()
