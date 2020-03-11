@@ -128,13 +128,18 @@ The human-legible cartesian position coordinates (x,y,z) as well as the Euler an
         return pose
 
 
-Robot Initialisation ** was this removed?
-^^^^^^^^^^^
+Robot Initialisation
+^^^^^^^^^^^^^^^^^^^^
+
+Standard procedure, to clear the current targets to avoid conflicts.
+
+
 ::
 
-        ***
+    def robot_init(self): 
+        ''' Clears targets, good to do after planning poses '''
+        self.group.clear_pose_targets()
 
-***
 
 Neutral
 ^^^^^^^
