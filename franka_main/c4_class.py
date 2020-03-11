@@ -17,7 +17,7 @@ class Connect4Robot():
         self.GripperSizeRetracted = GripperSizeRetracted
         self.GripperSizeExtended = GripperSizeExtended
         self.group = group # All joints apart from the grippers
-        self.__positions__ = dict()  # the __ does nothing , it just signifies that I dont want the user to be writting to the memory location directly.
+        self.__positions__ = dict()
         self.group2 = group2 # Gripper joints
 
 
@@ -83,7 +83,7 @@ class Connect4Robot():
 
         # print("Moving to: ({},{},{}) with angle ({:.2f},{:.2f},{:.2f})".format(*Position))
 
-        # Converting the roll, pitch, yaw values to values which "moveit" understands
+        # Converting the coordinates to values which "moveit" understands
         pose_goal = self.CordinatesToPose(Position)
 
         self.group.set_pose_target(pose_goal)  # Set new pose objective
