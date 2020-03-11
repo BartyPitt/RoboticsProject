@@ -34,10 +34,15 @@ Currently the algorithm for counter detection can be split into five separate st
 
 4. The image detects the position of all the counters in play and calculates in which column each of the counters falls into.
 
+Yellow disks:
+
 
 .. figure:: _static/yellow_masks.png
     :align: center
     :figclass: align-center
+
+
+Blue disks:
 
 
 .. figure:: _static/blue_masks.png
