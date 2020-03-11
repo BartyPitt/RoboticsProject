@@ -38,7 +38,9 @@ Set up the board to print out in the terminal in a way that makes it visually ea
                     
             print(row_str+"\033[0m")
 
-.. note:: Due to restrictions on the version of numpy, ``np.flipud(board)`` was used instead of the most up to date version: ``np.flip(board)``.
+.. note:: 
+
+    Due to restrictions on the version of numpy, ``np.flipud(board)`` was used instead of the most up to date version: ``np.flip(board)``.
     If you are using the most up to date version of numpy, you can update this function (although it will not break if you do not - numpy has reasonably good backwards-compatibility).
     The algorithm fills the board from the top down, whereas in real life the board fills up from the bottom. ``np.flipud(board)`` flips the board about a horizontal axis, making it the correct visual orientation for Connect 4.
 
@@ -80,6 +82,61 @@ There are 4 functions that are used when placing a piece on the board.
 
 Analysis
 ----------
+
+When the human player (Player 1) has made a move, the ``drop_piece`` function will update the numpy array ``board``. In order for the game algorithm to choose the best move to play in response, it has to understand and analyse the current board state. This is done using a 'windowing' technique.
+In the following function, horizontal, vertical, positive (upward sloping) and negative (downward sloping) diagonal windows are created. These windows are then used to scan all possible 4-piece sections of the board, and evaluate (score) each window based on its contents. 
+This evaluation is performed separately by the ``evaluate_window`` function, which is called within the ``score_position`` function, and explained in further detail below.
+
+.. code-block:: python
+
+    def score_position(board, piece):
+        score = 0
+
+        # Score centre column
+        centre_array = [int(i) for i in list(board[:, COLUMN_COUNT // 2])]
+        centre_count = centre_array.count(piece)
+        score += centre_count * 3
+
+        # Score horizontal positions
+        for r in range(ROW_COUNT):
+            row_array = [int(i) for i in list(board[r, :])]
+            for c in range(COLUMN_COUNT - 3):
+                # Create a horizontal window of 4
+                window = row_array[c:c + WINDOW_LENGTH]
+                score += evaluate_window(window, piece)
+
+        # Score vertical positions
+        for c in range(COLUMN_COUNT):
+            col_array = [int(i) for i in list(board[:, c])]
+            for r in range(ROW_COUNT - 3):
+                # Create a vertical window of 4
+                window = col_array[r:r + WINDOW_LENGTH]
+                score += evaluate_window(window, piece)
+
+        # Score positive diagonals
+        for r in range(ROW_COUNT - 3):
+            for c in range(COLUMN_COUNT - 3):
+                # Create a positive diagonal window of 4
+                window = [board[r + i][c + i] for i in range(WINDOW_LENGTH)]
+                score += evaluate_window(window, piece)
+
+        # Score negative diagonals
+        for r in range(ROW_COUNT - 3):
+            for c in range(COLUMN_COUNT - 3):
+                # Create a negative diagonal window of 4
+                window = [board[r + 3 - i][c + i] for i in range(WINDOW_LENGTH)]
+                score += evaluate_window(window, piece)
+
+        return score
+
+The figure below shows the scanning range for this ``score_position`` function. It is unnecessary to use every index of the board as a starting position for a scanning window, because in many positions some windows would then extend over the sides of the board.
+As a result, there are only 69 positions in which the scanning window needs to be deployed. The yellow highlight shows the applicable scanning range, and the red squares are an example of a scanning window in the maximum required position.
+
+.. figure:: _static/scanning_windows.png
+    :align: center
+    :figclass: align-center
+
+
 
 Algorithm
 ----------
