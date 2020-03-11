@@ -127,5 +127,6 @@ def where_is_the_new_disk(board1, board2):
     return i, j #i is row, j is col
 
 6. The column of the newly placed disk by the human is returned to the connect 4 playing algorithm.
+
 Error detection with OpenCV:
 --------------------------------------------------
