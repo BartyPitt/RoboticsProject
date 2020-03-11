@@ -280,8 +280,7 @@ def GetPossitions(img ,Location = True):
     mergedb = get_row_and_col(get_x_and_y_coord_from_contours(blue_coordinates))
     Board = ArrayfromCordinates(mergedb,mergedy)
     return disks_to_array(Board)
-    
-    cam.release()
+
     
 def SnapShotAndPossition():
     '''Takes an image with the webcam and then puts it through the positon finding algorithm.'''
