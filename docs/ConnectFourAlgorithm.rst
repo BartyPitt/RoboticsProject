@@ -314,5 +314,5 @@ This would not be particuarly difficult to fix, but would require a different, m
 
 2. Incomplete win structure
 
-During stress testing, we noticed that the algorithm would not make a winning move if there were two or more available. This is presumably because it could not decide between equally weighted branches, and therefore made the 'next best' move.
+During stress testing, we noticed that the algorithm would not make a winning move if there were two or more possible winning moves available. This is presumably because it could not decide between equally weighted branches, and therefore made the 'next best' move.
 This problem did not impact the algorithm's success rate, however, because as soon as the human player filled one of the possible winning spaces, the algorithm would win using the other.
