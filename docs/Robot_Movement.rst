@@ -221,6 +221,9 @@ Cartesian Path
 	    self.group.clear_pose_targets()
 	    return True
 
+The cartesian path is a function that takes in an Endposition for the robot to move to and uses the compute_cartesian_path() function to generate a cartesian path between the two.
+During earlier phases of the project  , 
+
 
 Robot Initialisation
 ------------------------
