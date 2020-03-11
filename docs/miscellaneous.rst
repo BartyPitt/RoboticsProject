@@ -4,7 +4,7 @@ Miscellaneous
 Documentation Instructions
 ---------------------------
 
-We create this documentation that you are seeing now with ``sphinx`` documentation generator.
+We have created this documentation that you are seeing now with ``sphinx`` documentation generator.
 If you are creating the documentation for this project you will need to have ``sphinx`` installed on your computer.
 It can be done by
 
