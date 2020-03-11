@@ -1,16 +1,16 @@
 Overview
 ====================
 
-In this project, we got the Franka Emika "panda" robot to play a game of Connect Four against a human. It integrates computer vision to detect moves by the human opponent and plans its move. The Robot then picks its token from a human handler and drops it in the right column that it chooses.
+In this project, we got the Franka Emika "Panda" robot to play a game of Connect 4 against a human. To do this, we implemented Computer Vision, a Minimax Game Algorithm, Motion Planning and Collision Detection.
+We also carried out extensive simulations of the robot's motion using Gazebo for visualisation.
 
-We carried out extensive simulations of the robot's motion using Gazebo for visualisation.
+The different elements of the project were written in discrete python scripts, elements of which were than called and executed within a main file.
 
-
-Here is a flow chart showing the steps the robot takes.
-
+The flow chart below shows an overview of the steps that are executed in the main file.
 
 .. figure:: _static/Algorithm_flowchart.png
     :align: center
     :figclass: align-center
 
-
+Main File Breakdown
+-------------------
