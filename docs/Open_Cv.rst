@@ -1,12 +1,7 @@
 Open CV Overview
 ===============================
-
-*"You sure you need a Camera"*
-
-*- Petar*
-
-In order for the robot to be able to play connect 4 basic sets of machine vision *algorithms* were implemented.
-
+OpenCV is used as a way to allow the robot to update the state of the board and know where the human has played without requiring any inputs.
+It is also used for error prevention and recovery, as will be further explained.
 
 System Overview for Counter position detection.
 --------------------------------------------------
@@ -30,12 +25,3 @@ Current Order of Called Functions.::
 
 Mask and Contour Function
 ----------------------------------------
-
-
-
-
-
-
-
-
-
