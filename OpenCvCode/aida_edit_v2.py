@@ -250,7 +250,6 @@ def ArrayfromCordinates(Cordinates1, Cordinates2 = None):
     return output
         
 
-
 def GetPossitions(img, Location = True):
          
     '''It reads an image from the given Image Location, flattens it, finds the yellow and the blue disks,
