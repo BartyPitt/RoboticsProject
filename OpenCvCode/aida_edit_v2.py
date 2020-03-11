@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Created on Mon Feb  3 22:19:24 2020
 
@@ -32,7 +31,7 @@ def get_x_and_y_coord_from_contours(coordinates):
 
 def get_row_and_col(coordinates):
     '''Takes pixel coordinates in the form of [cX ,cY], and returns the row for cX, and column for cY'''
-    Tolerance = 20
+    Tolerance = 20 #a tolerance is added to check the coordinate in the row/column are within a range.
     xList = []
     yList = []
     KeyX = [55 , 155 , 250 , 345 , 450 , 545 , 640] #these are the estimated pixels in which the coordinates for each column lie in
@@ -41,7 +40,7 @@ def get_row_and_col(coordinates):
         y_coord = i[1]
         x_coord = i[0]
         for n,x in enumerate(KeyX):
-            if abs(x_coord - x) < Tolerance: #a tolerance is added to check the coordinate in the row/column are within a range.
+            if abs(x_coord - x) < Tolerance: 
                 xList.append(n)
                 break
         else:
