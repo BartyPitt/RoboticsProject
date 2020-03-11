@@ -93,9 +93,7 @@ class Connect4Robot():
 	    waypoints = []
 		# start with the current pose
 	    waypoints.append(StartPosition)
-		
-		#TODO add in a level of path interpolation.
-		
+				
 	    waypoints.append(Endposition)
 	    for i in range(max_tries):
 			(plan, fraction) = group.compute_cartesian_path (
