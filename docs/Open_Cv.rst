@@ -15,9 +15,36 @@ It then needs to find the new counter that has been placed in the board by the h
 Currently the algorithm for counter detection can be split into five separate stages:
 
 1. The webcam currently attached to the system takes a picture of the board in its current state.
+
+.. figure:: _static/snapshot_one.png
+    :align: center
+    :figclass: align-center
+
+
 2. The machine vision detects the four corners of the connect 4 grid.
+
+
+.. figure:: _static/white_masks.png
+    :align: center
+    :figclass: align-center
+
+
+
 3. The system warps the image so that just the connect 4 grid is shown in a planer projection.
+
 4. The image detects the position of all the counters in play and calculates in which column each of the counters falls into.
+
+
+.. figure:: _static/yellow_masks.png
+    :align: center
+    :figclass: align-center
+
+
+    .. figure:: _static/blue_masks.png
+        :align: center
+        :figclass: align-center
+
+
 5. The location of all the counters is returned in the form of a numpy array. This is saved as board1
 
 These steps are then repeated again. This outputs another board state in the form of a numpy array, saved as board2. Then board1 is subtracted from board2 to find where the new counter is.
@@ -39,6 +66,7 @@ How the code works:
       Board = GetPossitions(frame , Location = False)
       camera.release()
       return Board
+
 
 Where the position finding algorithm is the following:
 
@@ -71,6 +99,7 @@ Where the position finding algorithm is the following:
       return disks_to_array(Board)
 
       cam.release()
+
 
 It reads an image from the given Image Location, flattens it, finds the yellow and the blue disks,
 and returns the rows and columns of each of the disks.
@@ -105,6 +134,7 @@ This fucntion takes the pixel coordinates in the form of [cX ,cY], and returns t
           print("Y out" , y_coord)
   return [cord for cord in zip(xList , yList)]
 
+
 4. Converting the board into a numpy array:
 This function takes in the positions of all the disks on the board and returns a numpy
 array with -1 for the bot disks and 1 for the player disks
@@ -118,6 +148,7 @@ array with -1 for the bot disks and 1 for the player disks
           if x[...] == 2:
               x[...] = 1
       return board
+
 
 5. Finding the newly placed disk by the human:
 This function takes in the board state before the human plays (board1) and after they play
@@ -135,7 +166,13 @@ and row of that position, which is where the new disk has been played
               i, j = np.where(result != 0)
       return i, j #i is row, j is col
 
+
 6. The column of the newly placed disk by the human is returned to the connect 4 playing algorithm.
 
 Error detection with OpenCV:
 --------------------------------------------------
+
+
+.. figure:: _static/column_line.png
+    :align: center
+    :figclass: align-center
