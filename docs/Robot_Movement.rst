@@ -1,36 +1,18 @@
 Robot Movement Overview
 ===============================
 
-*"It would be good if the robot never did that again"*
-
-*- Alattar, Ahmad*
-
+A separate python script was created which contained the robot class with methods related to its motion. This enabled us to keep the main python script clean and legible.
 
 
 
 Functional Overview
 ----------------------------------------
 
-Class Connect4Robot
-^^^^^^^^^^^
-::
-
-    class Connect4Robot():
-
-    def __init__(self,GripperSizeExtended = 0.03 , GripperSizeRetracted = 0, group = moveit_commander.MoveGroupCommander("panda_arm")): #defult positions added to maintain compability with legacy code
-        '''Sets up the Inital setup conditions for the robot.
-        TODO add in more setup conditions when more are needed.
-        '''
-        self.GripperSizeRetracted = GripperSizeRetracted
-        self.GripperSizeExtended = GripperSizeExtended
-        self.group = group
-        self.__positions__ = dict()
-
-A class was used to combine our functions into a single object. This enabled information such as joint positions to be store here rather than on the main file.
-
 
 Init
 ^^^^
+
+When an instance of the Connect4Robot is created, the method init() is automatically called. This defines the variables for opening and closing the gripper, which are used in their related methods. 2 groups are also created. These are "group", which includes all the joints in the arm of the robot and "group2", which includes the joints in the gripper. These are used by the moveit_commander library for moving the robot. Finally, a dictionary is initialised, which will be used for storing position names and cartesian coordinates.
 
 ::
 
@@ -41,12 +23,8 @@ Init
         self.GripperSizeRetracted = GripperSizeRetracted
         self.GripperSizeExtended = GripperSizeExtended
         self.group = group # All joints apart from the grippers
-        self.__positions__ = dict()  # the __ does nothing , it just signifies that I dont want the user to be writting to the memory location directly.
+        self.__positions__ = dict()
         self.group2 = group2 # Gripper joints
-
-When an instance of the Connect4Robot is created, the method init() is automatically called. This defines the variables for opening and closing the gripper, which are used in their related methods. 2 groups are also created. These are "group", which includes all the joints in the arm of the robot and "group2", which includes the joints in the gripper. These are used by the moveit_commander library for moving the robot. Finally, a dictionary is initialised, which will be used for storing position names and cartesian coordinates.
-
-
 
 
 AddPosition
