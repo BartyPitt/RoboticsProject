@@ -87,7 +87,7 @@ There are 4 functions that are used when placing a piece on the board.
 Analysis Functions
 -----------------------
 
-When the human player (Player 1) has made a move, the ``drop_piece`` function will update the numpy array ``board`` with a 1. In order for the game algorithm (Player 2) to choose the best move to play in response, it has to understand and analyse the current board state. This is done using a 'windowing' technique.
+When the human player (Player 1) has made a move, the ``drop_piece`` function will update the numpy array ``board`` with a number 1 in the specified position. In order for the game algorithm (Player 2) to choose the best move to play in response, it has to understand and analyse the current board state. This is done using a 'windowing' technique.
 In the following function, horizontal, vertical, positive (upward sloping) and negative (downward sloping) diagonal windows are created. These windows are then used to scan all possible 4-piece sections of the board, and evaluate (score) each window based on its contents. 
 
 This evaluation is performed separately by the ``evaluate_window`` function, which is called within the ``score_position`` function, and explained in further detail below.
@@ -287,11 +287,11 @@ The minimax algorithm for the Connect 4 game is implemented below.
 
 .. note::
 
-The implementation of this minimax algorithm also contains Alpha-Beta pruning. There is no point following a decision-tree branch any further if the initial move scores less optimally than an alternative that has already been discovered. 
-Alpha-Beta pruning works to 'prune' away these branches, leaving a much smaller, more optimised decision tree.
+    The implementation of this minimax algorithm also contains Alpha-Beta pruning. There is no point following a decision-tree branch any further if the initial move scores less optimally than an alternative that has already been discovered. 
+    Alpha-Beta pruning works to 'prune' away these branches, leaving a much smaller, more optimised decision tree.
 
-This technique is used to reduce the time complexity of the algorithm, which in this context is important, as there are many other parts of the game loop that are time consuming (e.g. Motion Planning). 
-The game algorithm can now run reliably in under 500ms, even when looking 4 moves into the future.
+    This technique is used to reduce the time complexity of the algorithm, which in this context is important, as there are many other parts of the game loop that are time consuming (e.g. Motion Planning). 
+    The game algorithm can now run reliably in under 500ms, even when looking 4 moves into the future.
 
 Limitations / Improvements
 ---------------------------
