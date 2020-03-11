@@ -1,44 +1,36 @@
+"""
+Created on 05/02/2020
+
+@author: felixm
+"""
+
 import numpy as np
 import random
 import time
 import math
 
-# Set static variables
+# Define board size (not scalable, leave at 6x7)
 ROW_COUNT = 6
 COLUMN_COUNT = 7
 
+# Set turn counter values
 PLAYER = 0
 BOT = 1
 
+# Set piece values
 EMPTY = 0
 PLAYER_PIECE = 1
-BOT_PIECE = 2
+BOT_PIECE = 2 
 
-WINDOW_LENGTH = 4
+WINDOW_LENGTH = 4 # Size of the scanning window (should equal number of tokens connected to win)
+
+DEPTH = 4 # Minimax algorithm tree depth (a higher value takes longer to run, but plays better)
 
 
 # Create a Connect-4 board
 def create_board():
     board = np.zeros((ROW_COUNT, COLUMN_COUNT))
     return board
-
-
-# Place a piece on the board
-def drop_piece(board, row, col, piece):
-    board[row][col] = piece
-
-
-# Check if chosen column has an empty slot
-def is_valid_location(board, col):
-    return board[ROW_COUNT - 1][col] == 0
-
-
-# Check which row the piece falls into
-def get_next_open_row(board, col):
-    for r in range(ROW_COUNT):
-        if board[r][col] == 0:
-            return r
-
 
 # Print out the board in a nice fancy way!
 def pretty_print_board(board):
@@ -61,9 +53,19 @@ def pretty_print_board(board):
                 row_str +="\033[0;37;45m   "
         print(row_str+"\033[0m")
 
-# Change orientation of printed board so it looks like Connect-4 on print
-def print_board(board):
-    print(np.flipud(board))
+# Place a piece on the board
+def drop_piece(board, row, col, piece):
+    board[row][col] = piece
+
+# Check if chosen column has an empty slot
+def is_valid_location(board, col):
+    return board[ROW_COUNT - 1][col] == 0
+
+# Check which row the piece falls into
+def get_next_open_row(board, col):
+    for r in range(ROW_COUNT):
+        if board[r][col] == 0:
+            return r
 
 # Get all locations that could contain a piece
 def get_valid_locations(board):
@@ -177,7 +179,6 @@ def winning_move(board, piece):
 def is_terminal_node(board):
     return winning_move(board, PLAYER_PIECE) or winning_move(board, BOT_PIECE) or len(get_valid_locations(board)) == 0
 
-
 # Pick the best move by looking at all possible future moves and comparing their scores
 def minimax(board, depth, alpha, beta, maximisingPlayer):
     valid_locations = get_valid_locations(board)
@@ -187,10 +188,10 @@ def minimax(board, depth, alpha, beta, maximisingPlayer):
         if is_terminal:
             # Weight the bot winning really high
             if winning_move(board, BOT_PIECE):
-                return (None, 10000000)
+                return (None, 9999999)
             # Weight the human winning really low
             elif winning_move(board, PLAYER_PIECE):
-                return (None, -10000000)
+                return (None, -9999999)
             else:  # No more valid moves
                 return (None, 0)
         # Return the bot's score
