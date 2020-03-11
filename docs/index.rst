@@ -13,6 +13,7 @@ How to teach your robot to play connect four
    overview
    getting_start
    gazebo_simulations
+   main_code
    motion_planning
    collision_detection
    Robot_Movement
