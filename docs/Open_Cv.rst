@@ -22,6 +22,7 @@ Currently the algorithm for counter detection can be split into five separate st
 
 
 2. The machine vision detects the four corners of the connect 4 grid.
+White Masks:
 
 
 .. figure:: _static/white_masks.png
