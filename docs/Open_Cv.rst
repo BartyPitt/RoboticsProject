@@ -41,22 +41,6 @@ White Masks:
 
 
 4. The image detects the position of all the counters in play and calculates in which column each of the counters falls into.
-
-Yellow disks:
-
-
-.. figure:: _static/yellow_masks.png
-    :align: center
-    :figclass: align-center
-
-
-Blue disks:
-
-
-.. figure:: _static/blue_masks.png
-    :align: center
-    :figclass: align-center
-
 New disk:
 
 
@@ -118,7 +102,6 @@ Where the position finding algorithm is the following:
       Board = ArrayfromCordinates(mergedb,mergedy)
       return disks_to_array(Board)
 
-      cam.release()
 
 
 It reads an image from the given Image Location, flattens it, finds the yellow and the blue disks,
@@ -192,6 +175,23 @@ and row of that position, which is where the new disk has been played
 Error detection with OpenCV:
 --------------------------------------------------
 
+Yellow disks:
+
+
+.. figure:: _static/yellow_masks.png
+    :align: center
+    :figclass: align-center
+
+
+Blue disks:
+
+
+.. figure:: _static/blue_masks.png
+    :align: center
+    :figclass: align-center
+
+
+Finding center line of the target column:
 
 .. figure:: _static/column_line.png
     :align: center
