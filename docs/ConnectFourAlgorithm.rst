@@ -223,7 +223,7 @@ Before implementing the minimax algorithm, the two game-terminating states need 
     def is_terminal_node(board):
         return winning_move(board, PLAYER_PIECE) or winning_move(board, BOT_PIECE) or len(get_valid_locations(board)) == 0
 
-The minimiax algorithm for the Connect 4 game is implemented below.
+The minimax algorithm for the Connect 4 game is implemented below.
 
 .. code-block:: python
 
@@ -285,7 +285,7 @@ The minimiax algorithm for the Connect 4 game is implemented below.
                     break
             return column, value
 
-.. Note::
+.. note::
 
 The implementation of this minimax algorithm also contains Alpha-Beta pruning. There is no point following a decision-tree branch any further if the initial move scores less optimally than an alternative that has already been discovered. 
 Alpha-Beta pruning works to 'prune' away these branches, leaving a much smaller, more optimised decision tree.
