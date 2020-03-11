@@ -1,7 +1,7 @@
 Connect Four Algorithm
 ============================
 
-In order for the robot to play competitively against a human, a game algorithm is used to choose the best move in response to the human player. The algorithm's 'game loop' is implemented inside the main file, but for general tidiness we store all of the functions in a separate file.
+In order for the robot to play competitively against a human, a minimax game algorithm is used to choose the best move in response to the human player. The algorithm's 'game loop' is implemented inside the main file, but for general tidiness we store all of the functions in a separate file.
 
 
 Setup Functions
@@ -46,7 +46,11 @@ Set up the board to print out in the terminal in a way that makes it visually ea
 
     Due to restrictions on the version of numpy, ``np.flipud(board)`` was used instead of the most up to date version: ``np.flip(board)``.
     If you are using the most up to date version of numpy, you can update this function (although it will not break if you do not - numpy has reasonably good backwards-compatibility).
-    The algorithm fills the board from the top down, whereas in real life the board fills up from the bottom. ``np.flipud(board)`` flips the board about a horizontal axis, making it the correct visual orientation for Connect 4.
+    
+.. warning::
+    
+    It's important to understand that the algorithm fills the board from the top down. In real life, the board fills up from the bottom. ``np.flipud(board)`` flips the board around a horizontal axis, making it the correct visual orientation for Connect 4.
+    In future, for clarity and ease of understanding, the placement of the pieces within the board will be referred to in the same way that it would happen in real life (bottom up).
 
 There are 4 functions that are used when placing a piece on the board.
 
@@ -76,6 +80,11 @@ There are 4 functions that are used when placing a piece on the board.
         for r in range(ROW_COUNT):
             if board[r][col] == 0:
                 return r
+
+.. note::
+
+    This function serves as virtual 'gravity'. Instead of placing a piece anywhere in the column, by getting only the next open row, piece placement is restricted to the next available slot from the bottom of the board, as would happen in real life. 
+    This also means that the only input that is required is now the column (the row is automatically found and assigned).
 
 4. Finally, to place a piece in the next available row, in the chosen column:
 
@@ -287,7 +296,7 @@ The minimax algorithm for the Connect 4 game is implemented below.
 
 .. note::
 
-    The implementation of this minimax algorithm also contains Alpha-Beta pruning. There is no point following a decision-tree branch any further if the initial move scores less optimally than an alternative that has already been discovered. 
+    The implementation of this minimax algorithm also contains Alpha-Beta pruning. There is no point following a decision-tree branch any further if the initial move scores less optimally than an alternative move that has already been discovered. 
     Alpha-Beta pruning works to 'prune' away these branches, leaving a much smaller, more optimised decision tree.
 
     This technique is used to reduce the time complexity of the algorithm, which in this context is important, as there are many other parts of the game loop that are time consuming (e.g. Motion Planning). 
@@ -295,3 +304,15 @@ The minimax algorithm for the Connect 4 game is implemented below.
 
 Limitations / Improvements
 ---------------------------
+
+There are some key limitations to the algorithm, but they did not need to be directly addressed as they were outside the scope for this project.
+
+1. Lack of scalability
+
+Due to the hard-coded nature of the scanning procedure, the board size, the number of connected pieces required to win, and the scanning window size cannot be changed without causing major errors. 
+This would not be particuarly difficult to fix, but would require a different, more adaptive scanning structure and further definition of static variables.
+
+2. Incomplete win structure
+
+During stress testing, we noticed that the algorithm would not make a winning move if there were two or more available. This is presumably because it could not decide between equally weighted branches, and therefore made the 'next best' move.
+This problem did not impact the algorithm's success rate, however, because as soon as the human player filled one of the possible winning spaces, the algorithm would win using the other.
