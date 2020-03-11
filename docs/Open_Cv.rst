@@ -177,14 +177,14 @@ Error detection with OpenCV:
 1. One method used to check for errors was to run the code to find the position of the newly played disk by the human twice, and ensure that in both instances the result is the same.
 Otherwise, repeat the same procedure until the new disk position is the same.
 
-Firstly the yellow disks are found with the 'GetPossitions' function mentioned above,
+Firstly the yellow disks are found with the ``GetPossitions`` function mentioned above,
 
 
 .. figure:: _static/yellow_masks.png
     :align: center
     :figclass: align-center
 
-Then the blue disks, also found with 'GetPossitions':
+Then the blue disks, also found with ``GetPossitions``:
 
 
 .. figure:: _static/blue_masks.png
@@ -269,7 +269,7 @@ By running this code twice and ensuring that on both instances the disk position
 
 
 2. Another method that was developed for error recovery but never implemented was to draw a centre line on the column that the robot was about to place the disk in, and using a red marker on the centre of
-the robot gripper, check that the coordinate of the marker on the gripper is alligned with the target column.
+the robot gripper, check that the coordinate of the marker on the gripper is aligned with the target column.
 
 First the top and the bottom coordinates of the disks in each column are found:
 
@@ -331,7 +331,7 @@ Then after this, the target column is used as an input for the following functio
     :align: center
     :figclass: align-center
 
-Then using the existing code to find the red markers in the function GetPossitions, the coordinate of that marker can be found, and calling the following function:
+Then using the existing code to find the red markers in the function ``GetPossitions``, the coordinate of that marker can be found, and calling the following function:
 
 
 .. code-block:: python
