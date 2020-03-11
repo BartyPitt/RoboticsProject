@@ -22,6 +22,11 @@ You will also have to install ``recommonmark`` which can be done by
     pip install recommonmark       # for Windows
     apt-get install recommonmark   # for Linux
 
+Lastly you will have to install the pip install ``sphinx_rtd_theme``, the the theme we will be using.
+
+.. code-block:: bash
+
+    pip install sphinx_rtd_theme
 
 
 To compile and view your documentation, navigate to ``RoboticsProject/docs`` and open a terminal there. On your terminal, type in 
