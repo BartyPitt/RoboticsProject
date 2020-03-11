@@ -27,6 +27,7 @@ The column and the row of the new counter are found and the column is returned t
 How the code works:
 --------------------------------------------------
 1. Taking a snapshot with the webcam, and then putting it through the position finding algorithm:
+
 .. code-block:: python
 
 def SnapShotAndPossition():
@@ -40,7 +41,9 @@ def SnapShotAndPossition():
     return Board
 
 Where the position finding algorithm is the following:
+
 .. code-block:: python
+
 def GetPossitions(img ,Location = True):
     if Location:
          img = cv2.imread(img)
@@ -74,7 +77,9 @@ and returns the rows and columns of each of the disks.
 
 3. From the pixel coordinates of the disks, finding the row and column that they fall into:
 This fucntion takes the pixel coordinates in the form of [cX ,cY], and returns the row for cX, and column for cY
+
 .. code-block:: python
+
 def get_row_and_col(coordinates):
 Tolerance = 20 #a tolerance is added to check the coordinate in the row/column are within a range.
 xList = []
@@ -103,7 +108,9 @@ return [cord for cord in zip(xList , yList)]
 4. Converting the board into a numpy array:
 This function takes in the positions of all the disks on the board and returns a numpy
 array with -1 for the bot disks and 1 for the player disks
+
 .. code-block:: python
+
 def disks_to_array(board):
     for x in np.nditer(board, op_flags=['readwrite']):
         if x[...] == 1:
@@ -116,7 +123,9 @@ def disks_to_array(board):
 This function takes in the board state before the human plays (board1) and after they play
 (board2), and subtracts them from each other. Where the result is not 0 it returns the column
 and row of that position, which is where the new disk has been played
+
 .. code-block:: python
+
 def where_is_the_new_disk(board1, board2):
     board_before = disks_to_array(board1)
     board_after = disks_to_array(board2)
