@@ -26,7 +26,18 @@ The column and the row of the new counter are found and the column is returned t
 
 How the code works:
 --------------------------------------------------
+1. Taking a snapshot with the webcam, and then puts it through the position finding algorithm:
+.. code-block:: bash
 
+def SnapShotAndPossition():
+    camera = cv2.VideoCapture(0)
+    for i in range(10):
+        __, frame = camera.read()
+    frame = cv2.fastNlMeansDenoisingColored(frame,None,10,10,7,21)
+    ImageInlineShow(frame)
+    Board = GetPossitions(frame , Location = False)
+    camera.release()
+    return Board
 
 
 Error detection with OpenCV:
