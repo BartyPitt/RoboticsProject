@@ -10,11 +10,17 @@ How to teach your robot to play connect four
    :maxdepth: 2
    :caption: Contents:
    
-
+   overview
    getting_start
-   gazebo_problems
-   Open_Cv
+   gazebo_simulations
+   main_code
+   motion_planning
+   collision_detection
    Robot_Movement
+   Open_Cv
+   ConnectFourAlgorithm
+   troubleshooting
+   miscellaneous
 
 Indices and tables
 ==================
@@ -22,3 +28,9 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+
+
+..
+  TODO: add a section on Collision detection and how we overcame it.

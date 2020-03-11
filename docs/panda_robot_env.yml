@@ -1,0 +1,10 @@
+name: panda_robot_python3
+channels:
+- defaults
+- conda-forge
+dependencies:
+  - python=3.5
+
+
+  - pip:
+    - numpy==1.11    
