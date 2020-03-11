@@ -38,6 +38,10 @@ Set up the board to print out in the terminal in a way that makes it visually ea
                     
             print(row_str+"\033[0m")
 
+.. figure:: _static/terminal_visualisation.png
+    :align: center
+    :figclass: align-center
+
 .. note:: 
 
     Due to restrictions on the version of numpy, ``np.flipud(board)`` was used instead of the most up to date version: ``np.flip(board)``.
@@ -89,6 +93,7 @@ In the following function, horizontal, vertical, positive (upward sloping) and n
 This evaluation is performed separately by the ``evaluate_window`` function, which is called within the ``score_position`` function, and explained in further detail below.
 
 .. code-block:: python
+    :emphasize-lines: 14, 22, 29, 36
 
     def score_position(board, piece):
         score = 0
@@ -137,8 +142,8 @@ As a result, there are only 69 positions in which the scanning window needs to b
     :align: center
     :figclass: align-center
 
-The ``evaluate_window`` function is called in the last line of each scoring block. The output of this evaluation function is then used to find the best possible window, and therefore the best possible position for the game algorithm to play a move. 
-Note that this scoring mechanism is required, but the minimax function, which will be explained in further detail, makes some elements of this function much less important.
+The ``evaluate_window`` function is called in the last line of each scoring block. The output of this evaluation function (a numerical score value) is stored in the ``score`` variable, which is updated every time a higher score is found. 
+When the scanning is complete, the window with the best score is passed to the game algorithm to play a move. Note that this scoring mechanism is required, but the minimax function, which will be explained in further detail, makes some elements of this function much less important.
 
 In any given scanning position, the contents of that window are evaluated for 'strength', e.g. a window that contains 3 consecutive pieces from the same player is a 'strong' state, and has a higher score. 
 This means that the algorithm is more likely to try and create board states that are 'strong' - i.e. prioritise connecting 3 pieces together, rather than connecting 2.
@@ -170,9 +175,9 @@ This means that the algorithm is more likely to try and create board states that
         return score
 
 The final element of the analysis is a 'special case' variation of the ``score_position`` function. When 4 pieces are joined together, this signifies the game has been won. 
-After every move, the board needs to be scanned by both the ``score_position`` function, and also the ``winning_move`` function, which will exit out of the game loop if it sees that the game has been won.
+After every move, the board needs to be scanned by both the ``score_position`` function, and also the ``winning_move`` function, which will exit out of the game loop if it sees a winning move.
 
-.. code-block::
+.. code-block:: python
 
     def winning_move(board, piece):
         # Check valid horizontal locations for win
@@ -201,6 +206,92 @@ After every move, the board needs to be scanned by both the ``score_position`` f
 
 Algorithm
 ----------
+
+The algorithm chosen to play Connect 4 is the minimax algorithm. Minimax is a backtracking algorithm which is commonly used in decision-making and game theory to find the optimal move for a player.
+This makes it a perfect choice for two-player, turn-based games. 
+
+In the minimax algorithm, the two players are the maximiser and minimiser. The maximiser is trying to get the highest score possible, and the minimiser is trying to get the lowest score possible. 
+The best / worst scores are calculated by the ``evaluate_window`` function, and stored in the ``score`` variable, described in the previous section.
+
+At the start of every turn, minimax will scan the board's remaining valid locations and calculate all possible moves, before backtracking and choosing the optimal move for that turn. This will be either the best or worst move, depending on whether it is the maximiser or minimiser's turn.
+The assumption is that minimax (maximiser) can play optimally, as long as the human player (minimiser) also plays optimally. This will not always be the case, but does not lead to significant gameplay problems.
+
+Before implementing the minimax algorithm, the two game-terminating states need to be defined as terminal nodes. If there is a winning move from either player, or if the board fills up without a win (leading to a draw), the game will end.
+
+.. code-block:: python
+
+    def is_terminal_node(board):
+        return winning_move(board, PLAYER_PIECE) or winning_move(board, BOT_PIECE) or len(get_valid_locations(board)) == 0
+
+The minimiax algorithm for the Connect 4 game is implemented below.
+
+.. code-block:: python
+
+    def minimax(board, depth, alpha, beta, maximisingPlayer):
+        valid_locations = get_valid_locations(board)
+
+        is_terminal = is_terminal_node(board)
+        if depth == 0 or is_terminal:
+            if is_terminal:
+                # Weight the bot winning really high
+                if winning_move(board, BOT_PIECE):
+                    return (None, 9999999)
+                # Weight the human winning really low
+                elif winning_move(board, PLAYER_PIECE):
+                    return (None, -9999999)
+                else:  # No more valid moves
+                    return (None, 0)
+            # Return the bot's score
+            else:
+                return (None, score_position(board, BOT_PIECE))
+
+        if maximisingPlayer:
+            value = -9999999
+            # Randomise column to start
+            column = random.choice(valid_locations)
+            for col in valid_locations:
+                row = get_next_open_row(board, col)
+                # Create a copy of the board
+                b_copy = board.copy()
+                # Drop a piece in the temporary board and record score
+                drop_piece(b_copy, row, col, BOT_PIECE)
+                new_score = minimax(b_copy, depth - 1, alpha, beta, False)[1]
+                if new_score > value:
+                    value = new_score
+                    # Make 'column' the best scoring column we can get
+                    column = col
+                alpha = max(alpha, value)
+                if alpha >= beta:
+                    break
+            return column, value
+
+        else:  # Minimising player
+            value = 9999999
+            # Randomise column to start
+            column = random.choice(valid_locations)
+            for col in valid_locations:
+                row = get_next_open_row(board, col)
+                # Create a copy of the board
+                b_copy = board.copy()
+                # Drop a piece in the temporary board and record score
+                drop_piece(b_copy, row, col, PLAYER_PIECE)
+                new_score = minimax(b_copy, depth - 1, alpha, beta, True)[1]
+                if new_score < value:
+                    value = new_score
+                    # Make 'column' the best scoring column we can get
+                    column = col
+                beta = min(beta, value)
+                if alpha >= beta:
+                    break
+            return column, value
+
+.. Note::
+
+The implementation of this minimax algorithm also contains Alpha-Beta pruning. There is no point following a decision-tree branch any further if the initial move scores less optimally than an alternative that has already been discovered. 
+Alpha-Beta pruning works to 'prune' away these branches, leaving a much smaller, more optimised decision tree.
+
+This technique is used to reduce the time complexity of the algorithm, which in this context is important, as there are many other parts of the game loop that are time consuming (e.g. Motion Planning). 
+The game algorithm can now run reliably in under 500ms, even when looking 4 moves into the future.
 
 Limitations / Improvements
 ---------------------------
