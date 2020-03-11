@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Connect-four played by Panda Robot'
+project = 'Connect Four Robot'
 copyright = '2020, Medad Newman, Barty Pitt, Josh Moody, Aida Manzano Kharman, Felix Murray, Mia Taicher'
 author = 'Medad Newman, Barty Pitt, Josh Moody, Aida Manzano Kharman, Felix Murray, Mia Taicher'
 

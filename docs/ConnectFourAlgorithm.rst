@@ -4,10 +4,10 @@ Connect Four Algorithm
 In order for the robot to play competitively against a human, a game algorithm is used to choose the best move in response to the human player. The algorithm's 'game loop' is implemented inside the main file, but for general tidiness we store all of the functions in a separate file.
 
 
-Setup
-----------
+Setup Functions
+-----------------
 
-Create a numpy zeroes array to represent the Connect 4 board. This will be populated with pieces throughout the game.
+Create a numpy array of zeroes to represent the Connect 4 board. This will be populated with numbered pieces throughout the game.
 
 .. code-block:: python
 
@@ -38,7 +38,9 @@ Set up the board to print out in the terminal in a way that makes it visually ea
                     
             print(row_str+"\033[0m")
 
-.. note:: Due to restrictions on the version of numpy, ``np.flipud(board)`` was used instead of the most up to date version: ``np.flip(board)``.
+.. note:: 
+
+    Due to restrictions on the version of numpy, ``np.flipud(board)`` was used instead of the most up to date version: ``np.flip(board)``.
     If you are using the most up to date version of numpy, you can update this function (although it will not break if you do not - numpy has reasonably good backwards-compatibility).
     The algorithm fills the board from the top down, whereas in real life the board fills up from the bottom. ``np.flipud(board)`` flips the board about a horizontal axis, making it the correct visual orientation for Connect 4.
 
@@ -78,8 +80,127 @@ There are 4 functions that are used when placing a piece on the board.
     def drop_piece(board, row, col, piece):
         board[row][col] = piece
 
-Analysis
-----------
+Analysis Functions
+-----------------------
+
+When the human player (Player 1) has made a move, the ``drop_piece`` function will update the numpy array ``board`` with a 1. In order for the game algorithm (Player 2) to choose the best move to play in response, it has to understand and analyse the current board state. This is done using a 'windowing' technique.
+In the following function, horizontal, vertical, positive (upward sloping) and negative (downward sloping) diagonal windows are created. These windows are then used to scan all possible 4-piece sections of the board, and evaluate (score) each window based on its contents. 
+
+This evaluation is performed separately by the ``evaluate_window`` function, which is called within the ``score_position`` function, and explained in further detail below.
+
+.. code-block:: python
+
+    def score_position(board, piece):
+        score = 0
+
+        # Score centre column
+        centre_array = [int(i) for i in list(board[:, COLUMN_COUNT // 2])]
+        centre_count = centre_array.count(piece)
+        score += centre_count * 3
+
+        # Score horizontal positions
+        for r in range(ROW_COUNT):
+            row_array = [int(i) for i in list(board[r, :])]
+            for c in range(COLUMN_COUNT - 3):
+                # Create a horizontal window of 4
+                window = row_array[c:c + WINDOW_LENGTH]
+                score += evaluate_window(window, piece)
+
+        # Score vertical positions
+        for c in range(COLUMN_COUNT):
+            col_array = [int(i) for i in list(board[:, c])]
+            for r in range(ROW_COUNT - 3):
+                # Create a vertical window of 4
+                window = col_array[r:r + WINDOW_LENGTH]
+                score += evaluate_window(window, piece)
+
+        # Score positive diagonals
+        for r in range(ROW_COUNT - 3):
+            for c in range(COLUMN_COUNT - 3):
+                # Create a positive diagonal window of 4
+                window = [board[r + i][c + i] for i in range(WINDOW_LENGTH)]
+                score += evaluate_window(window, piece)
+
+        # Score negative diagonals
+        for r in range(ROW_COUNT - 3):
+            for c in range(COLUMN_COUNT - 3):
+                # Create a negative diagonal window of 4
+                window = [board[r + 3 - i][c + i] for i in range(WINDOW_LENGTH)]
+                score += evaluate_window(window, piece)
+
+        return score
+
+The figure below shows the scanning range for this ``score_position`` function. It is unnecessary to use every index of the board as a starting position for a scanning window, because in many positions some windows would then extend over the sides of the board.
+As a result, there are only 69 positions in which the scanning window needs to be deployed. The yellow highlight shows the applicable scanning range, and the red squares are an example of a scanning window in the maximum required position.
+
+.. figure:: _static/scanning_windows.png
+    :align: center
+    :figclass: align-center
+
+The ``evaluate_window`` function is called in the last line of each scoring block. The output of this evaluation function is then used to find the best possible window, and therefore the best possible position for the game algorithm to play a move. 
+Note that this scoring mechanism is required, but the minimax function, which will be explained in further detail, makes some elements of this function much less important.
+
+In any given scanning position, the contents of that window are evaluated for 'strength', e.g. a window that contains 3 consecutive pieces from the same player is a 'strong' state, and has a higher score. 
+This means that the algorithm is more likely to try and create board states that are 'strong' - i.e. prioritise connecting 3 pieces together, rather than connecting 2.
+
+.. code-block:: python
+
+    def evaluate_window(window, piece):
+        score = 0
+        # Switch scoring based on turn
+        opp_piece = PLAYER_PIECE
+        if piece == PLAYER_PIECE:
+            opp_piece = BOT_PIECE
+
+        # Prioritise a winning move
+        # Minimax makes this less important
+        if window.count(piece) == 4:
+            score += 100
+        # Make connecting 3 second priority
+        elif window.count(piece) == 3 and window.count(EMPTY) == 1:
+            score += 5
+        # Make connecting 2 third priority
+        elif window.count(piece) == 2 and window.count(EMPTY) == 2:
+            score += 2
+        # Prioritise blocking an opponent's winning move (but not over bot winning)
+        # Minimax makes this less important
+        if window.count(opp_piece) == 3 and window.count(EMPTY) == 1:
+            score -= 4
+
+        return score
+
+The final element of the analysis is a 'special case' variation of the ``score_position`` function. When 4 pieces are joined together, this signifies the game has been won. 
+After every move, the board needs to be scanned by both the ``score_position`` function, and also the ``winning_move`` function, which will exit out of the game loop if it sees that the game has been won.
+
+.. code-block::
+
+    def winning_move(board, piece):
+        # Check valid horizontal locations for win
+        for c in range(COLUMN_COUNT - 3):
+            for r in range(ROW_COUNT):
+                if board[r][c] == piece and board[r][c + 1] == piece and board[r][c + 2] == piece and board[r][c + 3] == piece:
+                    return True
+
+        # Check valid vertical locations for win
+        for c in range(COLUMN_COUNT):
+            for r in range(ROW_COUNT - 3):
+                if board[r][c] == piece and board[r + 1][c] == piece and board[r + 2][c] == piece and board[r + 3][c] == piece:
+                    return True
+
+        # Check valid positive diagonal locations for win
+        for c in range(COLUMN_COUNT - 3):
+            for r in range(ROW_COUNT - 3):
+                if board[r][c] == piece and board[r + 1][c + 1] == piece and board[r + 2][c + 2] == piece and board[r + 3][c + 3] == piece:
+                    return True
+
+        # check valid negative diagonal locations for win
+        for c in range(COLUMN_COUNT - 3):
+            for r in range(3, ROW_COUNT):
+                if board[r][c] == piece and board[r - 1][c + 1] == piece and board[r - 2][c + 2] == piece and board[r - 3][c + 3] == piece:
+                    return True
 
 Algorithm
-----------
+------------------------
+
+Limitations / Improvements
+---------------------------
