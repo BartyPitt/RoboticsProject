@@ -9,7 +9,7 @@ Functional Overview
 
 Create a numpy zeroes array to represent the Connect 4 board. This will be populated with pieces throughout the game.
 
-.. code-block:: bash
+.. code-block:: python
 
     def create_board():
         board = np.zeros((ROW_COUNT, COLUMN_COUNT))
@@ -17,7 +17,7 @@ Create a numpy zeroes array to represent the Connect 4 board. This will be popul
 
 Set up the board to print out in the terminal in a way that makes it visually easy to play with the computer.
 
-.. code-block:: bash
+.. code-block:: python
 
     def pretty_print_board(board):
         flipped_board = np.flipud(board)
@@ -41,16 +41,5 @@ Set up the board to print out in the terminal in a way that makes it visually ea
 
 .. note::
 
-    Due to restrictions on the version of numpy,
-
-    ..code-block:: bash
-
-        np.flipud(board)
-
-    was used instead of the most up to date version:
-
-    ..code-block:: bash
-
-        np.flip(board)
-
+    Due to restrictions on the version of numpy, ``np.flipud(board)`` was used instead of the most up to date version: ``np.flip(board)``.
     If you are using the most up to date version of numpy, you can update this function (although it will not break if you do not - numpy has reasonably good backwards-compatibility)
