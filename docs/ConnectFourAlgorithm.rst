@@ -5,7 +5,7 @@ In order for the robot to play competitively against a human, a game algorithm i
 
 
 Setup Functions
-----------
+-----------------
 
 Create a numpy array of zeroes to represent the Connect 4 board. This will be populated with numbered pieces throughout the game.
 
@@ -85,7 +85,7 @@ There are 4 functions that are used when placing a piece on the board.
         board[row][col] = piece
 
 Analysis Functions
-----------
+-----------------------
 
 When the human player (Player 1) has made a move, the ``drop_piece`` function will update the numpy array ``board`` with a 1. In order for the game algorithm (Player 2) to choose the best move to play in response, it has to understand and analyse the current board state. This is done using a 'windowing' technique.
 In the following function, horizontal, vertical, positive (upward sloping) and negative (downward sloping) diagonal windows are created. These windows are then used to scan all possible 4-piece sections of the board, and evaluate (score) each window based on its contents. 
@@ -205,7 +205,7 @@ After every move, the board needs to be scanned by both the ``score_position`` f
                     return True
 
 Algorithm
-----------
+------------------------
 
 The algorithm chosen to play Connect 4 is the minimax algorithm. Minimax is a backtracking algorithm which is commonly used in decision-making and game theory to find the optimal move for a player.
 This makes it a perfect choice for two-player, turn-based games. 

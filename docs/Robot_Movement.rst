@@ -11,11 +11,11 @@ Functional Overview
 Here is an overview of the methods created for the Connect4Robot class.
 
 Init
-^^^^
+----------
 
 When an instance of the Connect4Robot is created, the method init() is automatically called. This defines the variables for opening and closing the gripper, which are used in their related methods. 2 groups are also created. These are "group", which includes all the joints in the arm of the robot and "group2", which includes the joints in the gripper. These are used by the moveit_commander library for moving the robot. Finally, a dictionary is initialised, which will be used for storing position names and cartesian coordinates.
 
-::
+.. code-block:: python
 
     def __init__(self, GripperSizeExtended=0.03, GripperSizeRetracted=0, group=moveit_commander.MoveGroupCommander(
         "panda_arm"), group2 = moveit_commander.MoveGroupCommander("hand")):
@@ -29,11 +29,11 @@ When an instance of the Connect4Robot is created, the method init() is automatic
 
 
 Calibration
-^^^^^^^^^^^
+------------------------
 
 The calibration method has 2 purposes. The first is to check that the robot is operating correctly, which is done by making it move to a position and then open and close its gripper. The second is to enable the connect 4 board to be positioned correctly in the real world. This is done by making the Panda robot move its end effector to above where the 1st column on the board should be. Once the user has aligned the board beneath it, they should press Enter, and the end effector will move above the last column on the board. Since the exact height above the board is not important, this is enough to enable the board to be correctly positioned.
 
-::
+.. code-block:: python
 
     def Calibration(self):
         ''' Calibration function to align board and test robot '''
@@ -52,11 +52,12 @@ The calibration method has 2 purposes. The first is to check that the robot is o
 
 
 Define coordinates
-^^^^^^^^^^^^^^^^^^
+---------------------
+
 
 This method enables us to reposition the board if we need to, as long as it remains perpendicular to the robot. We define where the left corner is going to be (as seen by the robot), and the right corner is automatically calculated. The coordinates of the left and right corners are then created as attributes so that all other positions in cartesian space can be defined relative to the board, and will auto-update if we change the location of the board. Being able to reposition the board is important so that we can test different places in the robot's task space which lead to more reliable motion planning.
 
-::
+.. code-block:: python
 
     def define_coordinates(self, LeftCorner, dx=0, dy=-0.468, dz=0):
         '''Defines top left corner of board (from pov of robot) relative to the robot and moves to calibration points'''
@@ -71,13 +72,13 @@ This method enables us to reposition the board if we need to, as long as it rema
 
 
 AddPosition
-^^^^^^^^^^^
+-------------
 
 The function is designed to store a coordinate in cartesian form in a private dictionary. This function originally stored the variables in the form 
 of a Moveit Pose class , this was later changed , as it is very difficult to both view the values as well as made it very difficult to modify the values.
 The function remained partially to interact with legacy code, and partially as it was thought that it maybe useful to add in a sanitization layer.
 
-::
+.. code-block:: python
 
 	def AddPosition(self , PositionName , PositionCordinates):
 			'''A setter function that sets up the positions for the robot to travel to'''
@@ -85,11 +86,12 @@ The function remained partially to interact with legacy code, and partially as i
 
 
 Interpolation
-^^^^^^^^^^^
+---------------
+
 
 This function was used to generate the coordinates of the columns. Interpolation was used as a method to avoid hard coding the column coordinates individually, and is used when the AddPosition method is called in the main function.
 
-::
+.. code-block:: python
 
         def interpolation(self, column):
         ydistance = (self.y2-self.y1)/6 * (column-1)
@@ -97,10 +99,10 @@ This function was used to generate the coordinates of the columns. Interpolation
 
 
 Move to
-^^^^^^^
+-------------
 
 
-::
+.. code-block:: python
 
     def moveto(self, Position):
         '''Moves to a given position, in form [x,y,z,roll,pitch,yaw]'''
@@ -118,11 +120,11 @@ Move to
 
 
 Coordinates to pose
-^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 The human-legible cartesian position coordinates (x,y,z) as well as the Euler angles (roll, pitch, yaw) must be converted into a different coordinate space which can be understood by the robot motion planner. This starts by converting the Euler angles into quaternions and then converting these orientations as well as the Cartesian positions into a format understood by the moveit_controller library.
 
-::
+.. code-block:: python
 
     def CordinatesToPose(self, Position):
         '''Takes in a cordinate and transforms it into a pose'''
@@ -140,11 +142,12 @@ The human-legible cartesian position coordinates (x,y,z) as well as the Euler an
 
 
 Move To Position
-^^^^^^^^^^^
+-------------------
+
 
 The function takes the name of a position and moves the robot to that position. It enabled us to feed in the position name as defined in main.py.
 
-::
+.. code-block:: python
 
         def MoveToPosition(self ,Position):
         '''Takes the name of the position and moves the robot to that position.'''
@@ -152,9 +155,10 @@ The function takes the name of a position and moves the robot to that position. 
         self.moveto(Cordinates)
 
 Move joints
-^^^^^^^^^^^
+-----------------
 
-::
+
+.. code-block:: python
 
     def movejoints(self, jointAngles):
         '''Takes in joint angles and moves to that pose'''
@@ -165,11 +169,12 @@ Move joints
 
 
 Neutral
-^^^^^^^
+------------
+
 
 A challenge faced with the robot was that throughout the game it would slowly work itself into a singularity position after various successive moves, which meant it would become unable to move. In order to avoid this, a reset stage was required that would reconfigure the robot joints to a specific position after each move. Neutral() is a method which achieves this. It instructs the robot to move into a particular set of joint positions which orient it off to the side of the board. This method can be called after each time the robot plays a move, and can be used as the position from which it collects a disk.
 
-::
+.. code-block:: python
 
     def neutral(self):
         ''' Moves to disk collection position using joint angles.
@@ -180,8 +185,9 @@ A challenge faced with the robot was that throughout the game it would slowly wo
 
 
 Cartesian Path
-^^^^^^^^^^^^^^
-::
+------------------
+
+.. code-block:: python
 
 	def CartesianPath(self, Endposition , StartPosition = None , max_tries = 10):
 		'''Takes an Endpositions and generates and then acts on a motion plan to the Endposition using compute cartesian path. '''
@@ -215,14 +221,18 @@ Cartesian Path
 	    self.group.clear_pose_targets()
 	    return True
 
+The cartesian path is a function that takes in an Endposition for the robot to move to and uses the compute_cartesian_path() function to generate a cartesian path between the two.
+During earlier phases of the project  , 
+
 
 Robot Initialisation
-^^^^^^^^^^^^^^^^^^^^
+------------------------
+
 
 Standard procedure, to clear the current targets to avoid conflicts.
 
 
-::
+.. code-block:: python
 
     def robot_init(self): 
         ''' Clears targets, good to do after planning poses '''
@@ -235,7 +245,7 @@ We had two options for controlling the gripper, one by using movit commander's `
 
 
 Using GraspGoal() function
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------
 
 When picking up the ConnnectFour token, ideally, we would want to control both the position of gripper as well as the force exerted on it. We do not want to exceed the maximum force that the gripper can produce while preventing the token from falling off due to too little force exerted. We therefore tried using the ``GraspGoal(width=0.015,speed=0.08,force=1)`` function to set the gripper in place and exert a force on the token such that it did not fall off. However, we discovered that it would grip it, and then release its grip as soon as the ``closegrip()`` function came to an end. We could not figure out why it kept relaxing its grip.
 
@@ -258,7 +268,8 @@ When picking up the ConnnectFour token, ideally, we would want to control both t
 
 
 Using go() function
-^^^^^^^^^^^^^^^^^^^
+-----------------------
+
 
 What worked in the end was DIRECTLY setting the gripper position to the fully closed postion by setting both gripper's position to ``0.0``. However, there was a good chance of failure when using this method. We set the gripper's position to ``0`` while there is an obstacle, the connectFour token in the way of the gripper fully closing. The robot could have thrown an error. However, we discovered that due to the small size of the token and the flexiblity of the gripper pads, the grippers could close fully without detecting the ConnectFour token obstacle. 
 
