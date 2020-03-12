@@ -1,7 +1,8 @@
 Connect 4 Algorithm
 ============================
 
-In order for the robot to play competitively against a human, a minimax game algorithm is used to choose the best move in response to the human player. The algorithm's 'game loop' is implemented inside the main file, but for general tidiness we store all of the functions in a separate file.
+In order for the robot to play competitively against a human, a minimax game algorithm is used to choose the best move in response to the human player. 
+The algorithm's 'game loop' is implemented inside the main file, but for general tidiness all of the algorithm functions are stored in a separate file.
 
 
 Setup Functions
@@ -313,5 +314,5 @@ This would not be particuarly difficult to fix, but would require a different, m
 
 2. Incomplete win structure
 
-During stress testing, we noticed that the algorithm would not make a winning move if there were two or more possible winning moves available. This is presumably because it could not decide between equally weighted branches, and therefore made the 'next best' move.
-This problem did not impact the algorithm's success rate, however, because as soon as the human player filled one of the possible winning spaces, the algorithm would win using the other.
+During stress testing, it became clear that the algorithm would not make a winning move if there were two or more possible winning moves available. This is presumably because it could not decide between equally weighted branches, and therefore made the 'next best' move.
+This problem did not impact the algorithm's success rate, however, because as soon as the human player filled one of the possible winning spaces, the algorithm would win the game using the other.
