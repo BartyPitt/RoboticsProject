@@ -13,12 +13,10 @@ How to teach your robot to play connect four
    overview
    getting_start
    gazebo_simulations
-   motion_planning
-   collision_detection
    Robot_Movement
+   motion_planning
    Open_Cv
    ConnectFourAlgorithm
-   troubleshooting
    miscellaneous
 
 Indices and tables
