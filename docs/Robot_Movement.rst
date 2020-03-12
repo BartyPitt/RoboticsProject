@@ -2,14 +2,8 @@ Robot Motion
 ===============================
 
 We used the default motion planner in Movit, which uses the OMPL, an open-source motion planning library that primarily implements randomized motion planners. 
-A separate python script was created which contained the robot class with methods related to its motion. This enabled us to keep the main python script clean and legible. 
+A separate python script was created which contained the robot class with methods related to its motion. This enabled us to keep the main python script clean and legible. The following in a breakdown of the methods within this Connect4Robot class.
 
-
-
-Functional Overview
-----------------------------------------
-
-Here is an overview of the methods created for the Connect4Robot class. 
 
 Init
 ----------
