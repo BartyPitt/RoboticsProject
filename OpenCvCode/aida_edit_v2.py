@@ -296,6 +296,11 @@ if __name__ == "__main__":
     board2 = np.zeros((7,6))
     while True:
         board1 = (SnapShotAndPossition())
+        Attempt2 = (SnapShotAndPossition())
+        if board1 == Attempt2:
+            pass
+        else
+            continue
         print(board1)
         i , j = where_is_the_new_disk(board1,board2)
         print("the col is", j)
