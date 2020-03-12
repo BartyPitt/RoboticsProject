@@ -43,7 +43,6 @@ import open_cv as vision
 from c4_class import Connect4Robot
 
 # Import libraries
-
 import sys
 import copy
 import rospy
@@ -63,8 +62,7 @@ from moveit_commander.conversions import pose_to_list
 # SWITCHES to change
 
 # Set to true if we are going to use the code for simulation.
-# Ideally we dont want code different between simulation
-# and reality
+# Ideally we dont want code different between simulation and reality
 simulation_status = True
 visionworking = False
 
@@ -93,8 +91,7 @@ p.pose.orientation.w = 0.4440158
 scene.add_box("table", p, (0.5, 1.5, 0.6))
 rospy.sleep(2)
 
-display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path', moveit_msgs.msg.DisplayTrajectory,
-                                               queue_size=20)
+display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path', moveit_msgs.msg.DisplayTrajectory, queue_size=20)
 
 # This command makes ros to change the 'allowed_start_tolerance' to 0.05. Prevents controller failure
 ros_setup_message = """
@@ -126,6 +123,7 @@ PandaRobot.AddPosition("AboveBoard", [PandaRobot.x1,
                                       PandaRobot.roll1,
                                       PandaRobot.pitch1,
                                       PandaRobot.yaw1])
+
 for i in range(0, 7):
     PandaRobot.AddPosition(str(i),
                            [PandaRobot.x1,
