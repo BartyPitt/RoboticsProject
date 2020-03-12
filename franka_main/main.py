@@ -43,7 +43,6 @@ import open_cv as vision
 from c4_class import Connect4Robot
 
 # Import libraries
-
 import sys
 import copy
 import rospy
@@ -63,8 +62,7 @@ from moveit_commander.conversions import pose_to_list
 # SWITCHES to change
 
 # Set to true if we are going to use the code for simulation.
-# Ideally we dont want code different between simulation
-# and reality
+# Ideally we dont want code different between simulation and reality
 simulation_status = True
 visionworking = False
 
@@ -93,8 +91,7 @@ p.pose.orientation.w = 0.4440158
 scene.add_box("table", p, (0.5, 1.5, 0.6))
 rospy.sleep(2)
 
-display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path', moveit_msgs.msg.DisplayTrajectory,
-                                               queue_size=20)
+display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path', moveit_msgs.msg.DisplayTrajectory, queue_size=20)
 
 # This command makes ros to change the 'allowed_start_tolerance' to 0.05. Prevents controller failure
 ros_setup_message = """
@@ -105,7 +102,6 @@ rosservice call /move_group/trajectory_execution/set_parameters "config:
 subprocess.call(ros_setup_message, shell=True)
 
 PandaRobot = Connect4Robot()
-
 
 # Calibration positions
 PandaRobot.define_coordinates([0.3, 0.35, 0.3, pi, 0, pi / 4])
@@ -119,13 +115,6 @@ PandaRobot.AddPosition("DiskCollection",
                         PandaRobot.pitch1,
                         PandaRobot.yaw1])
 
-
-PandaRobot.AddPosition("AboveBoard", [PandaRobot.x1,
-                                      PandaRobot.y1,
-                                      PandaRobot.z1,
-                                      PandaRobot.roll1,
-                                      PandaRobot.pitch1,
-                                      PandaRobot.yaw1])
 for i in range(0, 7):
     PandaRobot.AddPosition(str(i),
                            [PandaRobot.x1,
@@ -138,17 +127,15 @@ for i in range(0, 7):
 
 PandaRobot.robot_init()
 
-position_names = ["DiskCollection", "AboveBoard", "0", "1", "2", "3", "4", "5", "6","LeftCorner","RightCorner"]
+position_names = ["DiskCollection", "0", "1", "2", "3", "4", "5", "6","LeftCorner","RightCorner"]
 
 '''
 Barty check and uncomment collision detection. 
 @Medad: this is how its done: https://answers.ros.org/question/209030/moveit-planningsceneinterface-addbox-not-showing-in-rviz/
 '''
 
-
 # Carry out calibration
 raw_input("Press Enter to move to DiskCollection point...")
-# PandaRobot.MoveToPosition("DiskCollection")
 PandaRobot.neutral()
 raw_input("Press Enter to open gripper...")
 PandaRobot.opengrip(simulation =simulation_status)
@@ -160,25 +147,26 @@ raw_input("Press Enter to continue to right corner...")
 PandaRobot.MoveToPosition("RightCorner")
 raw_input("Press Enter to continue to game...")
 
-# rospy.sleep(3)
-
 # Set static variables
+# Set player values for turn counter
 PLAYER = 0
 BOT = 1
 
+# Set player piece values for board placement
 PLAYER_PIECE = 1
 BOT_PIECE = 2
+
+# Set game algorithm difficulty (number of moves it looks ahead)
+DEPTH = 4 # A higher value takes longer to run
 
 # Initialise game
 board = botfunc.create_board()
 game_over = False
 turn = 0 # Human goes first
-visionworking = False
 
 
 while not game_over:
     if turn == PLAYER:
-
 
         if visionworking == False:
 
@@ -201,7 +189,7 @@ while not game_over:
                     col = move
                     break
 
-
+        # Note -  as we were not able to connect up OpenCV to this input, this version of the else code block is NOT final or refined
         else:
             # get new grid state from most recent capture
             vision.GetPositions('updated_gridstate.jpg')
@@ -227,20 +215,18 @@ while not game_over:
 
         # Ask Ro-Bot (Player 2) to pick the best move based on possible opponent future moves
 
-        col, minimax_score = botfunc.minimax(board, 4, -9999999, 9999999, True)  # A higher value takes longer to run
+        col, minimax_score = botfunc.minimax(board, DEPTH, -9999999, 9999999, True)
         print("Ro-Bot (Player 2) chose column: {0}".format(col))
 
         if botfunc.is_valid_location(board, col):
             row = botfunc.get_next_open_row(board, col)
             botfunc.drop_piece(board, row, col, BOT_PIECE)
             print("")
-            #botfunc.print_board(board)
             botfunc.pretty_print_board(board)
 
             print("Ro-Bot is currently heading to disk collection point")
             # Execute motion sequence
 
-            # PandaRobot.MoveToPosition("DiskCollection")
             PandaRobot.neutral()
             PandaRobot.opengrip(simulation =simulation_status)
             raw_input("Press Enter to close gripper...")
@@ -250,7 +236,6 @@ while not game_over:
             print("Ro-Bot is currently dropping the piece. Please wait!")
             rospy.sleep(0.3)
 
-            #PandaRobot.MoveToPosition("AboveBoard")
             PandaRobot.MoveToPosition(str(col))
             PandaRobot.opengrip(simulation =simulation_status)
             PandaRobot.closegrip(simulation =simulation_status)
@@ -263,9 +248,6 @@ while not game_over:
             turn += 1
             turn = turn % 2
 
-
-    # When game finishes, wait for 30 seconds
     if game_over:
-        #PandaRobot.MoveToPosition("DiskCollection")
         PandaRobot.neutral()
         print('Game finished!')

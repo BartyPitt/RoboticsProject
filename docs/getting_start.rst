@@ -3,20 +3,15 @@ Getting Started
 
 We will now get you started by showing all the setup steps you will need to install the simulation software.
 
-The primary components you will need is:
-
-1. ROS Melodic
-2. Gazebo
-
-
-
 Set Up
 -------------------------
 
 
 Installing ROS
 -------------------------
-It is assumed that you do not have ROS installed on your Ubuntu OS. The code we use here is tested on ROS Melodic and the following instructions show the installation steps for ROS Melodic.
+.. note::
+
+    It is assumed that you do not have ROS installed on your Ubuntu OS. The code we use here is tested on ROS Melodic and the following instructions show the installation steps for ROS Melodic.
 
 First, make sure your Debian package index is up-to-date:
 
@@ -32,8 +27,24 @@ It is recommened that you do the full ROS desktop installation that comes with: 
 
     sudo apt install ros-melodic-desktop-full
 
-Now should have installed ROS Melodic on your computer as gazebo(for visualising simulations) and RVIZ(for motion planning)
+Now should have installed ROS Melodic on your computer as well as  Gazebo (for visualising simulations) and RVIZ (for setting up and visualising motion planning)
 
+You will need to install catkin, the ROS build system.
+
+.. code-block:: bash
+
+	sudo apt-get install ros-melodic-catkin python-catkin-tools
+
+
+
+
+Installing Movit
+---------------------------------------
+Movit is the motion planning Rviz plugin that can be interacted with in Rviz. To install the prebuilt binaries
+
+.. code-block:: bash
+	
+	sudo apt install ros-melodic-moveit
 
 
 Installing Project folders
@@ -45,8 +56,7 @@ You would first clone the project repository into your home folder.
 
     git clone https://github.com/BartyPitt/RoboticsProject.git
 
-Now you have to make sure the submodules are updated
-
+Now you have to make sure the submodules are updated.
 
 .. code-block:: bash
 
