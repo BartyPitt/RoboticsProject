@@ -247,7 +247,6 @@ Having assigned the required column for the next move, this can also be passed i
     We chose to manually close the gripper with an Enter command, to minimise the risk of mis-collecting the Connect 4 piece.
 
 .. code-block:: python
-    :emphasize-lines: 6
 
     print("Ro-Bot is currently heading to disk collection point")
     # Execute motion sequence
