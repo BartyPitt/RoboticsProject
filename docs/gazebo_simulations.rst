@@ -8,6 +8,17 @@ Word of advice: **Simulate, Simulate, Simulate**. Until everything works perfect
 
 Note that the actual Franka Emika robot costs several thousand Euros, and you will have a very limited time with the actual robot. You can save a lot of time by simulating everything on your computer. By simulating, you can potentially avoid getting the robot to do unexpected things. E.g spin around and smash into the wall behind. It would be a very expensive error.
 
+
+Here is a video a full game simulation of the robot.
+
+.. raw:: html
+
+    <div style="position: relative; padding-bottom: 10%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+        <iframe src="https://drive.google.com/file/d/1JOPqCoLd7fvLnHGrHJNjEhJRbDciuPba/preview" width="640" height="480"></iframe>
+    </div>
+
+
+
 Starting up your simulation
 -----------------------------
 Open five terminals, navigate to ``/catkin_ws`` and run the following commands in each:
@@ -72,7 +83,7 @@ Now that we have the simulation setup, we can run the code to move the robot and
   
 
 
-Now you should be able to see the game startup on your terminal. It will give your instructions to help you position the Connect Four board right under the robot's gripper. More instructions on playing the game will be in the next section
+Now you should be able to see the game startup on your terminal. It will give your instructions to help you position the Connect Four board right under the robot's gripper. More instructions on playing the game will be in the next page.
 
 ..
   TODO: add in a link to the next section
@@ -86,7 +97,7 @@ For your reference, here is video showing the whole setup operation that will al
 
 .. raw:: html
 
-    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+    <div style="position: relative; padding-bottom: 10%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
         <iframe src="https://drive.google.com/file/d/1zKt-nPKSKOXqZ7UHFkeTi5kBK8eA0pko/preview" width="640" height="480"></iframe>
     </div>
 

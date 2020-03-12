@@ -12,6 +12,15 @@ Overview & Main File Breakdown
 In this project, the Franka Emika "Panda" robot was programmed to play a game of Connect 4 against a human. To do this, multiple tools such as Computer Vision, a Minimax Game Algorithm, Motion Planning and Collision Detection were implemented.
 Extensive simulations of the robot's motion were also performed using Gazebo for visualisation.
 
+
+Here is a quick introduction to what the robot does.
+
+.. raw:: html
+
+    <div style="position: relative; padding-bottom: 10%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+        <iframe src="https://drive.google.com/file/d/1eVkhQu3TrlreGFJxFhc7Gkob9gC2Xbqn/preview" width="640" height="480"></iframe>
+    </div>
+
 The different elements of the project were written in discrete python scripts, elements of which were than called and executed within a main file.
 
 The flow chart below shows an overview of the steps that are executed in the main file.

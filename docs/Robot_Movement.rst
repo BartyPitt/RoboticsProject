@@ -1,6 +1,18 @@
 Robot Motion
 ===============================
 
+.. raw:: html
+
+    <div style="position: relative; padding-bottom: 10%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+        <iframe src="https://drive.google.com/file/d/1iwWsbIvJiJaZ3lVvjgfFsQGlwxhQhPgR/preview" width="640" height="480"></iframe>
+    </div>
+
+..
+  The motion of the robot was controlled by setting
+
+
+
+
 A separate python script was created which contained the robot class with methods related to its motion. This enabled us to keep the main python script clean and legible. The following in a breakdown of the methods within this Connect4Robot class.
 
 
