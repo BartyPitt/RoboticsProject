@@ -154,9 +154,9 @@ The calibration sequence could be advanced by pressing Enter, giving us as much 
     PandaRobot.MoveToPosition("RightCorner")
     raw_input("Press Enter to continue to game...") 
 
- Before the game can begin, the final setup is to intialise all of the required static variables and variable states.
+Before the game can begin, the final step is to intialise all of the required static variables and variable states.
 
- .. code-block:: python
+.. code-block:: python
 
     # Set player values for turn counter
     PLAYER = 0
