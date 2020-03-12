@@ -40,7 +40,7 @@ You will need to install catkin, the ROS build system.
 
 Installing Movit
 ---------------------------------------
-Movit is the motion planning Rviz plugin that can be interacted with in Rviz. To install the prebuilt binaries
+Movit is the motion planning Rviz plugin that can be interacted with in Rviz. To install the prebuilt binaries, type in to your terminal
 
 .. code-block:: bash
 	
@@ -64,6 +64,17 @@ Now you have to make sure the submodules are updated.
     git submodule sync
     git submodule update --init --force --recursive
 
+
+The submodules that you will be downloading are:
+
+* franka_gazebo : Contains 3D models of robot, for collision detection and rendering.
+* franka_ros : To use ROS to control the Franka Emika robot
+* libfranka : Driver software to control the Franka Emika robot
+* moveit_tutorials : Tutorial documentation files for using Movit motion planner(not really necessary)
+* panda_moveit_config : Contains demos using Movit motion planner
+
+
+Some of these submodules have been forked and customised for our particular Franka Emika Robot.
 
 Compiling all necessary files
 --------------------------------
