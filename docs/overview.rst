@@ -130,7 +130,14 @@ Now that the robot has been set up, the physical elements of the game have to be
 Although it sounds inefficient, this was actually the most reliable way to set up the game under time pressure, leaving us with more time to debug and test gameplay and motion planning. 
 The calibration sequence could be advanced by pressing Enter, giving us as much time as we needed to position the board correctly.
 
+.. note::
+
+    In the code block below, you may notice that in the highlighted line, we call a robot position that has not been defined above: ``PandaRobot.neutral()``. 
+    This is actually the same as PandaRobot.DiskCollection(), but the ``neutral()`` position is defined in terms of joint angles, rather than the end-effector position in cartesian space. 
+    This is to prevent the robot slowly working itself into a singularity, by resetting the joint angles before each game move. You may see these calls used interchangeably based on the context.
+
 .. code-block:: python
+    :emphasize-lines: 2
 
     raw_input("Press Enter to move to DiskCollection point...")
     PandaRobot.neutral()
@@ -165,8 +172,8 @@ Before the game can begin, the final step is to intialise all of the required st
     turn = 0 # Human goes first
 
 
-Main Game Loop
---------------
+Game Loop Breakdown
+-------------------
 
 For the actual demonstration, we did not have the Computer Vision element of the project linked up to the column input, due to an issue with ROS Networking, so ``visionworking = False``. 
 This meant that someone was required to manually type in the column input for the human player's turn (however, we did cross-reference & verify this with the OpenCV output, to simulate a working system).
@@ -198,7 +205,7 @@ To avoid the whole loop crashing in the event of a mistyped entry, the input nee
                         col = move
                         break
 
-Once the input has been typed, this column value (assigned to col) is then passed into functions from the c4_functions file (imported as botfunc), to complete the piece placement and board state analysis.
+Once the input has been typed, this column value (assigned to ``col``) is then passed into functions from the ``c4_functions file`` (imported as ``botfunc``), to complete the piece placement and board state analysis.
 
 .. code-block:: python
 
@@ -215,6 +222,28 @@ Once the input has been typed, this column value (assigned to col) is then passe
         turn += 1
         turn = turn % 2
 
+Now that the turn has been advanced, it is the robot's turn to make a move. The minimax game algorithm scans the board state, generates the decision tree, and returns a ``col`` value relating to the column in which a piece should be placed to play the best possible move.
+This process is explained in further depth in the Connect 4 Algorithm section. This ``col`` value is then passed into the same function structure as above. In essence, the game is played and the piece is placed virtually before moving on to the robot arm movement.
+
+.. code-block::
+
+    if turn == BOT and not game_over:
+
+        # Ask Ro-Bot (Player 2) to pick the best move based on possible opponent future moves
+
+        col, minimax_score = botfunc.minimax(board, DEPTH, -9999999, 9999999, True)
+        print("Ro-Bot (Player 2) chose column: {0}".format(col))
+
+        if botfunc.is_valid_location(board, col):
+            row = botfunc.get_next_open_row(board, col)
+            botfunc.drop_piece(board, row, col, BOT_PIECE)
+            print("")
+            botfunc.pretty_print_board(board)
+
+
+
+Final Game Loop
+---------------
 
 The whole game loop is shown below, for completion:
 

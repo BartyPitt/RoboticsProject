@@ -102,7 +102,7 @@ In the following function, horizontal, vertical, positive (upward sloping) and n
 This evaluation is performed separately by the ``evaluate_window`` function, which is called within the ``score_position`` function, and explained in further detail below.
 
 .. code-block:: python
-    :emphasize-lines: 14, 22, 29, 36
+    :emphasize-lines: 14
 
     def score_position(board, piece):
         score = 0
