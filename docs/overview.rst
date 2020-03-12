@@ -57,7 +57,7 @@ In addition to this, OpenCV took a long time to develop and test, so in the mean
 
 When everything has been imported, the Franka Emika robot needs to be set up and initialised. The following code shows the setup procedure for this robot.
 
-..code-block:: python
+.. code-block:: python
 
     # Set up Franka Robot
     moveit_commander.roscpp_initialize(sys.argv)
