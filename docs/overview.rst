@@ -10,7 +10,7 @@ Overview & Main File Breakdown
 
 
 In this project, the Franka Emika "Panda" robot was programmed to play a game of Connect 4 against a human. To do this, multiple tools such as Computer Vision, a Minimax Game Algorithm, Motion Planning and Collision Detection were implemented.
-Extensive simulations of the robot's motion were also performed using Gazebo for visualisation.
+Due to the limited access to the physical robot, extensive simulations of the robot's motion were also performed, using Gazebo for visualisation. 
 
 
 Here is a quick introduction to what the robot does.
@@ -25,7 +25,7 @@ The different elements of the project were written in discrete python scripts, e
 
 The flow chart below shows an overview of the steps that are executed in the main file.
 
-.. figure:: _static/Robotics_Flow.png
+.. figure:: _static/Algorithm_flowchart.png
     :align: center
     :figclass: align-center
 
@@ -37,7 +37,7 @@ The main file collates all the code that is split into separate files into one e
 
 .. warning::
 
-    Although this is a python script, it will NOT run in an IDE in Windows. Many of the functions and libraries imported are specific for the ROS environment, which needs to be run inside a Virtual Machine, or on a ROS (Linux) dual-boot.
+    Although this is a python script, it will NOT run in an IDE in Windows. Many of the functions and libraries imported are specific for the ROS environment, which needs to be run on Ubuntu in a Virtual Machine with with necessary dependencies installed, or on computer with the necessary packages installed.
 
 .. code-block:: python
 
@@ -61,11 +61,12 @@ The main file collates all the code that is split into separate files into one e
     from std_msgs.msg import String, Float64MultiArray, MultiArrayDimension, Float64
     from moveit_commander.conversions import pose_to_list
 
-To aid debugging, a number of simple state-switching tools were included. Due to the limited access to the physical robot, most of the testing was done in simulation.
-Although the code operation for each state is similar, there are some small differences in code required to make the simulation run (particularly effective operation of the grippers).
-These differences are highlighted in the 'Robot Movement' section of the documentation, and this switch is used to toggle between the code blocks.
 
-In addition to this, OpenCV took a long time to develop and test, so in the meantime a switch was used so that the rest of the code could be tested without relying on computer vision.
+
+Setup Functions
+-------------------
+
+To aid debugging, a number of boolean variables were used to switch on and off sections of code during development. This is due to sections being non-functional/insufficiently tested initially. OpenCV took a long time to develop and test, so in the meantime a switch was used so that the rest of the code could be tested without relying on computer vision. The switches are set at the beginning of the main code flow as follows.
 
 .. code-block:: python
 
@@ -110,8 +111,7 @@ When everything has been imported, the Franka Emika robot needs to be set up and
 
     PandaRobot = Connect4Robot()
 
-After setup, it is necessary to define all of the positions that the robot arm will need to visit during calibration and gameplay. This also means that simple function calls can be used for each position later in the game loop section of the code.
-The positions were as follows: left & right corners (calibration), columns 0-6 (gameplay), and disk collection (resting position).
+After setup, it is necessary to define all of the positions that the robot arm will need to visit during calibration and gameplay with labels. This allowed us to call all target positions merely with a string variable name. The positions were as follows: ``"LeftCorner"``, ``"RightCorner"`` (for calibration), ``"column_1"``, ``"column_2"`` ... ``"column_7"`` (for gameplay) and ``"DiskCollection"`` (resting position).
 
 .. code-block:: python
 
@@ -128,7 +128,7 @@ The positions were as follows: left & right corners (calibration), columns 0-6 (
                             PandaRobot.yaw1])
 
     for i in range(0, 7):
-        PandaRobot.AddPosition(str(i),
+        PandaRobot.AddPosition("column_"+str(i),
                             [PandaRobot.x1,
                                 PandaRobot.y1 + PandaRobot.interpolation(i),
                                 PandaRobot.z1,
@@ -137,8 +137,6 @@ The positions were as follows: left & right corners (calibration), columns 0-6 (
                                 PandaRobot.yaw1])
 
     PandaRobot.robot_init()
-
-    position_names = ["DiskCollection", "0", "1", "2", "3", "4", "5", "6","LeftCorner","RightCorner"]
 
 Calibration & Game Setup
 ------------------------
