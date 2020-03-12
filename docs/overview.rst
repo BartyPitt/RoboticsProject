@@ -8,7 +8,7 @@ The different elements of the project were written in discrete python scripts, e
 
 The flow chart below shows an overview of the steps that are executed in the main file.
 
-.. figure:: _static/Algorithm_flowchart.png
+.. figure:: _static/Robotics_Flow.png
     :align: center
     :figclass: align-center
 
