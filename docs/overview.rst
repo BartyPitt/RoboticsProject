@@ -1,8 +1,8 @@
 Overview & Main File Breakdown
 ===============================
 
-In this project, we got the Franka Emika "Panda" robot to play a game of Connect 4 against a human. To do this, we implemented Computer Vision, a Minimax Game Algorithm, Motion Planning and Collision Detection.
-We also carried out extensive simulations of the robot's motion using Gazebo for visualisation.
+In this project, the Franka Emika "Panda" robot was programmed to play a game of Connect 4 against a human. To do this, multiple tools such as Computer Vision, a Minimax Game Algorithm, Motion Planning and Collision Detection were implemented.
+Extensive simulations of the robot's motion were also performed using Gazebo for visualisation.
 
 The different elements of the project were written in discrete python scripts, elements of which were than called and executed within a main file.
 
@@ -16,7 +16,7 @@ The flow chart below shows an overview of the steps that are executed in the mai
 Setup Functions
 -------------------
 
-The main file collates all the code that is split into separate files into one executable file. To do this effectively, we first need to import all of the required external functions, and all the necessary python libraries.
+The main file collates all the code that is split into separate files into one executable file. To do this effectively, first it is necessary to import all of the required external functions and python libraries.
 
 .. warning::
 
@@ -44,11 +44,11 @@ The main file collates all the code that is split into separate files into one e
     from std_msgs.msg import String, Float64MultiArray, MultiArrayDimension, Float64
     from moveit_commander.conversions import pose_to_list
 
-We also included a number of tools to aid debugging. Due to the limited access to the physical robot, most of the testing was done in simulation. 
+To aid debugging, a number of simple state-switching tools were included. Due to the limited access to the physical robot, most of the testing was done in simulation. 
 Although the code operation for each state is similar, there are some small differences in code required to make the simulation run (particularly effective operation of the grippers).
 These differences are highlighted in the 'Robot Movement' section of the documentation, and this switch is used to toggle between the code blocks.
 
-In addition to this, OpenCV took a long time to develop and test, so in the meantime we created a switch so that the rest of the code could be tested without relying on computer vision.
+In addition to this, OpenCV took a long time to develop and test, so in the meantime a switch was used so that the rest of the code could be tested without relying on computer vision.
 
 .. code-block:: python
 
@@ -93,8 +93,8 @@ When everything has been imported, the Franka Emika robot needs to be set up and
 
     PandaRobot = Connect4Robot()
 
-After setup, we then needed to define all of the positions that the robot arm had to visit during calibration and gameplay. This allowed us to use simple function calls for each position later in the game loop section of the code.
-The positions were as follows: left & right corners (calibration), columns 0-6 (gameplay), and disc collection (resting position).
+After setup, it is necessary to define all of the positions that the robot arm will need to visit during calibration and gameplay. This also means that simple function calls can be used for each position later in the game loop section of the code.
+The positions were as follows: left & right corners (calibration), columns 0-6 (gameplay), and disk collection (resting position).
 
 .. code-block:: python
 
@@ -126,15 +126,15 @@ The positions were as follows: left & right corners (calibration), columns 0-6 (
 Calibration & Game Setup
 ------------------------
 
-Now that the robot has been set up, the physical elements of the game have to be set up and calibrated before the gameplay can begin. We added two calibration positions that allowed us to manually line up the physical Connect 4 board with the robot arm. 
-Although it sounds inefficient, this was actually the most reliable way to set up the game under time pressure, leaving us with more time to debug and test gameplay and motion planning. 
-The calibration sequence could be advanced by pressing Enter, giving us as much time as we needed to position the board correctly.
+Now that the robot has been set up, the physical elements of the game have to be set up and calibrated before the gameplay can begin. Two calibration positions were added that allowed the physical Connect 4 board to be manually with the robot arm. 
+Although it sounds inefficient, this was actually the most reliable way to set up the game under time pressure, leaving more time to debug and test gameplay and motion planning. 
+The calibration sequence could be advanced by pressing Enter, leaving as much time as was needed to position the board correctly.
 
 .. note::
 
-    In the code block below, you may notice that in the highlighted line, we call a robot position that has not been defined above: ``PandaRobot.neutral()``. 
+    In the code block below, one might notice that in the highlighted line, a robot position is called that has not been defined above: ``PandaRobot.neutral()``. 
     This is actually the same as PandaRobot.DiskCollection(), but the ``neutral()`` position is defined in terms of joint angles, rather than the end-effector position in cartesian space. 
-    This is to prevent the robot slowly working itself into a singularity, by resetting the joint angles before each game move. You may see these calls used interchangeably based on the context.
+    This is to prevent the robot slowly working itself into a singularity, by resetting the joint angles before each game move. These calls are used interchangeably based on the context.
 
 .. code-block:: python
 
@@ -174,8 +174,8 @@ Before the game can begin, the final step is to intialise all of the required st
 Game Loop Breakdown
 -------------------
 
-For the actual demonstration, we did not have the Computer Vision element of the project linked up to the column input, due to an issue with ROS Networking, so ``visionworking = False``. 
-This meant that someone was required to manually type in the column input for the human player's turn (however, we did cross-reference & verify this with the OpenCV output, to simulate a working system).
+For the actual demonstration, the Computer Vision element of the project was not linked up to the column input, due to an issue with ROS Networking, so ``visionworking = False``. 
+This meant that someone was required to manually type in the column input for the human player's turn (however, this was cross-referenced & verified against the OpenCV output, to simulate a working system).
 
 To avoid the whole loop crashing in the event of a mistyped entry, the input needed to be sanitised:
 
@@ -243,7 +243,7 @@ Having assigned the required column for the next move, this can also be passed i
 
 .. note:: 
 
-    We chose to manually close the gripper with an Enter command, to minimise the risk of mis-collecting the Connect 4 piece.
+    It was decided that the gripper should be manually closed with an Enter command, to minimise the risk of mis-collecting the Connect 4 piece.
 
 .. code-block:: python
 
@@ -303,7 +303,7 @@ The whole game loop is shown below, for completion:
                         col = move
                         break
 
-            # Note -  as we were not able to connect up OpenCV to this input, this version of the else code block is NOT final or refined
+            # Note -  as it was not possible to connect up OpenCV to this input, this version of the 'else' code block is NOT final or refined
             else: 
                 # get new grid state from most recent capture
                 vision.GetPositions('updated_gridstate.jpg')
