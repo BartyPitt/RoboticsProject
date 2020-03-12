@@ -1,7 +1,6 @@
 Robot Motion
 ===============================
 
-We used the default motion planner in Movit, which uses the OMPL, an open-source motion planning library that primarily implements randomized motion planners.
 A separate python script was created which contained the robot class with methods related to its motion. This enabled us to keep the main python script clean and legible. The following in a breakdown of the methods within this Connect4Robot class.
 
 
@@ -307,5 +306,6 @@ The code for closing the gripper is as follows
 
 
 
-
-Note that we have a separate function that broadcasts the gripper position to ROS. This is to ensure Gazebo sees the movement and displays accordingly. We create a ``gripper_publisher`` that publishes the new gripper position to the ``/franka/gripper_position_controller/command`` topic so that Gazebo can be updated.
+.. note::
+    
+    we have a separate function that broadcasts the gripper position to ROS. This is to ensure Gazebo sees the movement and displays accordingly. We create a ``gripper_publisher`` that publishes the new gripper position to the ``/franka/gripper_position_controller/command`` topic so that Gazebo can be updated.
