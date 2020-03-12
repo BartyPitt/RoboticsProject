@@ -2,9 +2,9 @@ Motion planning
 ======================
 
 
-We used the default motion planner in Movit, which uses the OMPL, an open-source motion planning library that primarily implements randomized motion planners.
+We used the default motion planner in Movit, which uses the **Open Motion Planning Library**,OMPL,an open-source motion planning library that primarily implements randomized motion planners. It was used to plan the movement of robot gripper between locations such as from the token pick up point to the drop off point above the column.
 
-
+Occasionally we observed that the planner seemed to plan a circuitous plan for the robot, or occasionally spinning around to reach its destination. We minimised the risk of this happening by adding additional waypoints. 
 
 
 Collision Avoidance
