@@ -205,7 +205,7 @@ To avoid the whole loop crashing in the event of a mistyped entry, the input nee
                         col = move
                         break
 
-Once the input has been typed, this column value (assigned to ``col``) is then passed into functions from the ``c4_functions file`` (imported as ``botfunc``), to complete the piece placement and board state analysis.
+Once the input has been typed, this column value (assigned to ``col``) is then passed into functions from the ``c4_functions`` file (imported as ``botfunc``), to complete the piece placement and board state analysis.
 
 .. code-block:: python
 
