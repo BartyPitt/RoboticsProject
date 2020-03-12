@@ -134,7 +134,7 @@ The positions were as follows: left & right corners (calibration), columns 0-6 (
 Calibration & Game Setup
 ------------------------
 
-Now that the robot has been set up, the physical elements of the game have to be set up and calibrated before the gameplay can begin. Two calibration positions were added that allowed the physical Connect 4 board to be manually with the robot arm.
+Now that the robot has been set up, the physical elements of the game have to be set up and calibrated before the gameplay can begin. Two calibration positions were added that allowed the physical Connect 4 board to be manually aligned with the robot arm.
 Although it sounds inefficient, this was actually the most reliable way to set up the game under time pressure, leaving more time to debug and test gameplay and motion planning.
 The calibration sequence could be advanced by pressing Enter, leaving as much time as was needed to position the board correctly.
 
