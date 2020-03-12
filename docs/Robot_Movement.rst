@@ -1,7 +1,7 @@
 Robot Motion
 ===============================
 
-We used the default motion planner in Movit, which uses the OMPL, an open-source motion planning library that primarily implements randomized motion planners. 
+We used the default motion planner in Movit, which uses the OMPL, an open-source motion planning library that primarily implements randomized motion planners.
 A separate python script was created which contained the robot class with methods related to its motion. This enabled us to keep the main python script clean and legible. The following in a breakdown of the methods within this Connect4Robot class.
 
 
@@ -69,7 +69,7 @@ This method enables us to reposition the board if we need to, as long as it rema
 AddPosition
 -------------
 
-This function is designed to store a coordinate in cartesian form in a private dictionary. It originally stored the variables in the form 
+This function is designed to store a coordinate in cartesian form in a private dictionary. It originally stored the variables in the form
 of a Moveit Pose class, however this was later changed, as it is very difficult to both view the values as well as making it very difficult to modify the values.
 The function remained partially to interact with legacy code, and partially as it was thought it might be useful to add in a sanitization layer.
 
@@ -96,8 +96,8 @@ This function was used to generate the coordinates of the columns. Interpolation
 Move to
 -------------
 
-This is a movement function that uses the moveit motion planner to move the robot. 
-It takes in a position in cartesian list form, transforms it into the pose class, and then runs it directly through the motion planner. 
+This is a movement function that uses the moveit motion planner to move the robot.
+It takes in a position in cartesian list form, transforms it into the pose class, and then runs it directly through the motion planner.
 It then executes the plan.
 
 .. code-block:: python
@@ -121,7 +121,7 @@ Coordinates to pose
 -----------------------
 
 The human-legible cartesian position coordinates and rotations  (x, y, z, roll, pitch, yaw), must be passed into a class for moveit to be able to interpret them.
-This starts by converting roll, pitch and yaw angles into quaternions and then converting these orientations as well as the Cartesian positions 
+This starts by converting roll, pitch and yaw angles into quaternions and then converting these orientations as well as the Cartesian positions
 into a format understood by the moveit_controller library.
 
 .. code-block:: python
@@ -204,14 +204,14 @@ between the two functions other than the motion planning is that Cartesian Path 
 			StartPosition = self.CordinatesToPose(StartPosition)
 		else:
 			StartPosition = group.get_current_pose().pose
-		
+
 	    Endposition = self.CordinatesToPose(Endposition)
-		
+
 	    waypoints = []
 		# start with the current pose
 	    waypoints.append(StartPosition)
-		
-		
+
+
 	    waypoints.append(Endposition)
 	    for i in range(max_tries):
 			(plan, fraction) = group.compute_cartesian_path (
@@ -241,7 +241,7 @@ Standard procedure, to clear the current targets to avoid conflicts.
 
 .. code-block:: python
 
-    def robot_init(self): 
+    def robot_init(self):
         ''' Clears targets, good to do after planning poses '''
         self.group.clear_pose_targets()
 
@@ -254,7 +254,7 @@ We had two options for controlling the gripper, one by using movit commander's `
 Using GraspGoal() function
 ------------------------------
 
-When picking up the ConnnectFour token, ideally we would control both the position of gripper as well as the force it exerts. We do not want to exceed the maximum force that the gripper can produce, but we must ensure the token doesn't fall off due to a lack of force. We therefore tried using the ``GraspGoal(width=0.015,speed=0.08,force=1)`` function to set the gripper in place and exert a force on the token such that it did not fall off. However, we discovered that it would grip it, and then release its grip as soon as the ``closegrip()`` function came to an end. We could not figure out why it kept relaxing its grip.
+When picking up the ConnnectFour token, ideally we would control both the position of gripper as well as the force it exerts. We do not want to exceed the maximum force that the gripper can produce, but we must ensure the token doesn't fall off due to a lack of force. We therefore tried using the ``GraspGoal(width,speed,force)`` function to set the gripper in place and exert a force on the token such that it did not fall off. However, we discovered that the gripper would grip the token, and then release its grip as soon as the ``closegrip()`` function came to an end. We could not figure out why it kept relaxing its grip.
 
 
 .. code-block:: python
@@ -278,7 +278,7 @@ Using go() function
 -----------------------
 
 
-What worked in the end was DIRECTLY setting the gripper position to the fully closed postion by setting both gripper's position to ``0.0``. However, there was a good chance of failure when using this method. We set the gripper's position to ``0`` despite the connect 4 token stopping it being able to achieve this goal. The robot could have thrown an error, however we discovered that due to the small size of the token and the flexiblity of the gripper pads, the grippers could close fully without detecting the ConnectFour token obstacle. 
+What worked in the end was DIRECTLY setting the gripper position to the fully closed postion by setting both gripper's position to ``0``(fully closed). The gripper exerted a sufficient force to prevent the token from falling off. However, there was a good chance of failure when using this method. We set the gripper's position to ``0`` despite the connect 4 token getting in the way of the gripper fully closing. The robot could have thrown an error as the connect 4 token obstacle was getting in the way of the gripper fully closing, preventing it from going to the fully closed ``0`` position. However we discovered that due to the small size of the token and the flexiblity of the gripper pads, the grippers could close fully without detecting the connect 4 token obstacle.
 
 
 The code for closing the gripper is as follows
@@ -309,15 +309,3 @@ The code for closing the gripper is as follows
 
 
 Note that we have a separate function that broadcasts the gripper position to ROS. This is to ensure Gazebo sees the movement and displays accordingly. We create a ``gripper_publisher`` that publishes the new gripper position to the ``/franka/gripper_position_controller/command`` topic so that Gazebo can be updated.
-
-
-
-
-
-
-
-Current Order of Called Functions.::
-
-*PLease PlAcE aN ImagE HerE*
-
-

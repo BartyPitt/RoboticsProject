@@ -265,10 +265,10 @@ And then by taking multiple snapshots and performing this procedure twice the ne
               i, j = np.where(result != 0)
       return i, j #i is row, j is col
 
-By running this code twice and ensuring that on both instances the disk position found is the same it can be verified that the board has been updated to the correct state.
+By running this code twice and ensuring that on both instances the disk position found is the same, it can then be verified that the board has been updated to the correct state.
 
 
-2. Another method that was developed for error recovery but never implemented was to draw a centre line on the column that the robot was about to place the disk in, and using a red marker on the centre of
+2. Another method that was developed for error recovery but never implemented, was to draw a centre line on the column that the robot was about to place the disk in, and using a red marker on the centre of
 the robot gripper, check that the coordinate of the marker on the gripper is aligned with the target column.
 
 First the top and the bottom coordinates of the disks in each column are found:
