@@ -59,7 +59,7 @@ In addition to this, OpenCV took a long time to develop and test, so in the mean
 
 When everything has been imported, the Franka Emika robot needs to be set up and initialised. The following code shows the setup procedure for this robot.
 
-..code-block::
+..code-block:: python
 
     # Set up Franka Robot
     moveit_commander.roscpp_initialize(sys.argv)
@@ -67,7 +67,6 @@ When everything has been imported, the Franka Emika robot needs to be set up and
     robot = moveit_commander.RobotCommander()
     scene = moveit_commander.PlanningSceneInterface()
     rospy.sleep(2)
-
 
     # Get object frames
     p = geometry_msgs.msg.PoseStamped()
@@ -97,7 +96,7 @@ When everything has been imported, the Franka Emika robot needs to be set up and
     PandaRobot = Connect4Robot()
 
 After setup, we then needed to define all of the positions that the robot arm had to visit during calibration and gameplay. This allowed us to use simple function calls for each position later in the game loop section of the code.
-The positions were as follows: left & right corners (calibration), columns 0-6 (gameplay), disc collection (resting position)
+The positions were as follows: left & right corners (calibration), columns 0-6 (gameplay), and disc collection (resting position).
 
 .. code-block:: python
 
@@ -133,3 +132,44 @@ The positions were as follows: left & right corners (calibration), columns 0-6 (
     PandaRobot.robot_init()
 
     position_names = ["DiskCollection", "AboveBoard", "0", "1", "2", "3", "4", "5", "6","LeftCorner","RightCorner"]
+
+Calibration & Game Setup
+------------------------
+
+Now that the robot has been set up, the physical elements of the game have to be set up and calibrated before the gameplay can begin. We added two calibration positions that allowed us to manually line up the physical Connect 4 board with the robot arm. 
+Although it sounds inefficient, this was actually the most reliable way to set up the game under time pressure, leaving us with more time to debug and test gameplay and motion planning. 
+The calibration sequence could be advanced by pressing Enter, giving us as much time as we needed to position the board correctly.
+
+.. code-block:: python
+
+    raw_input("Press Enter to move to DiskCollection point...")
+    PandaRobot.neutral()
+    raw_input("Press Enter to open gripper...")
+    PandaRobot.opengrip(simulation =simulation_status)
+    raw_input("Press Enter to close gripper...")
+    PandaRobot.closegrip(simulation =simulation_status)
+    raw_input("Press Enter to move to left corner...")
+    PandaRobot.MoveToPosition("LeftCorner")
+    raw_input("Press Enter to continue to right corner...")
+    PandaRobot.MoveToPosition("RightCorner")
+    raw_input("Press Enter to continue to game...") 
+
+ Before the game can begin, the final setup is to intialise all of the required static variables and variable states.
+
+ .. code-block:: python
+
+    # Set player values for turn counter
+    PLAYER = 0
+    BOT = 1
+
+    # Set player piece values for board placement
+    PLAYER_PIECE = 1
+    BOT_PIECE = 2
+
+    # Initialise game
+    board = botfunc.create_board()
+    game_over = False
+    turn = 0 # Human goes first
+
+Main Game Loop
+--------------

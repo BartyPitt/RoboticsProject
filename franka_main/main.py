@@ -158,12 +158,12 @@ raw_input("Press Enter to continue to right corner...")
 PandaRobot.MoveToPosition("RightCorner")
 raw_input("Press Enter to continue to game...")
 
-# rospy.sleep(3)
-
 # Set static variables
+# Set player values for turn counter
 PLAYER = 0
 BOT = 1
 
+# Set player piece values for board placement
 PLAYER_PIECE = 1
 BOT_PIECE = 2
 
@@ -171,7 +171,6 @@ BOT_PIECE = 2
 board = botfunc.create_board()
 game_over = False
 turn = 0 # Human goes first
-visionworking = False
 
 
 while not game_over:
