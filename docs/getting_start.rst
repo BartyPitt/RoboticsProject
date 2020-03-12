@@ -32,7 +32,7 @@ It is recommened that you do the full ROS desktop installation that comes with: 
 
     sudo apt install ros-melodic-desktop-full
 
-Now should have installed ROS Melodic on your computer as well as  Gazebo(for visualising simulations) and RVIZ(for setting up and visualising motion planning)
+Now should have installed ROS Melodic on your computer as well as  Gazebo (for visualising simulations) and RVIZ (for setting up and visualising motion planning)
 
 You will need to install catkin, the ROS build system.
 

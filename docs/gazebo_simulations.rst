@@ -10,7 +10,7 @@ Note that the actual Franka Emika robot costs several thousand Euros, and you wi
 
 Running Gazebo
 ----------------------
-Open five termials and run the following commands in each:
+Open five terminals and run the following commands in each:
 
 Run Roscore, the master messaging core
 
@@ -85,7 +85,7 @@ Now you should be able to see the game startup on your terminal. It will give yo
 Simulation setup screencast
 -------------------------------- 
 
-Now for your reference, here is video showing the whole setup operation that will allow you to run a full simulation.
+For your reference, here is video showing the whole setup operation that will allow you to run a full simulation.
 
 .. raw:: html
 
