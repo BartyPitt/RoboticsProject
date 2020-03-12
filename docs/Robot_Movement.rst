@@ -254,7 +254,7 @@ We had two options for controlling the gripper, one by using movit commander's `
 Using GraspGoal() function
 ------------------------------
 
-When picking up the ConnnectFour token, ideally we would control both the position of gripper as well as the force it exerts. We do not want to exceed the maximum force that the gripper can produce, but we must ensure the token doesn't fall off due to a lack of force. We therefore tried using the ``GraspGoal(width=0.015,speed=0.08,force=1)`` function to set the gripper in place and exert a force on the token such that it did not fall off. However, we discovered that it would grip it, and then release its grip as soon as the ``closegrip()`` function came to an end. We could not figure out why it kept relaxing its grip.
+When picking up the ConnnectFour token, ideally we would control both the position of gripper as well as the force it exerts. We do not want to exceed the maximum force that the gripper can produce, but we must ensure the token doesn't fall off due to a lack of force. We therefore tried using the ``GraspGoal(width,speed,force)`` function to set the gripper in place and exert a force on the token such that it did not fall off. However, we discovered that the gripper would grip the token, and then release its grip as soon as the ``closegrip()`` function came to an end. We could not figure out why it kept relaxing its grip.
 
 
 .. code-block:: python
@@ -278,7 +278,7 @@ Using go() function
 -----------------------
 
 
-What worked in the end was DIRECTLY setting the gripper position to the fully closed postion by setting both gripper's position to ``0.0``. However, there was a good chance of failure when using this method. We set the gripper's position to ``0`` despite the connect 4 token stopping it being able to achieve this goal. The robot could have thrown an error, however we discovered that due to the small size of the token and the flexiblity of the gripper pads, the grippers could close fully without detecting the ConnectFour token obstacle.
+What worked in the end was DIRECTLY setting the gripper position to the fully closed postion by setting both gripper's position to ``0``(fully closed). The gripper exerted a sufficient force to prevent the token from falling off. However, there was a good chance of failure when using this method. We set the gripper's position to ``0`` despite the connect 4 token getting in the way of the gripper fully closing. The robot could have thrown an error as the connect 4 token obstacle was getting in the way of the gripper fully closing, preventing it from going to the fully closed ``0`` position. However we discovered that due to the small size of the token and the flexiblity of the gripper pads, the grippers could close fully without detecting the connect 4 token obstacle.
 
 
 The code for closing the gripper is as follows
