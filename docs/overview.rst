@@ -225,7 +225,7 @@ Once the input has been typed, this column value (assigned to ``col``) is then p
 Now that the turn has been advanced, it is the robot's turn to make a move. The minimax game algorithm scans the board state, generates the decision tree, and returns a ``col`` value relating to the column in which a piece should be placed to play the best possible move.
 This process is explained in further depth in the Connect 4 Algorithm section. This ``col`` value is then passed into the same function structure as above. In essence, the game is played and the piece is placed virtually before moving on to the robot arm movement.
 
-.. code-block::
+.. code-block:: python
 
     if turn == BOT and not game_over:
 
@@ -240,6 +240,38 @@ This process is explained in further depth in the Connect 4 Algorithm section. T
             print("")
             botfunc.pretty_print_board(board)
 
+Having assigned the required column for the next move, this can also be passed into the function calls for the robot arm movement.
+
+.. note:: 
+
+    We chose to manually close the gripper with an Enter command, to minimise the risk of mis-collecting the Connect 4 piece.
+
+.. code-block:: python
+    :emphasize-lines: 6
+
+    print("Ro-Bot is currently heading to disk collection point")
+    # Execute motion sequence
+
+    PandaRobot.neutral()
+    PandaRobot.opengrip(simulation =simulation_status)
+    raw_input("Press Enter to close gripper...")
+
+    PandaRobot.closegrip(simulation =simulation_status)
+
+    print("Ro-Bot is currently dropping the piece. Please wait!")
+    rospy.sleep(0.3)
+
+    PandaRobot.MoveToPosition(str(col))
+    PandaRobot.opengrip(simulation =simulation_status)
+    PandaRobot.closegrip(simulation =simulation_status)
+
+    if botfunc.winning_move(board, BOT_PIECE):
+        print("Ro-Bot Wins!")
+        game_over = True
+
+    # Advance turn & alternate between Player 1 and 2
+    turn += 1
+    turn = turn % 2
 
 
 Final Game Loop

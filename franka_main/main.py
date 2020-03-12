@@ -222,7 +222,6 @@ while not game_over:
             row = botfunc.get_next_open_row(board, col)
             botfunc.drop_piece(board, row, col, BOT_PIECE)
             print("")
-            #botfunc.print_board(board)
             botfunc.pretty_print_board(board)
 
             print("Ro-Bot is currently heading to disk collection point")
