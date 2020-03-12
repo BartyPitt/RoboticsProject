@@ -299,7 +299,7 @@ if __name__ == "__main__":
         Attempt2 = (SnapShotAndPossition())
         if board1 == Attempt2:
             pass
-        else
+        else:
             continue
         print(board1)
         i , j = where_is_the_new_disk(board1,board2)
