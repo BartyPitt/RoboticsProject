@@ -1,14 +1,15 @@
-Robot Movement Overview
+Robot Motion
 ===============================
 
-A separate python script was created which contained the robot class with methods related to its motion. This enabled us to keep the main python script clean and legible.
+We used the default motion planner in Movit, which uses the OMPL, an open-source motion planning library that primarily implements randomized motion planners. 
+A separate python script was created which contained the robot class with methods related to its motion. This enabled us to keep the main python script clean and legible. 
 
 
 
 Functional Overview
 ----------------------------------------
 
-Here is an overview of the methods created for the Connect4Robot class.
+Here is an overview of the methods created for the Connect4Robot class. 
 
 Init
 ----------
