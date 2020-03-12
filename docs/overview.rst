@@ -141,7 +141,7 @@ The calibration sequence could be advanced by pressing Enter, leaving as much ti
 .. note::
 
     In the code block below, one might notice that in the highlighted line, a robot position is called that has not been defined above: ``PandaRobot.neutral()``.
-    This is actually the same as PandaRobot.DiskCollection(), but the ``neutral()`` position is defined in terms of joint angles, rather than the end-effector position in cartesian space.
+    This is actually the same as ``PandaRobot.DiskCollection()``, but the ``neutral()`` position is defined in terms of joint angles, rather than the end-effector position in cartesian space.
     This is to prevent the robot slowly working itself into a singularity, by resetting the joint angles before each game move. These calls are used interchangeably based on the context.
 
 .. code-block:: python
