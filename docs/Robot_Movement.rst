@@ -231,7 +231,8 @@ Cartesian Path
 	    return True
 
 The cartesian path is a function that takes in an Endposition for the robot to move to and uses the compute_cartesian_path() function to generate a cartesian path between the two.
-During earlier phases of the project  , 
+This function was added , as it for the most part kept the robot end effector along an easily predictable path. This gives much more stability than moveto(): , the main difference,
+between the two functions other than the motion planning is that Cartesian Path returns a true or false depending on weather or not it was Successful
 
 
 Robot Initialisation
@@ -310,7 +311,7 @@ The code for closing the gripper is as follows
 
 
 
-Note that we have a seperate function that broadcasts the gripper position to ROS. This is to ensure Gazebo sees the movement and displays accordingly. We create a ``gripper_publisher`` that publishes the new gripper position to the ``/franka/gripper_position_controller/command`` topic so that Gazebo can be updated.
+Note that we have a separate function that broadcasts the gripper position to ROS. This is to ensure Gazebo sees the movement and displays accordingly. We create a ``gripper_publisher`` that publishes the new gripper position to the ``/franka/gripper_position_controller/command`` topic so that Gazebo can be updated.
 
 
 
