@@ -3,20 +3,15 @@ Getting Started
 
 We will now get you started by showing all the setup steps you will need to install the simulation software.
 
-The primary components you will need is:
-
-1. ROS Melodic
-2. Gazebo
-
-
-
 Set Up
 -------------------------
 
 
 Installing ROS
 -------------------------
-It is assumed that you do not have ROS installed on your Ubuntu OS. The code we use here is tested on ROS Melodic and the following instructions show the installation steps for ROS Melodic.
+.. note::
+
+    It is assumed that you do not have ROS installed on your Ubuntu OS. The code we use here is tested on ROS Melodic and the following instructions show the installation steps for ROS Melodic.
 
 First, make sure your Debian package index is up-to-date:
 

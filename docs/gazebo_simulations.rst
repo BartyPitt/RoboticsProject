@@ -3,14 +3,14 @@ Simulating the robot
 
 Before testing on the real robot, it is vital to test your code on a simulator. We use Gazebo to visulise the movement of the Panda Emika robot to see if it behaves properly. Form experience, IF and ONLY if it works in the simulation is there a REMOTE chance that your code will work on the actual robot. 
 
-Word of advice: simulate, simulate, simulate. Until everything works perfectly in the simulation.
+Word of advice: **Simulate, Simulate, Simulate**. Until everything works perfectly in the simulation.
 
 
 Note that the actual Franka Emika robot costs several thousand Euros, and you will have a very limited time with the actual robot. You can save a lot of time by simulating everything on your computer. By simulating, you can potentially avoid getting the robot to do unexpected things. E.g spin around and smash into the wall behind. It would be a very expensive error.
 
-Running Gazebo
-----------------------
-Open five terminals and run the following commands in each:
+Starting up your simulation
+-----------------------------
+Open five terminals, navigate to ``/catkin_ws`` and run the following commands in each:
 
 Run Roscore, the master messaging core
 
@@ -35,10 +35,7 @@ Now open up Rviz, and open up the Movit motion planner plugin used for motion pl
     source devel/setup.bash
     roslaunch panda_moveit_config demo.launch rviz_tutorial:=true
 
-Now you need to activate motion planning using the Movit plugin.
-You will have to run a motion planning move from the RVIZ gui, by opening the open planning tab. Then set the //TODO put in user group.
-
-
+Now you need to activate motion planning using the Movit plugin. Add motion Motion Planning in the ``Add`` button. Then make sure ``Planning Scene Topic`` is set to ``/planning_scene`` . Also, set ``Planning Request`` to ``panda_arm`` . Under the ``Planning`` tab, make sure ``Use Cartesian Path`` is selected. You can set it up as shown in the image below.
 
 
 
