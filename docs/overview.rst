@@ -6,6 +6,7 @@ Overview & Main File Breakdown
 
   For best UI experience, please use the web version of the documentation as opposed to the PDF version.
 
+
 In this project, the Franka Emika "Panda" robot was programmed to play a game of Connect 4 against a human. To do this, multiple tools such as Computer Vision, a Minimax Game Algorithm, Motion Planning and Collision Detection were implemented.
 Extensive simulations of the robot's motion were also performed using Gazebo for visualisation.
 
