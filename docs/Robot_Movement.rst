@@ -1,14 +1,9 @@
-Robot Movement Overview
+Robot Motion
 ===============================
 
-A separate python script was created which contained the robot class with methods related to its motion. This enabled us to keep the main python script clean and legible.
+We used the default motion planner in Movit, which uses the OMPL, an open-source motion planning library that primarily implements randomized motion planners. 
+A separate python script was created which contained the robot class with methods related to its motion. This enabled us to keep the main python script clean and legible. The following in a breakdown of the methods within this Connect4Robot class.
 
-
-
-Functional Overview
-----------------------------------------
-
-Here is an overview of the methods created for the Connect4Robot class.
 
 Init
 ----------
@@ -74,9 +69,9 @@ This method enables us to reposition the board if we need to, as long as it rema
 AddPosition
 -------------
 
-The function is designed to store a coordinate in cartesian form in a private dictionary. This function originally stored the variables in the form 
-of a Moveit Pose class , this was later changed , as it is very difficult to both view the values as well as made it very difficult to modify the values.
-The function remained partially to interact with legacy code, and partially as it was thought that it maybe useful to add in a sanitization layer.
+This function is designed to store a coordinate in cartesian form in a private dictionary. It originally stored the variables in the form 
+of a Moveit Pose class, however this was later changed, as it is very difficult to both view the values as well as making it very difficult to modify the values.
+The function remained partially to interact with legacy code, and partially as it was thought it might be useful to add in a sanitization layer.
 
 .. code-block:: python
 
@@ -102,8 +97,8 @@ Move to
 -------------
 
 This is a movement function that uses the moveit motion planner to move the robot. 
-It takes in a position in cartesian list form , transforms it into the pose class, and then runs it directly through the motion planner. 
-It then runs the plan.
+It takes in a position in cartesian list form, transforms it into the pose class, and then runs it directly through the motion planner. 
+It then executes the plan.
 
 .. code-block:: python
 
@@ -125,8 +120,8 @@ It then runs the plan.
 Coordinates to pose
 -----------------------
 
-The human-legible cartesian position coordinates and rotations  (x,y,z roll, pitch, yaw) , must be inputted into a class for moveit to be able to interpret them.
-This starts by converting roll ,pitch and yaw angles into quaternions and then converting these orientations as well as the Cartesian positions 
+The human-legible cartesian position coordinates and rotations  (x, y, z, roll, pitch, yaw), must be passed into a class for moveit to be able to interpret them.
+This starts by converting roll, pitch and yaw angles into quaternions and then converting these orientations as well as the Cartesian positions 
 into a format understood by the moveit_controller library.
 
 .. code-block:: python
@@ -150,7 +145,7 @@ Move To Position
 -------------------
 
 
-The function takes the name of a position and moves the robot to that position. It enabled us to feed in the position name as defined in main.py.
+The function takes the name of a position and moves the robot to that position. It enabled us to feed in the position names defined in main.py.
 
 .. code-block:: python
 
@@ -161,10 +156,10 @@ The function takes the name of a position and moves the robot to that position. 
 
 Move joints
 -----------------
-This is the command for direct joint control of the robot. As for the most part the use of motion planners and inverse kinematics was preferred for this project.
+This is the command for direct joint control of the robot. For the most part the use of motion planners and inverse kinematics was preferred for this project.
 Most of the motion planning was done with the moveto() and the MoveToPosition() commands.
-This function was added so that after every run the robot could head to a set joint position, the idea behind this is that it stopped the robot from gradually working
-its way into a singularity , something that gradually happened within the simulations.
+This function was added so that after every run the robot could head to a set joint position, the idea behind this being that it stopped the robot from gradually working
+its way into a singularity, something that would happen within the simulations.
 
 
 .. code-block:: python
@@ -181,7 +176,7 @@ Neutral
 ------------
 
 
-A challenge faced with the robot was that throughout the game it would slowly work itself into a singularity position after various successive moves, which meant it would become unable to move. In order to avoid this, a reset stage was required that would reconfigure the robot joints to a specific position after each move. Neutral() is a method which achieves this. It instructs the robot to move into a particular set of joint positions which orient it off to the side of the board. This method can be called after each time the robot plays a move, and can be used as the position from which it collects a disk.
+Throughout the game the robot would slowly work itself into a singularity position after various successive moves, which meant it would become unable to move. In order to avoid this, a reset stage was required that would reconfigure the robot joints to a specific position after each move. Neutral() is a method which achieves this. It instructs the robot to move into a particular set of joint positions which orient it off to the side of the board. This method can be called after each time the robot plays a move, and can be used as the position from which it collects a disk.
 
 .. code-block:: python
 
@@ -195,6 +190,11 @@ A challenge faced with the robot was that throughout the game it would slowly wo
 
 Cartesian Path
 ------------------
+
+Cartesian path is a function that takes in an Endposition for the robot to move to and uses the compute_cartesian_path() function to generate a cartesian path between the two.
+This function was useful, since for the most part it would keep the robot end effector along an easily predictable path. This gives much more stability than moveto(). The main difference
+between the two functions other than the motion planning is that Cartesian Path returns a true or false depending on weather or not it was successful.
+
 
 .. code-block:: python
 
@@ -230,9 +230,6 @@ Cartesian Path
 	    self.group.clear_pose_targets()
 	    return True
 
-The cartesian path is a function that takes in an Endposition for the robot to move to and uses the compute_cartesian_path() function to generate a cartesian path between the two.
-This function was added , as it for the most part kept the robot end effector along an easily predictable path. This gives much more stability than moveto(): , the main difference,
-between the two functions other than the motion planning is that Cartesian Path returns a true or false depending on weather or not it was Successful
 
 
 Robot Initialisation
@@ -257,7 +254,7 @@ We had two options for controlling the gripper, one by using movit commander's `
 Using GraspGoal() function
 ------------------------------
 
-When picking up the ConnnectFour token, ideally, we would want to control both the position of gripper as well as the force exerted on it. We do not want to exceed the maximum force that the gripper can produce while preventing the token from falling off due to too little force exerted. We therefore tried using the ``GraspGoal(width=0.015,speed=0.08,force=1)`` function to set the gripper in place and exert a force on the token such that it did not fall off. However, we discovered that it would grip it, and then release its grip as soon as the ``closegrip()`` function came to an end. We could not figure out why it kept relaxing its grip.
+When picking up the ConnnectFour token, ideally we would control both the position of gripper as well as the force it exerts. We do not want to exceed the maximum force that the gripper can produce, but we must ensure the token doesn't fall off due to a lack of force. We therefore tried using the ``GraspGoal(width=0.015,speed=0.08,force=1)`` function to set the gripper in place and exert a force on the token such that it did not fall off. However, we discovered that it would grip it, and then release its grip as soon as the ``closegrip()`` function came to an end. We could not figure out why it kept relaxing its grip.
 
 
 .. code-block:: python
@@ -281,7 +278,7 @@ Using go() function
 -----------------------
 
 
-What worked in the end was DIRECTLY setting the gripper position to the fully closed postion by setting both gripper's position to ``0.0``. However, there was a good chance of failure when using this method. We set the gripper's position to ``0`` while there is an obstacle, the connectFour token in the way of the gripper fully closing. The robot could have thrown an error. However, we discovered that due to the small size of the token and the flexiblity of the gripper pads, the grippers could close fully without detecting the ConnectFour token obstacle. 
+What worked in the end was DIRECTLY setting the gripper position to the fully closed postion by setting both gripper's position to ``0.0``. However, there was a good chance of failure when using this method. We set the gripper's position to ``0`` despite the connect 4 token stopping it being able to achieve this goal. The robot could have thrown an error, however we discovered that due to the small size of the token and the flexiblity of the gripper pads, the grippers could close fully without detecting the ConnectFour token obstacle. 
 
 
 The code for closing the gripper is as follows
