@@ -103,7 +103,6 @@ subprocess.call(ros_setup_message, shell=True)
 
 PandaRobot = Connect4Robot()
 
-
 # Calibration positions
 PandaRobot.define_coordinates([0.3, 0.35, 0.3, pi, 0, pi / 4])
 
@@ -115,14 +114,6 @@ PandaRobot.AddPosition("DiskCollection",
                         PandaRobot.roll1,
                         PandaRobot.pitch1,
                         PandaRobot.yaw1])
-
-
-PandaRobot.AddPosition("AboveBoard", [PandaRobot.x1,
-                                      PandaRobot.y1,
-                                      PandaRobot.z1,
-                                      PandaRobot.roll1,
-                                      PandaRobot.pitch1,
-                                      PandaRobot.yaw1])
 
 for i in range(0, 7):
     PandaRobot.AddPosition(str(i),
@@ -136,17 +127,15 @@ for i in range(0, 7):
 
 PandaRobot.robot_init()
 
-position_names = ["DiskCollection", "AboveBoard", "0", "1", "2", "3", "4", "5", "6","LeftCorner","RightCorner"]
+position_names = ["DiskCollection", "0", "1", "2", "3", "4", "5", "6","LeftCorner","RightCorner"]
 
 '''
 Barty check and uncomment collision detection. 
 @Medad: this is how its done: https://answers.ros.org/question/209030/moveit-planningsceneinterface-addbox-not-showing-in-rviz/
 '''
 
-
 # Carry out calibration
 raw_input("Press Enter to move to DiskCollection point...")
-# PandaRobot.MoveToPosition("DiskCollection")
 PandaRobot.neutral()
 raw_input("Press Enter to open gripper...")
 PandaRobot.opengrip(simulation =simulation_status)
@@ -167,6 +156,9 @@ BOT = 1
 PLAYER_PIECE = 1
 BOT_PIECE = 2
 
+# Set game algorithm difficulty (number of moves it looks ahead)
+DEPTH = 4 # A higher value takes longer to run
+
 # Initialise game
 board = botfunc.create_board()
 game_over = False
@@ -175,7 +167,6 @@ turn = 0 # Human goes first
 
 while not game_over:
     if turn == PLAYER:
-
 
         if visionworking == False:
 
@@ -198,7 +189,7 @@ while not game_over:
                     col = move
                     break
 
-
+        # Note -  as we were not able to connect up OpenCV to this input, this version of the else code block is NOT final or refined
         else:
             # get new grid state from most recent capture
             vision.GetPositions('updated_gridstate.jpg')
@@ -224,7 +215,7 @@ while not game_over:
 
         # Ask Ro-Bot (Player 2) to pick the best move based on possible opponent future moves
 
-        col, minimax_score = botfunc.minimax(board, 4, -9999999, 9999999, True)  # A higher value takes longer to run
+        col, minimax_score = botfunc.minimax(board, DEPTH, -9999999, 9999999, True)
         print("Ro-Bot (Player 2) chose column: {0}".format(col))
 
         if botfunc.is_valid_location(board, col):
@@ -237,7 +228,6 @@ while not game_over:
             print("Ro-Bot is currently heading to disk collection point")
             # Execute motion sequence
 
-            # PandaRobot.MoveToPosition("DiskCollection")
             PandaRobot.neutral()
             PandaRobot.opengrip(simulation =simulation_status)
             raw_input("Press Enter to close gripper...")
@@ -247,7 +237,6 @@ while not game_over:
             print("Ro-Bot is currently dropping the piece. Please wait!")
             rospy.sleep(0.3)
 
-            #PandaRobot.MoveToPosition("AboveBoard")
             PandaRobot.MoveToPosition(str(col))
             PandaRobot.opengrip(simulation =simulation_status)
             PandaRobot.closegrip(simulation =simulation_status)
@@ -260,9 +249,6 @@ while not game_over:
             turn += 1
             turn = turn % 2
 
-
-    # When game finishes, wait for 30 seconds
     if game_over:
-        #PandaRobot.MoveToPosition("DiskCollection")
         PandaRobot.neutral()
         print('Game finished!')
