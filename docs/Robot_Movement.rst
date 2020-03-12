@@ -101,6 +101,9 @@ This function was used to generate the coordinates of the columns. Interpolation
 Move to
 -------------
 
+This is a movement function that uses the moveit motion planner to move the robot. 
+It takes in a position in cartesian list form , transforms it into the pose class, and then runs it directly through the motion planner. 
+It then runs the plan.
 
 .. code-block:: python
 
@@ -122,7 +125,9 @@ Move to
 Coordinates to pose
 -----------------------
 
-The human-legible cartesian position coordinates (x,y,z) as well as the Euler angles (roll, pitch, yaw) must be converted into a different coordinate space which can be understood by the robot motion planner. This starts by converting the Euler angles into quaternions and then converting these orientations as well as the Cartesian positions into a format understood by the moveit_controller library.
+The human-legible cartesian position coordinates and rotations  (x,y,z roll, pitch, yaw) , must be inputted into a class for moveit to be able to interpret them.
+This starts by converting roll ,pitch and yaw angles into quaternions and then converting these orientations as well as the Cartesian positions 
+into a format understood by the moveit_controller library.
 
 .. code-block:: python
 
@@ -150,12 +155,16 @@ The function takes the name of a position and moves the robot to that position. 
 .. code-block:: python
 
         def MoveToPosition(self ,Position):
-        '''Takes the name of the position and moves the robot to that position.'''
-        Cordinates = self.__positions__[Position]
-        self.moveto(Cordinates)
+            '''Takes the name of the position and moves the robot to that position.'''
+            Cordinates = self.__positions__[Position]
+            self.moveto(Cordinates)
 
 Move joints
 -----------------
+This is the command for direct joint control of the robot. As for the most part the use of motion planners and inverse kinematics was preferred for this project.
+Most of the motion planning was done with the moveto() and the MoveToPosition() commands.
+This function was added so that after every run the robot could head to a set joint position, the idea behind this is that it stopped the robot from gradually working
+its way into a singularity , something that gradually happened within the simulations.
 
 
 .. code-block:: python
@@ -222,7 +231,8 @@ Cartesian Path
 	    return True
 
 The cartesian path is a function that takes in an Endposition for the robot to move to and uses the compute_cartesian_path() function to generate a cartesian path between the two.
-During earlier phases of the project  , 
+This function was added , as it for the most part kept the robot end effector along an easily predictable path. This gives much more stability than moveto(): , the main difference,
+between the two functions other than the motion planning is that Cartesian Path returns a true or false depending on weather or not it was Successful
 
 
 Robot Initialisation
@@ -301,7 +311,7 @@ The code for closing the gripper is as follows
 
 
 
-Note that we have a seperate function that broadcasts the gripper position to ROS. This is to ensure Gazebo sees the movement and displays accordingly. We create a ``gripper_publisher`` that publishes the new gripper position to the ``/franka/gripper_position_controller/command`` topic so that Gazebo can be updated.
+Note that we have a separate function that broadcasts the gripper position to ROS. This is to ensure Gazebo sees the movement and displays accordingly. We create a ``gripper_publisher`` that publishes the new gripper position to the ``/franka/gripper_position_controller/command`` topic so that Gazebo can be updated.
 
 
 

@@ -236,7 +236,7 @@ def TransformTheImage(img,Extension):
 
     return SquareImage
 
-def ArrayfromCordinates(Cordinates1 , Cordinates2 = None):
+def ArrayfromCordinates(Cordinates1, Cordinates2 = None):
     '''Takes in one or two sets of cordninates , and returns a combined array.'''
     output = np.zeros((7,6))
     for co in Cordinates1:
@@ -250,8 +250,7 @@ def ArrayfromCordinates(Cordinates1 , Cordinates2 = None):
     return output
         
 
-
-def GetPossitions(img ,Location = True):
+def GetPossitions(img, Location = True):
          
     '''It reads an image from the given Image Location, flattens it, finds the yellow and the blue disks,
         and returns the rows and columns of each of the disks.'''
@@ -297,6 +296,11 @@ if __name__ == "__main__":
     board2 = np.zeros((7,6))
     while True:
         board1 = (SnapShotAndPossition())
+        Attempt2 = (SnapShotAndPossition())
+        if board1 == Attempt2:
+            pass
+        else
+            continue
         print(board1)
         i , j = where_is_the_new_disk(board1,board2)
         print("the col is", j)
@@ -304,4 +308,5 @@ if __name__ == "__main__":
         if k == "q":
             break
         board2 = board1
-    #GetPossitions('/Users/aidam/Desktop/Robotics Coursework /Images/WithRedDot/Grid1.jpg')
+
+#GetPossitions('/Users/aidam/Desktop/Robotics Coursework /Images/WithRedDot/Grid1.jpg')
