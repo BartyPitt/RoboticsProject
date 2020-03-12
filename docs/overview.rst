@@ -137,7 +137,6 @@ The calibration sequence could be advanced by pressing Enter, giving us as much 
     This is to prevent the robot slowly working itself into a singularity, by resetting the joint angles before each game move. You may see these calls used interchangeably based on the context.
 
 .. code-block:: python
-    :emphasize-lines: 2
 
     raw_input("Press Enter to move to DiskCollection point...")
     PandaRobot.neutral()
@@ -247,7 +246,6 @@ Having assigned the required column for the next move, this can also be passed i
     We chose to manually close the gripper with an Enter command, to minimise the risk of mis-collecting the Connect 4 piece.
 
 .. code-block:: python
-    :emphasize-lines: 6
 
     print("Ro-Bot is currently heading to disk collection point")
     # Execute motion sequence
