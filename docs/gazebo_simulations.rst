@@ -10,7 +10,7 @@ Note that the actual Franka Emika robot costs several thousand Euros, and you wi
 
 Starting up your simulation
 -----------------------------
-Open five terminals and run the following commands in each:
+Open five terminals, navigate to ``/catkin_ws`` and run the following commands in each:
 
 Run Roscore, the master messaging core
 
