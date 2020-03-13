@@ -15,7 +15,7 @@ The human and robot took turns playing by dropping their tokens in their chosen 
 Due to the limited access to the physical robot, extensive simulations of the robot's motion were also performed, using Gazebo for visualisation. 
 
 
-Here is a quick introduction to what the robot does.
+Here is a quick introduction video of what the robot does.
 
 .. raw:: html
 
@@ -23,9 +23,8 @@ Here is a quick introduction to what the robot does.
         <iframe src="https://drive.google.com/file/d/1eVkhQu3TrlreGFJxFhc7Gkob9gC2Xbqn/preview" width="640" height="480"></iframe>
     </div>
 
-The different elements of the project were written in discrete python scripts, elements of which were than called and executed within a main file.
 
-The flow chart below shows an overview of the steps that are executed in the main file.
+The flow chart below shows an overview of the main program that plays the game.
 
 .. figure:: _static/Algorithm_flowchart.png
     :align: center
@@ -42,7 +41,7 @@ Importing Libraries
 
     Although this is a python script, it will NOT run in an IDE in Windows. Many of the functions and libraries imported are specific for the ROS environment, which needs to be run on Ubuntu in a Virtual Machine with with necessary dependencies installed, or on computer with the necessary packages installed.
 
-First it is necessary to import all of the required external functions and python libraries.
+First it is necessary to import all of the required external functions and python libraries. Many driver functions were abstracted away in other python files to prevent cluttering up the main python file.
 
 
 .. code-block:: python
