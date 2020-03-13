@@ -9,7 +9,9 @@ Overview & Main File Breakdown
 .. _web: https://roboticsproject.readthedocs.io/en/latest/index.html
 
 
-In this project, the Franka Emika "Panda" robot was programmed to play a game of Connect 4 against a human. To do this, multiple tools such as Computer Vision, a Minimax Game Algorithm, Motion Planning and Collision Detection were implemented.
+In this project, the Franka Emika "Panda" robot was programmed to play a game of Connect 4 against a human. 
+The human and robot took turns playing by dropping their tokens in their chosen column until one won the game. To do this, multiple tools such as Computer Vision, a Minimax Game Algorithm, Motion Planning and Collision Detection were implemented.
+
 Due to the limited access to the physical robot, extensive simulations of the robot's motion were also performed, using Gazebo for visualisation. 
 
 
@@ -17,7 +19,7 @@ Here is a quick introduction to what the robot does.
 
 .. raw:: html
 
-    <div style="position: relative; padding-bottom: 10%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+    <div style="position: relative; padding-bottom: 1%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
         <iframe src="https://drive.google.com/file/d/1eVkhQu3TrlreGFJxFhc7Gkob9gC2Xbqn/preview" width="640" height="480"></iframe>
     </div>
 
@@ -30,14 +32,18 @@ The flow chart below shows an overview of the steps that are executed in the mai
     :figclass: align-center
 
 
-Setup Functions
--------------------
+Now here is a brief overview of our main script that plays the game.
 
-The main file collates all the code that is split into separate files into one executable file. To do this effectively, first it is necessary to import all of the required external functions and python libraries.
+
+Importing Libraries
+-------------------
 
 .. warning::
 
     Although this is a python script, it will NOT run in an IDE in Windows. Many of the functions and libraries imported are specific for the ROS environment, which needs to be run on Ubuntu in a Virtual Machine with with necessary dependencies installed, or on computer with the necessary packages installed.
+
+First it is necessary to import all of the required external functions and python libraries.
+
 
 .. code-block:: python
 
@@ -62,16 +68,20 @@ The main file collates all the code that is split into separate files into one e
     from moveit_commander.conversions import pose_to_list
 
 
-
-Setup Functions
+Debug Switches
 -------------------
 
-To aid debugging, a number of boolean variables were used to switch on and off sections of code during development. This is due to sections being non-functional/insufficiently tested initially. OpenCV took a long time to develop and test, so in the meantime a switch was used so that the rest of the code could be tested without relying on computer vision. The switches are set at the beginning of the main code flow as follows.
+To aid debugging, a number of boolean variables were used to switch on and off sections of code during development. This is due to sections of code being non-functional/insufficiently tested initially. OpenCV took a long time to develop and test, so in the meantime a switch was used so that the rest of the code could be tested without relying on computer vision. The switches are set at the beginning of the main code flow as follows.
 
 .. code-block:: python
 
     simulation_status = True
     visionworking = False
+
+
+
+Initialisation
+-------------------
 
 When everything has been imported, the Franka Emika robot needs to be set up and initialised. The following code shows the setup procedure for this robot.
 

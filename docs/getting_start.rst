@@ -1,7 +1,7 @@
 Getting Started
 ========================
 
-We will now get you started by showing all the setup steps you will need to install the simulation software.
+In order to run the game script, you will have to install ROS and the simulation packages.
 
 Set Up
 -------------------------
@@ -11,7 +11,7 @@ Installing ROS
 -------------------------
 .. note::
 
-    It is assumed that you do not have ROS installed on your Ubuntu OS. The code we use here is tested on ROS Melodic and the following instructions show the installation steps for ROS Melodic.
+    It is assumed that you do **not** have ROS installed on your Ubuntu OS. The code we use here is tested on ROS Melodic on Ubuntu 18.1 and the following instructions show the installation steps for ROS Melodic.
 
 First, make sure your Debian package index is up-to-date:
 
